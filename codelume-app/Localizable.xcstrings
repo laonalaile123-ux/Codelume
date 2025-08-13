@@ -1,35 +1,52 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "• Dynamic Wallpaper: Custom video wallpapers for personalized desktops" : {
-      "extractionState" : "stale",
+    "• Use the AVKit framework to set regular videos as dynamic wallpapers, with no interactive support." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "• 动态桌面：支持自定义视频壁纸，打造个性化桌面"
+            "value" : "• 借助 AVkit 框架将普通视频设置为动态壁纸，不支持交互"
           }
         }
       }
     },
-    "• Other utilities: More features coming soon..." : {
-      "extractionState" : "stale",
+    "• Use the high-performance SpriteKit framework to render 2D interactive dynamic wallpapers" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "• 其他实用小工具：持续更新中..."
+            "value" : "• 借助高性能 SpriteKit 框架渲染2D 可交互动态壁纸"
           }
         }
       }
     },
-    "© 2025 北京新界力科技有限公司. All rights reserved." : {
-      "extractionState" : "stale",
+    "• Use the SceneKit framework to create interactive 3D dynamic wallpapers with high resource consumption" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "© 2025 北京新界力科技有限公司。保留所有权利。"
+            "value" : "• 借助 SceneKit 框架实现可交互的3D动态壁纸，资源占用较高"
+          }
+        }
+      }
+    },
+    "© 2025 CodeLume. All rights reserved." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2025 码镜。 保留所有权利。"
+          }
+        }
+      }
+    },
+    "A dynamic wallpaper software dedicated to the macOS platform." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一款专注于macos平台的动态壁纸软件"
           }
         }
       }
@@ -128,17 +145,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "码镜"
-          }
-        }
-      }
-    },
-    "CodeLume is an all-in-one desktop enhancement and productivity tool, featuring:" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CodeLume 是一款集桌面美化与效率工具于一体的软件，主要功能包括："
           }
         }
       }
@@ -317,6 +323,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "主界面"
+          }
+        }
+      }
+    },
+    "If you have any suggestions or comments during use, please contact the developer through the link below." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在使用过程中，如有任何建议和意见，通过下方的链接联系开发者。"
           }
         }
       }
@@ -813,7 +829,6 @@
       }
     },
     "Version %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -824,7 +839,6 @@
       }
     },
     "Visit the official website." : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

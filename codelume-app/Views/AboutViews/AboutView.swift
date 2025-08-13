@@ -11,19 +11,14 @@ struct AboutView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
             
-            VStack(alignment: .leading, spacing: 10) {
-                Text("CodeLume is an all-in-one desktop enhancement and productivity tool, featuring:")
+            VStack(alignment: .center, spacing: 10) {
+                Text("A dynamic wallpaper software dedicated to the macOS platform.")
                     .font(.body)
                     .fixedSize(horizontal: false, vertical: true)
-                
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("• Dynamic Wallpaper: Custom video wallpapers for personalized desktops")
-                        .fixedSize(horizontal: false, vertical: true)
-                    Text("• Other utilities: More features coming soon...")
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+
+                Text("If you have any suggestions or comments during use, please contact the developer through the link below.")
+                    .font(.body)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.horizontal)
             
@@ -40,12 +35,12 @@ struct AboutView: View {
                     .foregroundColor(.secondary)
             }
             
-            Text("© 2025 guangziyu. All rights reserved.")
+            Text("© 2025 CodeLume. All rights reserved.")
                 .font(.footnote)
                 .foregroundColor(.secondary)
         }
-        .padding()
-        .frame(width: 500, height: 400)
+        .padding(20)
+        .frame(width: 500, height: 300)
     }
 }
 
