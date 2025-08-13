@@ -36,21 +36,21 @@ class ScreenPlaybackViewModel: ObservableObject {
     // 加载屏幕配置
     func loadScreenConfiguration(screen: NSScreen) {
         // 从WindowController获取配置
-        if let windowController = NSApplication.shared.delegate?.windowController {
-            let screenIdentifier = screen.identifier
-            if let config = windowController.screenConfigurations[screenIdentifier] {
-                selectedPlaybackType = config.playbackType
-                contentPath = config.contentPath
-                volume = config.volume
-                isPlaying = config.isPlaying
-            } else {
-                // 默认配置
-                selectedPlaybackType = .video
-                contentPath = ""
-                volume = 1.0
-                isPlaying = false
-            }
-        }
+//        if let windowController = NSApplication.shared.delegate?.windowController {
+//            let screenIdentifier = screen.identifier
+//            if let config = windowController.screenConfigurations[screenIdentifier] {
+//                selectedPlaybackType = config.playbackType
+//                contentPath = config.contentUrl
+//                volume = config.volume
+//                isPlaying = config.isPlaying
+//            } else {
+//                // 默认配置
+//                selectedPlaybackType = .video
+//                contentPath = ""
+//                volume = 1.0
+//                isPlaying = false
+//            }
+//        }
     }
     
     // 更新屏幕配置

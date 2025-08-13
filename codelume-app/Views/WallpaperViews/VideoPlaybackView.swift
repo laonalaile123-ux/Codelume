@@ -1,7 +1,6 @@
 import AppKit
 import AVKit
 
-// 视频播放视图
 class VideoPlaybackView: AVPlayerView {
     // 播放状态属性
     var isPlaying: Bool {
@@ -36,21 +35,21 @@ class VideoPlaybackView: AVPlayerView {
     }
     
     private func setupPlayer(with config: ScreenConfiguration) {
-        if !config.contentPath.isEmpty, let url = try? URL(fileURLWithPath: config.contentPath) {
-            let player = AVPlayer(url: url)
-            self.player = player
-            player.volume = config.volume
-            if config.isPlaying {
-                player.play()
-            }
-        }
-        if !config.contentPath.isEmpty, let url = try? URL(fileURLWithPath: config.contentPath) {
-            let player = AVPlayer(url: url)
-            self.player = player
-            player.volume = config.volume
-            if config.isPlaying {
-                player.play()
-            }
-        }
+//        if !config.contentPath.isEmpty, let url = try? URL(fileURLWithPath: config.contentPath) {
+//            let player = AVPlayer(url: url)
+//            self.player = player
+//            player.volume = config.volume
+//            if config.isPlaying {
+//                player.play()
+//            }
+//        }
+//        if !config.contentPath.isEmpty, let url = try? URL(fileURLWithPath: config.contentPath) {
+//            let player = AVPlayer(url: url)
+//            self.player = player
+//            player.volume = config.volume
+//            if config.isPlaying {
+//                player.play()
+//            }
+//        }
     }
 }

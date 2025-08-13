@@ -46,8 +46,8 @@ struct PlayingView: View {
                         .frame(width: 100, alignment: .leading)
                     Picker("播放类型", selection: $viewModel.selectedPlaybackType) {
                         Text("视频").tag(PlaybackType.video)
-                        Text("SpriteKit").tag(PlaybackType.spriteKit)
-                        Text("SceneKit").tag(PlaybackType.sceneKit)
+                        Text("SpriteKit").tag(PlaybackType.sprite)
+                        Text("SceneKit").tag(PlaybackType.scene)
                     }
                     .frame(width: 200)
                 }

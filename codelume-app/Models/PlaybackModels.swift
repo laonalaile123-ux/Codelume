@@ -3,21 +3,23 @@ import Foundation
 
 enum PlaybackType: String, Codable {
     case video
-    case spriteKit
-    case sceneKit
+    case sprite
+    case scene
 }
 
 struct ScreenConfiguration: Codable {
     let screenIdentifier: String
+    var isMainScreen: Bool
     var playbackType: PlaybackType
-    var contentPath: String
-    var volume: Float = 1.0
+    var contentUrl: URL?
+    var volume: Float = 0.0
     var isPlaying: Bool = false
     
-    init(screen: NSScreen, playbackType: PlaybackType = .video, contentPath: String = "") {
+    init(screen: NSScreen, playbackType: PlaybackType = .video, contentUrl: URL? = nil, isMainScreen: Bool = false) {
         self.screenIdentifier = screen.identifier
+        self.isMainScreen = isMainScreen
         self.playbackType = playbackType
-        self.contentPath = contentPath
+        self.contentUrl = contentUrl
     }
 }
 
@@ -49,4 +51,3 @@ enum SenceType: Int, CaseIterable {
     case VideoSence = 0
     case SpritekitSence = 1
 }
-
