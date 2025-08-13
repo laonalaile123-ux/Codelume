@@ -1,0 +1,101 @@
+# Xcode
+#
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+
+## Build generated
+build/
+DerivedData/
+
+## Various settings
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+
+## Other
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcworkspace/
+!default.xcworkspace/
+*.xcscmblueprint
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+#
+# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+# Packages/
+# Package.pins
+# Package.resolved
+# *.xcodeproj
+#
+# Xcode automatically generates this file and it's generally not a good idea to include it in your repo.
+# For information about this file see: https://developer.apple.com/documentation/swift_packages/package.resolved
+#
+# Uncomment this line if you want to exclude generated dependencies from your repo
+# Package.resolved
+
+# CocoaPods
+#
+# We recommend against adding the Pods directory to your .gitignore. However, you should judge for
+# yourself. For instructions on sharing the Pods directory between developers: https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
+#
+# Pods/
+#
+# Add this line if you want to avoid checking in source code from the Xcode workspace
+# *.xcworkspace
+
+# Carthage
+#
+# Add this line if you want to avoid checking in source code from Carthage dependencies.
+# Carthage/Checkouts/
+#
+# Carthage/Build/ is recommended to be checked in to properly preserve the state of the dependencies.
+# However, you may want to exclude it if you prefer to build Carthage dependencies during CI.
+# Carthage/Build/
+
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo.
+# Instead, use fastlane to re-generate the screenshots whenever they are needed.
+# For more information about the recommended setup: https://docs.fastlane.tools/best-practices/source-control/
+#
+# fastlane/screenshots/
+# fastlane/test_output/
+# fastlane/report.xml
+
+# Code coverage
+#
+# Add this line if you want to avoid checking in code coverage reports.
+# *.xccovreport
+# *.xccovarchive
+
+# macOS
+.DS_Store
+
+# User-specific files
+*.user
+*.userprefs
+
+# IDEs
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
