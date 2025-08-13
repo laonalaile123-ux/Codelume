@@ -44,7 +44,7 @@ struct MenuBarView: View {
             }
             Divider()
             Button("Import external dynamic wallpaper") {
-//                importExternalWallpaper()
+                importExternalWallpaper()
             }
             Divider()
             Button("Quit") {

@@ -1,7 +1,21 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@ (%lfx%lf)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ (%2$lfx%3$lf)"
+          }
+        }
+      }
+    },
+    "%@:" : {
+
+    },
     "• Use the AVKit framework to set regular videos as dynamic wallpapers, with no interactive support." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -12,6 +26,7 @@
       }
     },
     "• Use the high-performance SpriteKit framework to render 2D interactive dynamic wallpapers" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -22,6 +37,7 @@
       }
     },
     "• Use the SceneKit framework to create interactive 3D dynamic wallpapers with high resource consumption" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -36,7 +52,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "© 2025 码镜。 保留所有权利。"
+            "value" : "© 2025 码镜 保留所有权利。"
           }
         }
       }
@@ -73,7 +89,6 @@
       }
     },
     "Already Exists" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -84,7 +99,6 @@
       }
     },
     "Cancel" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -95,7 +109,6 @@
       }
     },
     "Cannot Delete" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -183,7 +196,6 @@
       }
     },
     "Delete" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -194,7 +206,6 @@
       }
     },
     "Delete dynamic wallpaper" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -205,7 +216,6 @@
       }
     },
     "Details" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -391,6 +401,9 @@
         }
       }
     },
+    "LocalVideos" : {
+
+    },
     "Loop" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -414,7 +427,6 @@
       }
     },
     "Non-program-built-in dynamic wallpapers cannot be recovered after deletion and need to be redownloaded or imported." : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -425,7 +437,6 @@
       }
     },
     "OK" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -544,6 +555,9 @@
         }
       }
     },
+    "Play" : {
+
+    },
     "Playback mode" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -610,7 +624,6 @@
       }
     },
     "Preview" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -642,7 +655,6 @@
       }
     },
     "Removal failed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -653,7 +665,6 @@
       }
     },
     "Remove" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -696,6 +707,9 @@
         }
       }
     },
+    "SceneKit" : {
+
+    },
     "Sequence" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -708,7 +722,6 @@
       }
     },
     "Set" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -717,6 +730,9 @@
           }
         }
       }
+    },
+    "SpriteKit" : {
+
     },
     "Start at login" : {
       "extractionState" : "stale",
@@ -774,7 +790,6 @@
       }
     },
     "This dynamic wallpaper is currently in use." : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -785,7 +800,6 @@
       }
     },
     "This wallpaper is already in the playlist." : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -796,7 +810,6 @@
       }
     },
     "This wallpaper is in the playlist. Please remove it from the playlist before deleting." : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -858,6 +871,48 @@
           }
         }
       }
+    },
+    "可用屏幕:" : {
+
+    },
+    "屏幕管理" : {
+
+    },
+    "播放状态:" : {
+
+    },
+    "播放类型" : {
+
+    },
+    "播放类型:" : {
+
+    },
+    "播放设置:" : {
+
+    },
+    "文件路径:" : {
+
+    },
+    "更新配置" : {
+
+    },
+    "正在播放" : {
+
+    },
+    "浏览" : {
+
+    },
+    "视频" : {
+
+    },
+    "输入文件路径" : {
+
+    },
+    "选择屏幕" : {
+
+    },
+    "音量:" : {
+
     }
   },
   "version" : "1.0"
