@@ -58,7 +58,21 @@ class VideoPlaybackView: AVPlayerView {
             } else {
                 player.volume = 0.0
             }
+            // 暂时默认使用 Fill 填充方式, 其他方式保留
+            self.videoGravity = .resizeAspectFill
+            // setVideoFillMode(config.videoFillMode)
             player.play()
+        }
+    }
+
+    private func setVideoFillMode(_ mode: VideoFillMode) {
+        switch mode {
+        case .fit:
+            self.videoGravity = .resizeAspect
+        case .fill:
+            self.videoGravity = .resizeAspectFill
+        case .stretch:
+            self.videoGravity = .resize
         }
     }
 }
