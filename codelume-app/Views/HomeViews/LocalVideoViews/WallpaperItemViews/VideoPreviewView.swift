@@ -31,6 +31,7 @@ struct VideoPreviewView: View {
             }
             .onChange(of: mute) { _, newValue in
                 player.isMuted = newValue
+            }
     }
 }
 
