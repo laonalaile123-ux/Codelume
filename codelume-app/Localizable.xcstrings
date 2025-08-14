@@ -89,6 +89,7 @@
       }
     },
     "Already Exists" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -805,6 +806,7 @@
       }
     },
     "This wallpaper is already in the playlist." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

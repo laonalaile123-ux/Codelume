@@ -1,10 +1,3 @@
-//
-//  LocalWallpaperItemView.swift
-//  CodeLume
-//
-//  Created by Lyke on 2025/3/20.
-//
-
 import SwiftUI
 import AVKit
 
@@ -14,6 +7,8 @@ struct LocalWallpaperItemView: View {
     @State private var thumbnailImage: Image?
     @State private var isShowingPreview = false
     @State private var isShowingDetails = false
+    @State private var isButtonDisabled = false
+    private let buttonDelay: Double = 0.5
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -33,10 +28,10 @@ struct LocalWallpaperItemView: View {
                 HStack(spacing: 8) {
                     VideoNameLabel(text: item.fileUrl.lastPathComponent)
                     Spacer()
-                    VideoFloatButton(text: "Preview", action: { isShowingPreview = true})
-                    VideoFloatButton(text: "Details", action: showDetails)
-                    VideoFloatButton(text: "Play", action: playVideo)
-                    VideoFloatButton(text: "Delete", color: .red, action: deleteDynamicWallpaper)
+                    VideoFloatButton(text: "Preview", action: debouncedAction { isShowingPreview = true })
+                    VideoFloatButton(text: "Details", action: debouncedAction(showDetails))
+                    VideoFloatButton(text: "Play", action: debouncedAction(playVideo))
+                    VideoFloatButton(text: "Delete", color: .red, action: debouncedAction(deleteDynamicWallpaper))
                 }
                 .padding(8)
             }
@@ -90,73 +85,65 @@ struct LocalWallpaperItemView: View {
     }
     
     private func playVideo() {
-        // if LocalVideManger.shared.getPlayListItemByFileName(URL(fileURLWithPath: item.filePath).lastPathComponent) != nil {
-        //     let alert = NSAlert()
-        //     alert.messageText = NSLocalizedString("Already Exists", comment: "")
-        //     alert.informativeText = NSLocalizedString("This wallpaper is already in the playlist.", comment: "")
-        //     alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
-        //     alert.alertStyle = .informational
-        //     alert.runModal()
-        //     return
-        // }
-        
-        // LocalVideoManager.shared.addToPlaylist(uuid: item.id)
         let videoURL = item.fileUrl
         NotificationCenter.default.post(name: .playVideoUrlChanged, object: nil, userInfo: ["videoURL": videoURL])
     }
     
-    private func deleteDynamicWallpaper() {
-//        if DatabaseManger.shared.getPlayListItemByFileName(item.fileUrl.lastPathComponent) != nil {
-//            let alert = NSAlert()
-//            alert.messageText = NSLocalizedString("Cannot Delete", comment: "")
-//            alert.informativeText = NSLocalizedString("This wallpaper is in the playlist. Please remove it from the playlist before deleting.", comment: "")
-//            alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
-//            alert.alertStyle = .warning
-//            alert.runModal()
-//            return
-//        }
-//        
-//        let alert = NSAlert()
-//        alert.messageText = NSLocalizedString("Delete dynamic wallpaper", comment: "")
-//        alert.informativeText = NSLocalizedString(
-//            "Non-program-built-in dynamic wallpapers cannot be recovered after deletion and need to be redownloaded or imported.",
-//            comment: "")
-//        alert.addButton(withTitle: NSLocalizedString("Delete", comment: ""))
-//        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
-//        alert.alertStyle = .warning
-//        
-//        let response = alert.runModal()
-//        if response == .alertFirstButtonReturn {
-//            do {
-//                try FileManager.default.removeItem(at: item.fileUrl)
-//                Logger.info("Dynamic wallpaper deleted successfully: \(item.fileUrl)")
-//                LocalVideManger.shared.deleteLocalWallpaper(item: item)
-//                NotificationCenter.default.post(name: .refreshLocalWallpaperList, object: nil)
-//            } catch {
-//                Logger.error("Failed to delete dynamic wallpaper: \(error)")
-//            }
-//        }
+    private func debouncedAction(_ action: @escaping () -> Void) -> () -> Void {
+        return {
+            if !isButtonDisabled {
+                isButtonDisabled = true
+                action()
+                DispatchQueue.main.asyncAfter(deadline: .now() + buttonDelay) {
+                    isButtonDisabled = false
+                }
+            }
+        }
     }
     
-    private func isCurrentWallpaper() -> Bool {
-        if let currentWallpaperURL = UserDefaults.standard.url(forKey: "videoUrl") {
-            return currentWallpaperURL == item.fileUrl
-        }
-        return false
+    private func deleteDynamicWallpaper() {
+        //        if DatabaseManger.shared.getPlayListItemByFileName(item.fileUrl.lastPathComponent) != nil {
+        //            let alert = NSAlert()
+        //            alert.messageText = NSLocalizedString("Cannot Delete", comment: "")
+        //            alert.informativeText = NSLocalizedString("This wallpaper is in the playlist. Please remove it from the playlist before deleting.", comment: "")
+        //            alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+        //            alert.alertStyle = .warning
+        //            alert.runModal()
+        //            return
+        //        }
+        //        
+        //        let alert = NSAlert()
+        //        alert.messageText = NSLocalizedString("Delete dynamic wallpaper", comment: "")
+        //        alert.informativeText = NSLocalizedString(
+        //            "Non-program-built-in dynamic wallpapers cannot be recovered after deletion and need to be redownloaded or imported.",
+        //            comment: "")
+        //        alert.addButton(withTitle: NSLocalizedString("Delete", comment: ""))
+        //        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
+        //        alert.alertStyle = .warning
+        //        
+        //        let response = alert.runModal()
+        //        if response == .alertFirstButtonReturn {
+        //            do {
+        //                try FileManager.default.removeItem(at: item.fileUrl)
+        //                Logger.info("Dynamic wallpaper deleted successfully: \(item.fileUrl)")
+        //                LocalVideManger.shared.deleteLocalWallpaper(item: item)
+        //                NotificationCenter.default.post(name: .refreshLocalWallpaperList, object: nil)
+        //            } catch {
+        //                Logger.error("Failed to delete dynamic wallpaper: \(error)")
+        //            }
+        //        }
     }
 }
 
-//#Preview {
-//    LocalWallpaperItemView(item: WallpaperItem(
-//        id: UUID(),
-//        title: "Sample Video",
-//        filePath: "video/test_1.mp4",
-//        category: "Scenery",
-//        resolution: "1920x1080",
-//        fileSize: 123456,
-//        codec: "H.264",
-//        duration: 60.0,
-//        creationDate: Date(),
-//        tags: ["scenery", "HD"]
-//    ))
-//}
+#Preview {
+    LocalWallpaperItemView(item: WallpaperItem(
+        id: UUID(),
+        title: "Sample Video",
+        fileUrl: Bundle.main.url(forResource: "codelume_0", withExtension: "mp4")!,
+        resolution: "1920x1080",
+        fileSize: 123456,
+        codec: "H.264",
+        duration: 60.0,
+        creationDate: Date()
+    ))
+}

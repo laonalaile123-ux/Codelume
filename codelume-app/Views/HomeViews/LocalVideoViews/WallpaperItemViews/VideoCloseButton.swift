@@ -1,10 +1,3 @@
-//
-//  VideoCloseButton.swift
-//  CodeLume
-//
-//  Created by Lyke on 2025/3/20.
-//
-
 import SwiftUI
 
 struct VideoCloseButton: View {

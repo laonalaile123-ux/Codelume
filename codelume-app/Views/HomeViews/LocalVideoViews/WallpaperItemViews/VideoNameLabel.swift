@@ -1,10 +1,3 @@
-//
-//  VideoNameLabel.swift
-//  CodeLume
-//
-//  Created by Lyke on 2025/3/20.
-//
-
 import SwiftUI
 
 struct VideoNameLabel: View {
@@ -23,6 +16,6 @@ struct VideoNameLabel: View {
 }
 
 #Preview {
-    VideoNameLabel(text: "CodeLume_0.mp4")
+    VideoNameLabel(text: "codelume_0.mp4")
         .frame(width: 300, height: 50)
 }

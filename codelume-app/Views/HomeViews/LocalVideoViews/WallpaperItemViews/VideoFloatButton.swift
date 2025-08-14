@@ -1,10 +1,3 @@
-//
-//  VideoFloatButton.swift
-//  CodeLume
-//
-//  Created by Lyke on 2025/3/20.
-//
-
 import SwiftUI
 
 struct VideoFloatButton: View {
@@ -30,6 +23,6 @@ struct VideoFloatButton: View {
 }
 
 #Preview {
-    VideoFloatButton(text: "test", color: .black, action: {})
+    VideoFloatButton(text: "codelume", color: .black, action: {})
         .frame(width: 100, height: 50)
 }
