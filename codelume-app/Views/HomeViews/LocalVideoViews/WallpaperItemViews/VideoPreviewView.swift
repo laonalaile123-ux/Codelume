@@ -1,10 +1,3 @@
-//
-//  VideoPreviewView.swift
-//  CodeLume
-//
-//  Created by Lyke on 2025/3/20.
-//
-
 import SwiftUI
 import AVKit
 
@@ -38,10 +31,10 @@ struct VideoPreviewView: View {
             }
             .onChange(of: mute) { _, newValue in
                 player.isMuted = newValue
-            }
     }
 }
+
 #Preview {
-    let videoURL = Bundle.main.url(forResource: "CodeLume_0", withExtension: "mp4")!
+    let videoURL = Bundle.main.url(forResource: "codelume_0", withExtension: "mp4")!
     VideoPreviewView(videoURL: videoURL)
 }
