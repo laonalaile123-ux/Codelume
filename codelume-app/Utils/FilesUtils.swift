@@ -1,41 +1,31 @@
-//
-//  FilesUtils.swift
-//  CodeLume
-//
-//  Created by Lyke on 2025/3/15.
-//
-
 import AVFoundation
 import AppKit
 import Foundation
 import ServiceManagement
+import UniformTypeIdentifiers
 
-func getWallpapersSavePathUrl() -> URL? {
+func getVideoSaveURL() -> URL? {
     let fileManager = FileManager.default
-    guard
-        let docDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-    else {
+    guard let docDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
         return nil
     }
     
-    let wallpapersSavePathUrl = docDir.appendingPathComponent("wallpapers")
-    
-    if !fileManager.fileExists(atPath: wallpapersSavePathUrl.path) {
+    let videosSaveURL = docDir.appendingPathComponent("Videos")
+    if !fileManager.fileExists(atPath: videosSaveURL.path) {
         do {
             try fileManager.createDirectory(
-                at: wallpapersSavePathUrl, withIntermediateDirectories: true, attributes: nil)
+                at: videosSaveURL, withIntermediateDirectories: true, attributes: nil)
+                Logger.info("Created videos save path: \(videosSaveURL.path)")
         } catch {
-            Logger.error("Failed to create wallpapers save path: \(error)")
+            Logger.error("Failed to create videos save path: \(error)")
             return nil
         }
     }
     
-    return wallpapersSavePathUrl
+    return videosSaveURL
 }
 
-import UniformTypeIdentifiers
-
-func getWallpaperInfo(from fileURL: URL) async -> WallpaperItem? {
+func getVideoInfo(from fileURL: URL) async -> WallpaperItem? {
     guard (try? fileURL.checkResourceIsReachable()) == true else {
         return nil
     }
@@ -125,32 +115,28 @@ extension FourCharCode {
     }
 }
 
-func importExternalWallpaper() {
+func importExternalVideo() {
     let openPanel = NSOpenPanel()
-    openPanel.title = "Select a Wallpaper."
+    openPanel.title = "Select a Video."
     openPanel.allowedContentTypes = [.mpeg4Movie]
     openPanel.allowsMultipleSelection = false
-    
     openPanel.begin { response in
         if response == .OK, let selectedURL = openPanel.url {
             do {
-                if let wallpapersSavePathUrl = getWallpapersSavePathUrl() {
-                    let destinationURL = wallpapersSavePathUrl.appendingPathComponent(
-                        selectedURL.lastPathComponent)
-                    
+                if let videoSaveURL = getVideoSaveURL() {
+                    let destinationURL = videoSaveURL.appendingPathComponent(selectedURL.lastPathComponent)
                     if FileManager.default.fileExists(atPath: destinationURL.path) {
                         try FileManager.default.removeItem(at: destinationURL)
+                        Logger.info("Deleted existing file at: \(destinationURL.path)")
                     }
-                    
                     try FileManager.default.copyItem(at: selectedURL, to: destinationURL)
                     Task { @MainActor in
-                        if let item = await getWallpaperInfo(from: destinationURL) {
+                        if let item = await getVideoInfo(from: destinationURL) {
                             DatabaseManger.shared.addLocalVideo(item)
                             Logger.info("External wallpaper imported successfully. Path: \(destinationURL.path)")
                             NotificationCenter.default.post(name: .refreshLocalWallpaperList, object: nil)
                         }
                     }
-                    
                 } else {
                     Logger.error("Failed to get wallpapers save path url!")
                 }

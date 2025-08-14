@@ -13,7 +13,7 @@ struct DetailsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             infoRow("Title", item.title)
-            infoRow("File URL", item.fileUrl.path())
+            infoRow("FileName", item.fileUrl.lastPathComponent)
             infoRow("Resolution", item.resolution)
             infoRow("File Size", String(format: "%.2f MB", Double(item.fileSize) / 1024 / 1024))
             infoRow("Codec", item.codec)
