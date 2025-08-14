@@ -1,6 +1,5 @@
 import Foundation
 import AppKit
-import Foundation
 
 class WindowController: NSObject {
     var windows: [NSScreen: NSWindow] = [:]
