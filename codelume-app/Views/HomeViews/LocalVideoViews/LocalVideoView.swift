@@ -21,8 +21,8 @@ struct LocalVideoView: View {
         .onAppear {
             loadVideoItems()
         }
-        .onReceive(NotificationCenter.default.publisher(for: .refreshLocalWallpaperList)) { _ in
-            print("start load video items from database.")
+        .onReceive(NotificationCenter.default.publisher(for: .refreshLocalVideoList)) { _ in
+            Logger.info("start load video items from database.")
             loadVideoItems()
         }
     }

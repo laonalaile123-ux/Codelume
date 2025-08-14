@@ -142,6 +142,18 @@ final class DatabaseManger {
         }
         return nil
     }
+
+    func isUrlInScreenConfig(url: URL) -> Bool {
+        guard let db = db else { return false }
+        do {
+            let query = localScreenConfigTable.filter(contentUrlExp == url.path)
+            let count = try db.scalar(query.count)
+            return count > 0
+        } catch {
+            Logger.error("Failed to check if url is in screen config: \(error)")
+            return false
+        }
+    }
     
     func getAllScreenConfigs() -> [ScreenConfiguration] {
         guard let db = db else { return [] }

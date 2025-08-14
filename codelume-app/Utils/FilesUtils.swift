@@ -134,7 +134,7 @@ func importExternalVideo() {
                         if let item = await getVideoInfo(from: destinationURL) {
                             DatabaseManger.shared.addLocalVideo(item)
                             Logger.info("External wallpaper imported successfully. Path: \(destinationURL.path)")
-                            NotificationCenter.default.post(name: .refreshLocalWallpaperList, object: nil)
+                            NotificationCenter.default.post(name: .refreshLocalVideoList, object: nil)
                         }
                     }
                 } else {

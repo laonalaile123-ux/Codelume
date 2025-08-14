@@ -207,6 +207,7 @@
       }
     },
     "Delete dynamic wallpaper" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -215,6 +216,9 @@
           }
         }
       }
+    },
+    "Delete this video?" : {
+
     },
     "Details" : {
       "localizations" : {
@@ -437,6 +441,9 @@
           }
         }
       }
+    },
+    "Non-program-built-in local video cannot be recovered after deletion and need to be redownloaded or imported." : {
+
     },
     "OK" : {
       "localizations" : {
@@ -805,6 +812,9 @@
         }
       }
     },
+    "This video is currently being used by a screen and cannot be deleted." : {
+
+    },
     "This wallpaper is already in the playlist." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -817,6 +827,7 @@
       }
     },
     "This wallpaper is in the playlist. Please remove it from the playlist before deleting." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

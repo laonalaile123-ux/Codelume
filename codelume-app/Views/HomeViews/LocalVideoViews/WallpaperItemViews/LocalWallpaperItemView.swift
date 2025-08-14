@@ -31,7 +31,7 @@ struct LocalWallpaperItemView: View {
                     VideoFloatButton(text: "Preview", action: debouncedAction { isShowingPreview = true })
                     VideoFloatButton(text: "Details", action: debouncedAction(showDetails))
                     VideoFloatButton(text: "Play", action: debouncedAction(playVideo))
-                    VideoFloatButton(text: "Delete", color: .red, action: debouncedAction(deleteDynamicWallpaper))
+                    VideoFloatButton(text: "Delete", color: .red, action: debouncedAction(deleteVideo))
                 }
                 .padding(8)
             }
@@ -101,37 +101,32 @@ struct LocalWallpaperItemView: View {
         }
     }
     
-    private func deleteDynamicWallpaper() {
-        //        if DatabaseManger.shared.getPlayListItemByFileName(item.fileUrl.lastPathComponent) != nil {
-        //            let alert = NSAlert()
-        //            alert.messageText = NSLocalizedString("Cannot Delete", comment: "")
-        //            alert.informativeText = NSLocalizedString("This wallpaper is in the playlist. Please remove it from the playlist before deleting.", comment: "")
-        //            alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
-        //            alert.alertStyle = .warning
-        //            alert.runModal()
-        //            return
-        //        }
-        //        
-        //        let alert = NSAlert()
-        //        alert.messageText = NSLocalizedString("Delete dynamic wallpaper", comment: "")
-        //        alert.informativeText = NSLocalizedString(
-        //            "Non-program-built-in dynamic wallpapers cannot be recovered after deletion and need to be redownloaded or imported.",
-        //            comment: "")
-        //        alert.addButton(withTitle: NSLocalizedString("Delete", comment: ""))
-        //        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
-        //        alert.alertStyle = .warning
-        //        
-        //        let response = alert.runModal()
-        //        if response == .alertFirstButtonReturn {
-        //            do {
-        //                try FileManager.default.removeItem(at: item.fileUrl)
-        //                Logger.info("Dynamic wallpaper deleted successfully: \(item.fileUrl)")
-        //                LocalVideManger.shared.deleteLocalWallpaper(item: item)
-        //                NotificationCenter.default.post(name: .refreshLocalWallpaperList, object: nil)
-        //            } catch {
-        //                Logger.error("Failed to delete dynamic wallpaper: \(error)")
-        //            }
-        //        }
+    private func deleteVideo() {
+        guard !DatabaseManger.shared.isUrlInScreenConfig(url: item.fileUrl) else {
+            let alert = NSAlert()
+            alert.messageText = NSLocalizedString("Cannot Delete", comment: "")
+            alert.informativeText = NSLocalizedString("This video is currently being used by a screen and cannot be deleted.", comment: "")
+            alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+            alert.alertStyle = .warning
+            alert.runModal()
+            return
+        }
+        
+        let alert = NSAlert()
+        alert.messageText = NSLocalizedString("Delete this video?", comment: "")
+        alert.informativeText = NSLocalizedString(
+            "Non-program-built-in local video cannot be recovered after deletion and need to be redownloaded or imported.",
+            comment: "")
+        alert.addButton(withTitle: NSLocalizedString("Delete", comment: ""))
+        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
+        alert.alertStyle = .warning
+        
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn {
+            DatabaseManger.shared.deleteLocalVideo(item: item)
+            NotificationCenter.default.post(name: .refreshLocalVideoList, object: nil)
+            Logger.info("Local video deleted successfully: \(item.fileUrl)")
+        }
     }
 }
 
