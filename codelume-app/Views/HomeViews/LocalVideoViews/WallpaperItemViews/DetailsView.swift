@@ -1,10 +1,3 @@
-//
-//  DetailsView.swift
-//  CodeLume
-//
-//  Created by lyke on 2025/5/28.
-//
-
 import SwiftUI
 
 struct DetailsView: View {
@@ -32,18 +25,16 @@ struct DetailsView: View {
     }
 }
 
-//#Preview {
-//    DetailsView(item: WallpaperItem(
-//        id: UUID(),
-//        title: "Sample Video",
-//        filePath: "video/sample.mp4",
-//        category: "Scenery",
-//        resolution: "1920x1080",
-//        fileSize: 123456,
-//        codec: "H.264",
-//        duration: 60.0,
-//        creationDate: Date(),
-//        tags: ["scenery", "HD"]
-//    ))
-//    .frame(width:400, height: 260)
-//}
+#Preview {
+    DetailsView(item: WallpaperItem(
+        id: UUID(),
+        title: "Sample Video",
+        fileUrl: URL(fileURLWithPath: "/test/test.mp4"),
+        resolution: "1920x1080",
+        fileSize: 123456,
+        codec: "H.264",
+        duration: 60.0,
+        creationDate: Date(),
+    ))
+    .frame(width:400, height: 260)
+}
