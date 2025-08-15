@@ -14,39 +14,6 @@
     "%@:" : {
 
     },
-    "• Use the AVKit framework to set regular videos as dynamic wallpapers, with no interactive support." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "• 借助 AVkit 框架将普通视频设置为动态壁纸，不支持交互"
-          }
-        }
-      }
-    },
-    "• Use the high-performance SpriteKit framework to render 2D interactive dynamic wallpapers" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "• 借助高性能 SpriteKit 框架渲染2D 可交互动态壁纸"
-          }
-        }
-      }
-    },
-    "• Use the SceneKit framework to create interactive 3D dynamic wallpapers with high resource consumption" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "• 借助 SceneKit 框架实现可交互的3D动态壁纸，资源占用较高"
-          }
-        }
-      }
-    },
     "© 2025 CodeLume. All rights reserved." : {
       "localizations" : {
         "zh-Hans" : {
@@ -73,28 +40,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关于"
-          }
-        }
-      }
-    },
-    "Add" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "添加"
-          }
-        }
-      }
-    },
-    "Already Exists" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已经存在"
           }
         }
       }
@@ -164,7 +109,6 @@
       }
     },
     "Conditions for pausing playback" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -206,19 +150,15 @@
         }
       }
     },
-    "Delete dynamic wallpaper" : {
-      "extractionState" : "stale",
+    "Delete this video?" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "删除动态壁纸"
+            "value" : "删除视频？"
           }
         }
       }
-    },
-    "Delete this video?" : {
-
     },
     "Details" : {
       "localizations" : {
@@ -297,7 +237,6 @@
       }
     },
     "General Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -319,10 +258,16 @@
       }
     },
     "Hello, world!" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你好世界"
+          }
+        }
+      }
     },
     "Hide Dock icon" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -352,29 +297,17 @@
         }
       }
     },
-    "Import external dynamic wallpaper" : {
+    "Import external video" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "导入外部动态壁纸"
-          }
-        }
-      }
-    },
-    "Imported" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已导入"
+            "value" : "导入外部视频"
           }
         }
       }
     },
     "Language settings:" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -385,7 +318,6 @@
       }
     },
     "Later" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -407,7 +339,14 @@
       }
     },
     "LocalVideos" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地视频"
+          }
+        }
+      }
     },
     "Loop" : {
       "extractionState" : "manual",
@@ -431,19 +370,15 @@
         }
       }
     },
-    "Non-program-built-in dynamic wallpapers cannot be recovered after deletion and need to be redownloaded or imported." : {
-      "extractionState" : "stale",
+    "Non-program-built-in local video cannot be recovered after deletion and need to be redownloaded or imported." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "非程序自带的动态壁纸删除后不可找回，需要重新下载或导入"
+            "value" : "非程序内置的本地视频删除后无法恢复，需重新下载或导入。"
           }
         }
       }
-    },
-    "Non-program-built-in local video cannot be recovered after deletion and need to be redownloaded or imported." : {
-
     },
     "OK" : {
       "localizations" : {
@@ -521,7 +456,6 @@
       }
     },
     "Pause the playback when in battery-powered mode" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -532,7 +466,6 @@
       }
     },
     "Pause the playback when in power-saving mode" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -543,7 +476,6 @@
       }
     },
     "Pause the playback when the app is in full-screen mode" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -554,7 +486,6 @@
       }
     },
     "Pause the playback when there are other apps on the desktop" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -565,54 +496,16 @@
       }
     },
     "Play" : {
-
-    },
-    "Playback mode" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "播放模式"
-          }
-        }
-      }
-    },
-    "Playback operations" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "播放操作"
-          }
-        }
-      }
-    },
-    "Playback Settings" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "播放设置"
-          }
-        }
-      }
-    },
-    "Playlist" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "播放列表"
+            "value" : "播放"
           }
         }
       }
     },
     "Please restart the app to apply the new language settings." : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -663,28 +556,6 @@
         }
       }
     },
-    "Removal failed" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "移除失败"
-          }
-        }
-      }
-    },
-    "Remove" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "移除"
-          }
-        }
-      }
-    },
     "Resolution" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -697,7 +568,6 @@
       }
     },
     "Restart Now" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -708,7 +578,6 @@
       }
     },
     "Restart Required" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -732,38 +601,15 @@
         }
       }
     },
-    "Set" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "设置"
-          }
-        }
-      }
-    },
     "SpriteKit" : {
 
     },
     "Start at login" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "开机自启"
-          }
-        }
-      }
-    },
-    "switchInterval" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "切换间隔"
           }
         }
       }
@@ -791,7 +637,6 @@
       }
     },
     "Theme settings:" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -801,38 +646,12 @@
         }
       }
     },
-    "This dynamic wallpaper is currently in use." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在使用这张动态壁纸"
-          }
-        }
-      }
-    },
     "This video is currently being used by a screen and cannot be deleted." : {
-
-    },
-    "This wallpaper is already in the playlist." : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此壁纸已在播放列表中"
-          }
-        }
-      }
-    },
-    "This wallpaper is in the playlist. Please remove it from the playlist before deleting." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "此壁纸在播放列表中。请在删除之前将其从播放列表中移除。"
+            "value" : "该视频正在被某个屏幕使用，无法删除。"
           }
         }
       }
@@ -844,17 +663,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "标题"
-          }
-        }
-      }
-    },
-    "Under Development, Stay Tuned..." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在开发，敬请期待…"
           }
         }
       }
@@ -880,7 +688,6 @@
       }
     },
     "Volume" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

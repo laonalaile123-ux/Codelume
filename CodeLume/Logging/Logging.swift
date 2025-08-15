@@ -13,7 +13,7 @@ final class Logger {
     
     private let logger = SwiftyBeaver.self
     private let console = ConsoleDestination()
-    private let file = FileDestination()
+//    private let file = FileDestination()
     private var fileSizeCheckTimer: Timer?
     
     struct Config {
@@ -41,7 +41,7 @@ final class Logger {
     
     func setLogLevel(_ level: SwiftyBeaver.Level) {
         console.minLevel = level
-        file.minLevel = level
+//        file.minLevel = level
     }
     
     
@@ -54,17 +54,17 @@ final class Logger {
             let logFileURL = logDirectory.appendingPathComponent(Config.logFileName)
             do {
                 try fileManager.createDirectory(at: logDirectory, withIntermediateDirectories: true, attributes: nil)
-                file.logFileURL = logFileURL
+//                file.logFileURL = logFileURL
             } catch {
                 print("Error handling log file: \(error)")
             }
         }
         
-        logger.addDestination(file)
+//        logger.addDestination(file)
         console.format = Config.consoleFormat
-        file.format = Config.fileFormat
+//        file.format = Config.fileFormat
         
-        logger.info("Logger initialized successfully. path: \(file.logFileURL?.path ?? "unknown")")
+//        logger.info("Logger initialized successfully. path: \(file.logFileURL?.path ?? "unknown")")
     }
     
     private func getNewFilePath() -> URL {
@@ -88,23 +88,23 @@ final class Logger {
     }
     
     private func checkAndRotateLogFileIfNeeded() {
-        guard let logFileURL = file.logFileURL else { return }
+//        guard let logFileURL = file.logFileURL else { return }
         
         let fileCounts = getLogFileCount()
         if fileCounts >= Config.maxLogFiles {
             _ = deleteOldestLogFile()
         }
         
-        do {
-            let attributes = try FileManager.default.attributesOfItem(atPath: logFileURL.path)
-            if let fileSize = attributes[.size] as? UInt64, fileSize >= Config.maxLogFileSize {
-                logger.removeDestination(file)
-                file.logFileURL = getNewFilePath()
-                logger.addDestination(file)
-            }
-        } catch {
-            logger.error("Failed to check log file size: \(error)")
-        }
+//        do {
+//            let attributes = try FileManager.default.attributesOfItem(atPath: logFileURL.path)
+//            if let fileSize = attributes[.size] as? UInt64, fileSize >= Config.maxLogFileSize {
+//                logger.removeDestination(file)
+//                file.logFileURL = getNewFilePath()
+//                logger.addDestination(file)
+//            }
+//        } catch {
+//            logger.error("Failed to check log file size: \(error)")
+//        }
     }
     
     func getLogFileCount() -> Int {

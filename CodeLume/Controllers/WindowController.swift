@@ -8,8 +8,7 @@ class WindowController: NSObject {
     
     override init() {
         super.init()
-        // 初始化数据库管理器
-        _ = DatabaseManger.shared
+        addDefaultVideo()
         loadConfigurations()
         createWindowsForAllScreens()
         startMonitoringNotification()
@@ -35,10 +34,9 @@ class WindowController: NSObject {
         }
     }
     
-    // MARK: - Configuration Management
     private func createDefaultConfig(for screen: NSScreen) -> ScreenConfiguration {
         let isMainScreen = NSScreen.screens.first?.identifier == screen.identifier
-        return ScreenConfiguration(screen: screen, playbackType: .video, contentUrl: nil, isMainScreen: true)
+        return ScreenConfiguration(screenIdentifier: screen.localizedName)
     }
 
     private func saveConfigurations() {
@@ -49,26 +47,36 @@ class WindowController: NSObject {
     }
 
     private func loadConfigurations() {
-        screenConfigurations = [:]
+        screenConfigurations = [:] 
+        // 1. 从数据库加载所有配置
         let configs = DatabaseManger.shared.getAllScreenConfigs()
-
-        if !configs.isEmpty {
-            for config in configs {
-                screenConfigurations[config.screenIdentifier] = config
-            }
-            Logger.info("Configurations loaded from database successfully")
-        } else {
-            // 如果数据库中没有配置，为每个屏幕创建默认配置
-            createDefaultConfigForAllScreens()
+        
+        // 2. 将数据库配置添加到全局配置中
+        for config in configs {
+            screenConfigurations[config.screenIdentifier] = config
         }
+        
+        // 3. 获取当前所有屏幕
+        let currentScreens = NSScreen.screens
+        
+        // 4. 检查每个屏幕是否有配置
+        for screen in currentScreens {
+            let screenId = screen.identifier
+            if screenConfigurations[screenId] == nil {
+                // 5. 没有配置则创建新配置
+                let newConfig = createDefaultConfig(for: screen)
+                screenConfigurations[screenId] = newConfig
+                DatabaseManger.shared.saveScreenConfig(newConfig)
+            }
+        }
+        
+        Logger.info("Configurations loaded successfully")
         syncScreenConfigurations()
     }
 
     private func syncScreenConfigurations() {
-        // 获取当前所有屏幕的标识符
         let currentScreenIds = NSScreen.screens.map { $0.identifier }
 
-        // 添加新屏幕的配置
         for screen in NSScreen.screens {
             let screenId = screen.identifier
             if !screenConfigurations.keys.contains(screenId) {
@@ -79,11 +87,11 @@ class WindowController: NSObject {
         }
 
         // 移除不存在屏幕的配置
-        let removedScreenIds = screenConfigurations.keys.filter { !currentScreenIds.contains($0) }
-        for screenId in removedScreenIds {
-            screenConfigurations.removeValue(forKey: screenId)
-            DatabaseManger.shared.deleteScreenConfig(for: screenId)
-        }
+        // let removedScreenIds = screenConfigurations.keys.filter { !currentScreenIds.contains($0) }
+        // for screenId in removedScreenIds {
+        //     screenConfigurations.removeValue(forKey: screenId)
+        //     DatabaseManger.shared.deleteScreenConfig(for: screenId)
+        // }
     }
 
     // 为所有屏幕创建默认配置
@@ -98,7 +106,7 @@ class WindowController: NSObject {
     
     func createPlaybackView(for screen: NSScreen) -> NSView? {
         let screenIdentifier = screen.identifier
-        let config = screenConfigurations[screenIdentifier] ?? ScreenConfiguration(screen: screen)
+        let config = screenConfigurations[screenIdentifier] ?? ScreenConfiguration(screenIdentifier: screenIdentifier)
         let viewFrame = screen.frame
         guard let contentUrl = config.contentUrl else {
             Logger.error("Content url is nil. Screen: \(screenIdentifier)")
@@ -108,6 +116,9 @@ class WindowController: NSObject {
             Logger.error("File not found at URL: \(contentUrl). Screen: \(screenIdentifier)")
             return nil
         }
+        
+        setFirstFrameAsWallpaper(videoURL: contentUrl)
+        
         switch config.playbackType {
         case .video:
             Logger.info("Create video playback view.")
@@ -122,6 +133,10 @@ class WindowController: NSObject {
     }
     
     func updateScreenConfiguration(_ screen: NSScreen, playbackType: PlaybackType, contentUrl: URL? = nil) {
+        if let contentUrl = contentUrl {
+            setFirstFrameAsWallpaper(videoURL: contentUrl)
+        }
+        
         let currentScreens = NSScreen.screens
         if !currentScreens.contains(where: { $0.identifier == screen.identifier }) {
             Logger.info("Screen does not exist, creating new window for it: \(screen.identifier)")
@@ -134,7 +149,7 @@ class WindowController: NSObject {
             config.contentUrl = contentUrl
             screenConfigurations[screenIdentifier] = config
         } else {
-            screenConfigurations[screenIdentifier] = ScreenConfiguration(screen: screen, playbackType: playbackType, contentUrl: contentUrl)
+            screenConfigurations[screenIdentifier] = ScreenConfiguration(screenIdentifier: screenIdentifier, playbackType: playbackType, contentUrl: contentUrl)
         }
         
         saveConfigurations()
@@ -232,7 +247,6 @@ class WindowController: NSObject {
                 }
             }
         } else {
-            // 更新现有窗口布局
             Logger.info("Updating layouts for all existing windows")
             let screenMap = [String: NSScreen](uniqueKeysWithValues: currentScreens.map { ($0.identifier, $0) })
             for (screenIdentifier, window) in windows {

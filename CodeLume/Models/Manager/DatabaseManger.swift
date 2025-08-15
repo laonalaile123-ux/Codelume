@@ -125,12 +125,8 @@ final class DatabaseManger {
                 let playbackType = PlaybackType(rawValue: row[playbackTypeExp]) ?? .video
                 let contentUrl = row[contentUrlExp].flatMap { URL(fileURLWithPath: $0) }
                 let videoFillMode = VideoFillMode(rawValue: row[videoFillModeExp]) ?? .fill
-                let currentScreen = NSScreen.screens.first { $0.localizedName == screenId } ?? nil
-                guard let screen = currentScreen else {
-                    return nil
-                }
                 return ScreenConfiguration(
-                    screen: screen,
+                    screenIdentifier: screenId,
                     playbackType: playbackType,
                     contentUrl: contentUrl,
                     isMainScreen: row[isMainScreenExp],
@@ -165,12 +161,8 @@ final class DatabaseManger {
                 let playbackType = PlaybackType(rawValue: row[playbackTypeExp]) ?? .video
                 let contentUrl = row[contentUrlExp].flatMap { URL(fileURLWithPath: $0) }
                 let videoFillMode = VideoFillMode(rawValue: row[videoFillModeExp]) ?? .fill
-                let currentScreen = NSScreen.screens.first { $0.identifier == screenId } ?? nil
-                guard let screen = currentScreen else {
-                    continue
-                }
                 let config = ScreenConfiguration(
-                    screen: screen,
+                    screenIdentifier: screenId,
                     playbackType: playbackType,
                     contentUrl: contentUrl,
                     isMainScreen: row[isMainScreenExp],

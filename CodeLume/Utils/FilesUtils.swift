@@ -167,3 +167,35 @@ func deleteFile(at url: URL) {
         }
     }
 }
+
+func addDefaultVideo() {
+    let videoURL = Bundle.main.url(forResource: "codelume_0", withExtension: "mp4")
+    let videoSaveURL = getVideoSaveURL()
+    if let videoSaveURL = videoSaveURL, let videoURL = videoURL {
+        let destinationURL = videoSaveURL.appendingPathComponent(videoURL.lastPathComponent)
+        do {
+            if FileManager.default.fileExists(atPath: destinationURL.path) {
+                try FileManager.default.removeItem(at: destinationURL)
+                Logger.info("Deleted existing file at: \(destinationURL.path)")
+            }
+            try FileManager.default.copyItem(at: videoURL, to: destinationURL)
+            Task { @MainActor in
+                if let item = await getVideoInfo(from: destinationURL) {
+                    DatabaseManger.shared.addLocalVideo(item)
+                    Logger.info("Default video imported successfully. Path: \(destinationURL.path)")
+                    NotificationCenter.default.post(name: .refreshLocalVideoList, object: nil)
+                }
+            }
+        } catch {
+            Logger.error("Failed to add default video: \(error)")
+        }
+    }
+}
+
+func getDefaultVideoURL() -> URL? {
+    if let videoSaveURL = getVideoSaveURL() {
+        let videoURL = videoSaveURL.appendingPathComponent("codelume_0.mp4")
+        return videoURL
+    }
+    return nil
+}

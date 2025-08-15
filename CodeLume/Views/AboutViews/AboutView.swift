@@ -40,7 +40,7 @@ struct AboutView: View {
                 .foregroundColor(.secondary)
         }
         .padding(20)
-        .frame(width: 500, height: 300)
+        .frame(width: 500, height: 400)
     }
 }
 

@@ -32,8 +32,8 @@ struct CodeLumeApp: App {
         .windowResizability(.contentSize)
         .windowStyle(.titleBar)
         
-//        Settings {
-//            SettingsView()
-//        }
+        Settings {
+            SettingsView()
+        }
     }
 }

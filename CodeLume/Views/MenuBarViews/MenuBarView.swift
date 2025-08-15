@@ -22,28 +22,28 @@ struct MenuBarView: View {
             Button("Home") {
                 openOrBringToFrontWindow(id: "home")
             }
-            Divider()
-            Toggle(isOn: $pause) {
-                Text("Pause")
-            }
-            .toggleStyle(.checkbox)
-            .onChange(of: pause) { oldValue, newValue in
-                pause = newValue
-            }
-            Toggle(isOn: $mute) {
-                Text("Mute")
-            }
-            .toggleStyle(.checkbox)
-            .onChange(of: mute) { oldValue, newValue in
-                mute = newValue
-            }
+//            Divider()
+//            Toggle(isOn: $pause) {
+//                Text("Pause")
+//            }
+//            .toggleStyle(.checkbox)
+//            .onChange(of: pause) { oldValue, newValue in
+//                pause = newValue
+//            }
+//            Toggle(isOn: $mute) {
+//                Text("Mute")
+//            }
+//            .toggleStyle(.checkbox)
+//            .onChange(of: mute) { oldValue, newValue in
+//                mute = newValue
+//            }
             Divider()
             Button("Preferences") {
                 NSApp.activate(ignoringOtherApps: true)
                 openSettings()
             }
             Divider()
-            Button("Import external dynamic wallpaper") {
+            Button("Import external video") {
                 importExternalVideo()
             }
             Divider()
