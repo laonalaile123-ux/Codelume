@@ -122,10 +122,12 @@ class WindowController: NSObject {
         
         saveConfigurations()
         
-        if let window = windows[screen.identifier] {            
+        if let window = windows[screen.identifier] {     
+            Logger.debug("Update screen window: \(screen.identifier)")
             let newView = createPlaybackView(for: screen)
             playbackViews[screenIdentifier] = newView
             window.contentView = newView
+            window.setFrame(screen.frame, display: true, animate: true)
         }
     }
     
@@ -218,11 +220,10 @@ class WindowController: NSObject {
                 }
             }
         } else if currentScreens.count > screens.count {
-            // 获取新增的屏幕列表
             let newScreens = currentScreens.filter { !screens.contains($0) }
+            Logger.debug("New screens: \(newScreens)")
             screens = currentScreens
             for screen in newScreens {
-                // 检查是否有对应的窗口存在，不存在则创建
                 if windows[screen.identifier] == nil {
                     createWindowForScreen(screen)
                 } else {
