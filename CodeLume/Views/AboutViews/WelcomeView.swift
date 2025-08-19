@@ -35,7 +35,7 @@ struct WelcomeView: View {
             .padding(.horizontal, 40)
             
             Button("Get Started") {
-                UserDefaults.standard.set(!showAgain, forKey: "showWelcomeScreen")
+                UserDefaults.standard.set(showAgain, forKey: "showWelcomeScreen")
                 UserDefaults.standard.synchronize()
                 dismiss()
             }

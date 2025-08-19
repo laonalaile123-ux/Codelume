@@ -20,7 +20,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NSApp.terminate(nil)
             return
         }
-        let shouldShowWelcomeBySetting = UserDefaults.standard.bool(forKey: "showWelcomeScreen") // 默认值为true
+        let shouldShowWelcomeBySetting = UserDefaults.standard.object(forKey: "showWelcomeScreen") as? Bool ?? true
+        
         
         if shouldShowWelcomeBySetting {
             // 延迟显示欢迎界面，确保应用完全加载
