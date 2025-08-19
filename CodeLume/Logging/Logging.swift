@@ -65,6 +65,7 @@ final class Logger {
 //        file.format = Config.fileFormat
         
 //        logger.info("Logger initialized successfully. path: \(file.logFileURL?.path ?? "unknown")")
+        setLogLevel(SwiftyBeaver.Level.info)
     }
     
     private func getNewFilePath() -> URL {

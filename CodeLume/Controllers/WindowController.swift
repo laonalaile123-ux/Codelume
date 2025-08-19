@@ -89,7 +89,7 @@ class WindowController: NSObject {
         case .video:
             Logger.info("Create video playback view.")
             if !setFirstFrameAsWallpaper(videoURL: contentUrl) { return nil }
-            return VideoPlaybackView(frame: viewFrame, config: config)
+            return VideoPlaybackView(frame: viewFrame, config: config, screen: screen)
         case .sprite:
             Logger.info("Create sprite playback view.")
             return SpriteKitPlaybackView(frame: viewFrame)

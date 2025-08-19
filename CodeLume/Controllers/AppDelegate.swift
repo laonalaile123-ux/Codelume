@@ -1,9 +1,25 @@
 import Cocoa
 import SwiftUI
+import SwiftyBeaver
 
+// 由于PlaybackManager与AppDelegate在同一个模块中，不需要额外导入
 class AppDelegate: NSObject, NSApplicationDelegate {
     let windowController = WindowController()
     private var welcomeWindow: NSWindow?
+    
+    // 应用启动时被调用
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        // 启动播放管理器
+        PlaybackManager.shared.start()
+        Logger.info("CodeLume application started")
+    }
+    
+    // 应用退出时被调用
+    func applicationWillTerminate(_ notification: Notification) {
+        // 停止播放管理器
+        PlaybackManager.shared.stop()
+        Logger.info("CodeLume application terminated")
+    }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 检查是否已经有应用实例在运行

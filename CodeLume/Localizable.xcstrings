@@ -598,20 +598,65 @@
         }
       }
     },
+    "Playback Settings" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放设置"
+          }
+        }
+      }
+    },
     "Playback Settings:" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放设置："
+          }
+        }
+      }
     },
     "Playback Status:" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放状态："
+          }
+        }
+      }
     },
     "Playback Type" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放类型"
+          }
+        }
+      }
     },
     "Playback Type:" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放类型："
+          }
+        }
+      }
     },
     "Playing" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放"
+          }
+        }
+      }
     },
     "Please restart the app to apply the new language settings." : {
       "localizations" : {
@@ -755,17 +800,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "下次启动时显示"
-          }
-        }
-      }
-    },
-    "Show welcome screen" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "展示欢迎界面"
           }
         }
       }

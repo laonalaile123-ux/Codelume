@@ -2,19 +2,8 @@ import AppKit
 import AVKit
 
 class VideoPlaybackView: AVPlayerView {
-    // 播放状态属性
-    var isPlaying: Bool {
-        get {
-            return player?.rate != 0
-        }
-        set {
-            if newValue {
-                player?.play()
-            } else {
-                player?.pause()
-            }
-        }
-    }
+    private var isPlaying = true
+    private var playScreen : NSScreen = NSScreen.main!
 
     func startMonitoringNotification() {
         NotificationCenter.default.addObserver(
@@ -23,12 +12,28 @@ class VideoPlaybackView: AVPlayerView {
             name: .AVPlayerItemDidPlayToEndTime,
             object: player?.currentItem
         )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleScreenPlayStateChanged),
+            name: .screenPlayStateChanged,
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handlePlaybackStateChanged),
+            name: .playbackStateChanged,
+            object: nil
+        )
     }
 
     func releaseResources() {
         player?.pause()
         player = nil
         NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self, name: .screenPlayStateChanged, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .playbackStateChanged, object: nil)
     }
 
 
@@ -41,23 +46,52 @@ class VideoPlaybackView: AVPlayerView {
         }
     }
 
+    @objc private func handleScreenPlayStateChanged(notification: Notification) {
+        if !isPlaying {
+            return
+        }
+
+        if let screenId = notification.object as? String {
+            if screenId == playScreen.identifier {
+                if let shouldPlay = notification.userInfo?["isPlaying"] as? Bool {
+                    if shouldPlay {
+                        Logger.info("Screen play state changed to playing.")
+//                        player?.seek(to: CMTime.zero, toleranceBefore: .zero, toleranceAfter: .zero)
+                        player?.play()
+                    } else {
+                        Logger.info("Screen play state changed to paused.")
+                        player?.pause()
+                        player?.seek(to: CMTime.zero, toleranceBefore: .zero, toleranceAfter: .zero)
+                    }
+                }
+            }
+        }
+    }
+
+    @objc private func handlePlaybackStateChanged(notification: Notification) {
+        if let isPlaying = notification.userInfo?["isPlaying"] as? Bool {
+            if isPlaying {
+                Logger.info("Playback state changed to playing.")
+                self.isPlaying = true
+                
+                player?.play()
+            } else {
+                Logger.info("Playback state changed to paused.")
+                self.isPlaying = false
+                player?.pause()
+                player?.seek(to: CMTime.zero, toleranceBefore: .zero, toleranceAfter: .zero)
+            }
+        }
+    }
+
     deinit {
         releaseResources()
     }
-
-    // 音量控制
-    var volume: Float {
-        get {
-            return player?.volume ?? 0.0
-        }
-        set {
-            player?.volume = newValue
-        }
-    }
     
-    init(frame: NSRect, config: ScreenConfiguration) {
+    init(frame: NSRect, config: ScreenConfiguration, screen: NSScreen) {
         super.init(frame: frame)
         setupPlayer(with: config)
+        playScreen = screen
     }
     
     required init?(coder: NSCoder) {
