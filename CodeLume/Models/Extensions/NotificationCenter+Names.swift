@@ -16,4 +16,6 @@ extension Notification.Name {
     static let playConfigChanged = Notification.Name("com.codelume.notification.playConfigChanged")
     static let playItemChanged = Notification.Name("com.codelume.notification.playItemChanged")
     static let playVideoUrlChanged = Notification.Name("com.codelume.notification.playVideoUrlChanged")
+    static let playbackStateChanged = Notification.Name("com.codelume.notification.playStateChanged")
+    static let screenPlayStateChanged = Notification.Name("com.codelume.notification.screenPlayStateChanged")
 }
