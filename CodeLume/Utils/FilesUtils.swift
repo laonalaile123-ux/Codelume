@@ -118,7 +118,7 @@ extension FourCharCode {
 func importExternalVideo() {
     let openPanel = NSOpenPanel()
     openPanel.title = "Select a Video."
-    openPanel.allowedContentTypes = [.mpeg4Movie]
+    openPanel.allowedContentTypes = [.mpeg4Movie, .quickTimeMovie]
     openPanel.allowsMultipleSelection = false
     openPanel.begin { response in
         if response == .OK, let selectedURL = openPanel.url {
