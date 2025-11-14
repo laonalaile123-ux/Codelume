@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		22D340882E4CF89F000D4DEA /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 22D340872E4CF89F000D4DEA /* SQLite */; };
-		22D3408B2E4CF8CB000D4DEA /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = 22D3408A2E4CF8CB000D4DEA /* SwiftyBeaver */; };
+		86E196F82EC6420A00B6C7A4 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 22D340872E4CF89F000D4DEA /* SQLite */; };
+		86E196F92EC6420A00B6C7A4 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = 22D3408A2E4CF8CB000D4DEA /* SwiftyBeaver */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,8 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22D340882E4CF89F000D4DEA /* SQLite in Frameworks */,
-				22D3408B2E4CF8CB000D4DEA /* SwiftyBeaver in Frameworks */,
+				86E196F92EC6420A00B6C7A4 /* SwiftyBeaver in Frameworks */,
+				86E196F82EC6420A00B6C7A4 /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				2262B8672E4B94B2003E8F45 /* CodeLume */,
+				86EDECDA2EC641BA00B3EAD8 /* Frameworks */,
 				2262B8662E4B94B2003E8F45 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,6 +64,13 @@
 				2262B8652E4B94B2003E8F45 /* CodeLume.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		86EDECDA2EC641BA00B3EAD8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,8 +126,8 @@
 			mainGroup = 2262B85C2E4B94B2003E8F45;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				22D340862E4CF89E000D4DEA /* XCLocalSwiftPackageReference "../SQLite.swift" */,
-				22D340892E4CF8CB000D4DEA /* XCLocalSwiftPackageReference "../SwiftyBeaver" */,
+				86EDECD82EC640BD00B3EAD8 /* XCLocalSwiftPackageReference "../../SwiftyBeaver" */,
+				86EDECD92EC6417D00B3EAD8 /* XCLocalSwiftPackageReference "../../SQLite.swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2262B8662E4B94B2003E8F45 /* Products */;
@@ -281,7 +289,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 7W3SSQJZ2M;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -295,7 +303,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codelume.CodeLume;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -313,7 +321,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 7W3SSQJZ2M;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -327,7 +335,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codelume.CodeLume;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -360,13 +368,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		22D340862E4CF89E000D4DEA /* XCLocalSwiftPackageReference "../SQLite.swift" */ = {
+		86EDECD82EC640BD00B3EAD8 /* XCLocalSwiftPackageReference "../../SwiftyBeaver" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../SQLite.swift;
+			relativePath = ../../SwiftyBeaver;
 		};
-		22D340892E4CF8CB000D4DEA /* XCLocalSwiftPackageReference "../SwiftyBeaver" */ = {
+		86EDECD92EC6417D00B3EAD8 /* XCLocalSwiftPackageReference "../../SQLite.swift" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../SwiftyBeaver;
+			relativePath = ../../SQLite.swift;
 		};
 /* End XCLocalSwiftPackageReference section */
 

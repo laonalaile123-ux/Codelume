@@ -25,7 +25,7 @@ struct PlayingView: View {
 
                 Picker("Select Screen", selection: $viewModel.selectedScreen) {
                     ForEach(viewModel.screens, id: \.self) {
-                        Text("\($0.localizedName) (\($0.frame.width)x\($0.frame.height))")
+                    Text("\($0.localizedName) (\($0.frame.width)x\($0.frame.height))")
                     }
                 }
                 .onChange(of: viewModel.selectedScreen) { oldValue, newValue in

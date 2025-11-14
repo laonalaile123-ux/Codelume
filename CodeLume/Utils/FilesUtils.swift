@@ -199,3 +199,50 @@ func getDefaultVideoURL() -> URL? {
     }
     return nil
 }
+
+// 下载资源文件中的屏保程序到指定目录，通过文件面板选择保存位置
+func downloadScreensaver() {
+    // 获取应用程序包中的屏保文件
+    guard let saverURL = Bundle.main.url(forResource: "CodeLumeSaver", withExtension: "saver") else {
+        Logger.error("Failed to find screensaver in bundle")
+        return
+    }
+    
+    // 创建保存面板
+    let savePanel = NSSavePanel()
+    savePanel.title = "Save Screensaver"
+    savePanel.nameFieldStringValue = "CodeLume.saver"
+    savePanel.allowedContentTypes = [UTType(filenameExtension: "saver") ?? .item]
+    
+    // 设置默认保存位置为桌面
+    let desktopURL = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first
+    savePanel.directoryURL = desktopURL
+    
+    // 显示保存面板并处理用户选择
+    savePanel.begin { response in
+        if response == .OK, let destinationURL = savePanel.url {
+            do {
+                // 如果目标文件已存在，则先删除
+                if FileManager.default.fileExists(atPath: destinationURL.path) {
+                    try FileManager.default.removeItem(at: destinationURL)
+                }
+                
+                // 复制屏保文件到用户选择的位置
+                try FileManager.default.copyItem(at: saverURL, to: destinationURL)
+                Logger.info("Screensaver saved successfully to: \(destinationURL.path)")
+
+                // 提供弹窗提示用户屏保已保存，双击安装即可生效
+                DispatchQueue.main.async {
+                    let alert = NSAlert()
+                    alert.messageText = NSLocalizedString("Screensaver Saved", comment: "")
+                    alert.informativeText = NSLocalizedString("Screensaver saved successfully! Double-click to install.", comment: "")
+                    alert.alertStyle = .informational
+                    alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+                    alert.runModal()
+                }
+            } catch {
+                Logger.error("Failed to save screensaver: \(error)")
+            }
+        }
+    }
+}

@@ -47,6 +47,10 @@ struct MenuBarView: View {
                 importExternalVideo()
             }
             Divider()
+            Button("Download screensaver") {
+                downloadScreensaver()
+            }
+            Divider()
             Button("Rstart") {
                 restartApplication()
             }
