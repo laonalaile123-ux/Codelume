@@ -24,6 +24,14 @@ class PlaybackManager {
     
     private init() {
         Logger.info("PlaybackManager initialized")
+        // 注册UserDefaults默认值，确保首次安装时就能正确读取
+        let defaults: [String: Any] = [
+            "pauseIfOtherAppOnDesktop": false,
+            "pauseIfOtherAppFullScreen": true,
+            "pauseIfBatteryPowered": false,
+            "pauseIfPowerSaving": true
+        ]
+        UserDefaults.standard.register(defaults: defaults)
     }
     
     func start() {
