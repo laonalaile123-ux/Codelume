@@ -59,9 +59,13 @@ struct GeneralSettingsView: View {
             }
             Divider()
             
-            IconToggle(iconName: "power.circle", title: "Start at login", isOn: $startAtLogin) {
-                newValue in
-                startAtLogin = newValue
+            HStack {
+                Label("Start at login", systemImage: "power.circle")
+                Spacer()
+                Toggle("", isOn: $startAtLogin)
+                    .toggleStyle(.switch)
+                    .frame(width: 50)
+                    .padding(.trailing, 20)
             }
             Spacer()
         }

@@ -6,19 +6,19 @@ struct HomeView: View {
             VStack {
                 List {
                     NavigationLink(destination: LocalVideoView()
-                        .navigationTitle("LocalVideos")) {
+                        .navigationTitle("")) {
                         Label("LocalVideos", systemImage: "film")
                     }
                     NavigationLink(destination: ScreenSaverView()
-                        .navigationTitle("Screen Saver")) {
+                        .navigationTitle("")) {
                         Label("Screen Saver", systemImage: "desktopcomputer")
                     }
                     NavigationLink(destination: SettingsView()
-                        .navigationTitle("Preferences")) {
+                        .navigationTitle("")) {
                         Label("Preferences", systemImage: "gear")
                     }
                     NavigationLink(destination: AboutView()
-                        .navigationTitle("About")) {
+                        .navigationTitle("")) {
                         Label("About", systemImage: "info.circle")
                     }
                 }

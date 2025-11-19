@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "%@ (%lfx%lf)" : {
       "localizations" : {
         "en" : {
@@ -214,6 +217,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "暂停/播放条件"
+          }
+        }
+      }
+    },
+    "Contact Us" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "联系我们"
           }
         }
       }
@@ -434,16 +447,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "主界面"
-          }
-        }
-      }
-    },
-    "If you have any suggestions or comments during use, please contact the developer through the link below." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在使用过程中，如有任何建议和意见，通过下方的链接联系开发者。"
           }
         }
       }
@@ -1058,16 +1061,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "视频"
-          }
-        }
-      }
-    },
-    "Visit the official website." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "访问官网"
           }
         }
       }

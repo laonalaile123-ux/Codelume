@@ -21,6 +21,7 @@ struct IconToggle: View {
                 Spacer()
             }
         }
+        .padding(.trailing, 20)
         .toggleStyle(.switch)
         .onChange(of: isOn) { oldValue, newValue in
             onChange?(newValue)
