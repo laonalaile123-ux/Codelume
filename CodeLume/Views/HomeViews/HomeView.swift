@@ -40,7 +40,7 @@ struct HomeView: View {
             }
         } detail: {
             LocalVideoView()
-                .navigationTitle("LocalVideos")
+                .navigationTitle("")
         }
         .presentedWindowStyle(.automatic)
     }

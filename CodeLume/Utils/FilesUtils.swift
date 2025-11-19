@@ -117,7 +117,7 @@ extension FourCharCode {
 
 func importExternalVideo() {
     let openPanel = NSOpenPanel()
-    openPanel.title = "Select a Video."
+    openPanel.title = NSLocalizedString("Select a Video.", comment: "")
     openPanel.allowedContentTypes = [.mpeg4Movie, .quickTimeMovie]
     openPanel.allowsMultipleSelection = false
     openPanel.begin { response in
@@ -135,6 +135,14 @@ func importExternalVideo() {
                             DatabaseManger.shared.addLocalVideo(item)
                             Logger.info("External wallpaper imported successfully. Path: \(destinationURL.path)")
                             NotificationCenter.default.post(name: .refreshLocalVideoList, object: nil)
+                            
+                            // 显示导入成功的弹窗
+                            let alert = NSAlert()
+                            alert.messageText = NSLocalizedString("Import Successful", comment: "Import successful title")
+                            alert.informativeText = NSLocalizedString("Video imported successfully. Please go to Local Videos to view it.", comment: "Import successful message")
+                            alert.alertStyle = .informational
+                            alert.addButton(withTitle: NSLocalizedString("OK", comment: "OK button text"))
+                            alert.runModal()
                         }
                     }
                 } else {

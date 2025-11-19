@@ -483,6 +483,17 @@
         }
       }
     },
+    "Import Successful" : {
+      "comment" : "Import successful title",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入成功"
+          }
+        }
+      }
+    },
     "Installation Method" : {
       "localizations" : {
         "zh-Hans" : {
@@ -577,6 +588,7 @@
       }
     },
     "OK" : {
+      "comment" : "OK button text",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -898,7 +910,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "屏保"
+            "value" : "屏保程序"
           }
         }
       }
@@ -939,6 +951,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "屏保保存成功!"
+          }
+        }
+      }
+    },
+    "Select a Video." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择一个视频"
           }
         }
       }
@@ -1093,6 +1115,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "视频"
+          }
+        }
+      }
+    },
+    "Video imported successfully. Please go to Local Videos to view it." : {
+      "comment" : "Import successful message",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "视频导入成功，请前往本地视频界面查看"
           }
         }
       }
