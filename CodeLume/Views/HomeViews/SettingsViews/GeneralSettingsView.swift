@@ -59,9 +59,6 @@ struct GeneralSettingsView: View {
                 .frame(width: 130)
             }
             Divider()
-            
-            Divider()
-            
             HStack {
                 Label("Show welcome screen at startup", systemImage: "star.fill")
                 Spacer()
