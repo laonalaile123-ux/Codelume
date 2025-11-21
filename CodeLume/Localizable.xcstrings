@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-      "shouldTranslate" : false
+
     },
     "%@ (%lfx%lf)" : {
       "localizations" : {
@@ -12,11 +12,10 @@
             "value" : "%1$@ (%2$lfx%3$lf)"
           }
         }
-      },
-      "shouldTranslate" : false
+      }
     },
     "%@:" : {
-      "shouldTranslate" : false
+
     },
     "%lldx%lld" : {
       "localizations" : {
@@ -26,8 +25,7 @@
             "value" : "%1$lldx%2$lld"
           }
         }
-      },
-      "shouldTranslate" : false
+      }
     },
     "© 2025 CodeLume. All rights reserved." : {
       "localizations" : {

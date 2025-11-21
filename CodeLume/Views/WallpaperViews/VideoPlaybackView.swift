@@ -1,7 +1,10 @@
 import AppKit
 import AVKit
+import AVFoundation
 
-class VideoPlaybackView: AVPlayerView {
+class VideoPlaybackView: NSView {
+    private var player: AVPlayer?
+    private var playerLayer: AVPlayerLayer?
     private var isPlaying = true
     private var currentScreenPlayingState = true
     private var playScreen : NSScreen = NSScreen.main!
@@ -150,6 +153,17 @@ class VideoPlaybackView: AVPlayerView {
         }
     }
 
+    var videoGravity: AVLayerVideoGravity = .resizeAspectFill {
+        didSet {
+            playerLayer?.videoGravity = videoGravity
+        }
+    }
+    
+    override func layout() {
+        super.layout()
+        playerLayer?.frame = bounds
+    }
+    
     deinit {
         releaseResources()
     }
@@ -168,14 +182,20 @@ class VideoPlaybackView: AVPlayerView {
         if let url = config.contentUrl {
             let player = AVPlayer(url: url)
             self.player = player
+            
+            let playerLayer = AVPlayerLayer(player: player)
+            playerLayer.videoGravity = .resizeAspectFill
+            playerLayer.frame = bounds
+            layer = playerLayer
+            wantsLayer = true
+            self.playerLayer = playerLayer
+            
             player.volume = 0.0
             // 判断当前屏幕是否为主屏幕
             // 如果是主屏幕，使用用户配置的静音状态
             // 如果是其他屏幕，强制静音
             player.isMuted = false
-            // 暂时默认使用 Fill 填充方式, 其他方式保留
-            self.videoGravity = .resizeAspectFill
-            // setVideoFillMode(config.videoFillMode)
+            
             startMonitoringNotification()
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
