@@ -66,4 +66,26 @@ class UserDefaultsManager {
         static let maxFileSize: Int = 5 * 1024 * 1024
         static let maxFileCount: Int = 1
     }
+    
+// MARK: - 主题配置
+    // MARK: - public
+    enum themeType: Int {
+        case system = 0
+        case light = 1
+        case dark = 2
+    }
+    
+    func saveTheme(_ theme: themeType) {
+        userDefaults.set(theme.rawValue, forKey: themeKeys)
+    }
+    
+    func getTheme() -> themeType {
+        UserDefaults.standard.synchronize()
+        if let theme = userDefaults.object(forKey: themeKeys) as? Int {
+            return themeType(rawValue: theme) ?? .system
+        }
+        return .system
+    }
+    // MARK: - private
+    let themeKeys = "codelumeTheme"
 }

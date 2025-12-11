@@ -7,11 +7,11 @@ struct CodeLumeApp: App {
         MenuBarExtra("CodeLume", image: "CodeLumeIcon") {
             MenuBarView()
                 .onAppear {
-                    let theme = UserDefaults.standard.string(forKey: "AppleInterfaceStyle")
+                    let theme = UserDefaultsManager.shared.getTheme()
                     switch theme {
-                    case "Light":
+                    case .light:
                         NSApp.appearance = NSAppearance(named: .aqua)
-                    case "Dark":
+                    case .dark:
                         NSApp.appearance = NSAppearance(named: .darkAqua)
                     default:
                         NSApp.appearance = nil

@@ -2,13 +2,15 @@ import Cocoa
 import SwiftUI
 import SwiftyBeaver
 
-// 由于PlaybackManager与AppDelegate在同一个模块中，不需要额外导入
 class AppDelegate: NSObject, NSApplicationDelegate {
     let windowController = WindowController()
     private var welcomeWindow: NSWindow?
     
     // 应用启动时被调用
     func applicationWillFinishLaunching(_ notification: Notification) {
+        let _ = LogManager.shared
+        let _ = UserDefaultsManager.shared
+
         // 确保开机自启默认关闭
         if UserDefaults.standard.object(forKey: "startAtLogin") == nil {
             UserDefaults.standard.set(false, forKey: "startAtLogin")
