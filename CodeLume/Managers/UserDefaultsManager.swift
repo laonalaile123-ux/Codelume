@@ -132,4 +132,23 @@ class UserDefaultsManager {
     // MARK: - private
     let languageKey = "AppleLanguages"
     let showLanguageKey = "showLanguage"
+
+// MARK: - 欢迎配置
+    // MARK: - public
+    func saveWelcomeStatus(_ welcomeStatus: Bool) {
+        userDefaults.set(welcomeStatus, forKey: welcomeStatusKeys)
+    }
+    
+    func getWelcomeStatus() -> Bool {
+        if userDefaults.object(forKey: welcomeStatusKeys) != nil {
+            return userDefaults.bool(forKey: welcomeStatusKeys)
+        }
+        return true
+    }
+    
+    func clearWelcomeStatusConfig() {
+        userDefaults.removeObject(forKey: welcomeStatusKeys)
+    }
+    // MARK: - private
+    let welcomeStatusKeys = "welcomeStatus"
 }

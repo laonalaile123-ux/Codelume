@@ -4,7 +4,7 @@ import ServiceManagement
 struct GeneralSettingsView: View {
     @State private var selectedLanguage: String = UserDefaultsManager.shared.getLanguage().rawValue
     @State private var selectedTheme: String = UserDefaultsManager.shared.getTheme().rawValue
-    @AppStorage("showWelcomeScreen") private var showWelcomeScreen: Bool = true
+    @State private var showWelcomeView: Bool = UserDefaultsManager.shared.getWelcomeStatus()
     @State private var startAtLogin: Bool = UserDefaultsManager.shared.getStartAtLogin()
     @State private var lastHideDockIconToggleTime: Date = .distantPast
     @State private var showRestartAlert = false
@@ -46,10 +46,13 @@ struct GeneralSettingsView: View {
             HStack {
                 Label("Show welcome screen at startup", systemImage: "star.fill")
                 Spacer()
-                Toggle("", isOn: $showWelcomeScreen)
+                Toggle("", isOn: $showWelcomeView)
                     .toggleStyle(.switch)
                     .frame(width: 50)
                     .padding(.trailing, 20)
+                    .onChange(of: showWelcomeView) { oldValue, newValue in
+                        UserDefaultsManager.shared.saveWelcomeStatus(newValue)
+                    }
             }
             
             HStack {

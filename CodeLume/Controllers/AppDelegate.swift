@@ -40,11 +40,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
         #endif
-        let shouldShowWelcomeBySetting = UserDefaults.standard.object(forKey: "showWelcomeScreen") as? Bool ?? true
-        
-        
-        if shouldShowWelcomeBySetting {
-            // 延迟显示欢迎界面，确保应用完全加载
+        let showWelcomeView = UserDefaultsManager.shared.getWelcomeStatus()
+        if showWelcomeView {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.showWelcomeWindow()
             }

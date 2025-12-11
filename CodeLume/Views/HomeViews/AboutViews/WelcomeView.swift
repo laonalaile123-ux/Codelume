@@ -29,8 +29,7 @@ struct WelcomeView: View {
             }
             
             Button("Get Started") {
-                UserDefaults.standard.set(showAgain, forKey: "showWelcomeScreen")
-                UserDefaults.standard.synchronize()
+                UserDefaultsManager.shared.saveWelcomeStatus(showAgain)
                 dismiss()
             }
             .buttonStyle(.borderedProminent)
