@@ -131,9 +131,6 @@
         }
       }
     },
-    "Bundle imported successfully. Please go to Local Wallpapers View to view it." : {
-
-    },
     "Cancel" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1084,6 +1081,7 @@
       }
     },
     "Select a Bundle." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1103,6 +1101,9 @@
           }
         }
       }
+    },
+    "Select a Wallpaper Bundle." : {
+
     },
     "Select Screen" : {
       "localizations" : {
@@ -1292,6 +1293,9 @@
           }
         }
       }
+    },
+    "Wallpaper imported successfully. Please go to Local Wallpapers View to view it." : {
+
     },
     "Yes" : {
       "localizations" : {

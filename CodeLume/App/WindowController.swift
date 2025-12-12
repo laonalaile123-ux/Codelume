@@ -11,7 +11,7 @@ class WindowController: NSObject {
     
     override init() {
         super.init()
-        addDefaultBundle()
+        addDefaultWallpaper()
         startMonitoringNotification()
         loadConfigurations()
         createWindowsForAllScreens()
@@ -75,7 +75,7 @@ class WindowController: NSObject {
 
         let viewFrame = screen.frame
 
-        guard let contentUrl = config.contentUrl else {
+        guard let contentUrl = config.wallpaperUrl else {
             Logger.error("Content url is nil. Screen: \(id)")
             return nil
         }
@@ -114,10 +114,10 @@ class WindowController: NSObject {
         let id = screen.identifier
         if var config = screenConfigurations[id] {
             config.playbackType = playbackType
-            config.contentUrl = contentUrl
+            config.wallpaperUrl = contentUrl
             screenConfigurations[id] = config
         } else {
-            screenConfigurations[id] = ScreenConfiguration(id: id, playbackType: playbackType, contentUrl: contentUrl)
+            screenConfigurations[id] = ScreenConfiguration(id: id, playbackType: playbackType, wallpaperUrl: contentUrl)
         }
         
         saveConfigurations()
@@ -264,7 +264,7 @@ class WindowController: NSObject {
                     createWindowForScreen(screen)
                 } else {
                     if let config = screenConfigurations[screen.identifier] {
-                        updateScreenConfiguration(screen, playbackType: config.playbackType, contentUrl: config.contentUrl)
+                        updateScreenConfiguration(screen, playbackType: config.playbackType, contentUrl: config.wallpaperUrl)
                     }
                 }
             }

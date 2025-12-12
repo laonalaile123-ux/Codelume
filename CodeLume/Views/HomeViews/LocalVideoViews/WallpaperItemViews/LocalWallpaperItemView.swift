@@ -138,7 +138,7 @@ struct LocalWallpaperItemView: View {
     }
     
     private func deleteVideo() {
-        guard !DatabaseManger.shared.isUrlInScreenConfig(url: item.fileUrl) else {
+        guard !DatabaseManger.shared.isSetWallpaperUrl(url: item.fileUrl) else {
             let alert = NSAlert()
             alert.messageText = NSLocalizedString("Cannot Delete", comment: "")
             alert.informativeText = NSLocalizedString("This video is currently being used by a screen and cannot be deleted.", comment: "")

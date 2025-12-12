@@ -10,8 +10,8 @@ final class DatabaseManger {
     
     private init() {
         openDatabase()
-        createLocalBundleTable()
-        createLocalScreenConfigTable()
+        createWallpaperTable()
+        createScreenConfigTable()
     }
     
     private func openDatabase() {
@@ -26,40 +26,43 @@ final class DatabaseManger {
     }
     
     // MARK: - 本地屏幕数据
-    private let localScreenConfigTable = Table("local_screen_config_table")
-    private let screenIdExp = Expression<String>("screenId")
+    private let screenConfigTable = Table("screen_config_table")
+    private let idExp = Expression<String>("id")
     private let playbackTypeExp = Expression<String>("playbackType")
-    private let contentUrlExp = Expression<String?>("contentUrl")
+    private let wallpaperUrlExp = Expression<String?>("wallpaperUrl")
     private let isPlayingExp = Expression<Bool>("isPlaying")
-    private let isMuteExp = Expression<Bool>("isMute")
+    private let isMutedExp = Expression<Bool>("isMuted")
     private let volumeExp = Expression<Double>("volume")
-    private let videoFillModeExp = Expression<String>("videoFillMode")
+    private let fillModeExp = Expression<String>("fillMode")
+    private let physicalResolutionExp = Expression<String>("physicalResolution")
     
     func setScreenConfig(_ config: ScreenConfiguration) {
         guard let db = db else { return }
         do {
-            let existingConfig = localScreenConfigTable.filter(screenIdExp == config.id)
+            let existingConfig = screenConfigTable.filter(idExp == config.id)
             let count = try db.scalar(existingConfig.count)
             if count > 0 {
                 let update = existingConfig.update(
                     playbackTypeExp <- config.playbackType.rawValue,
-                    contentUrlExp <- config.contentUrl?.path,
+                    wallpaperUrlExp <- config.wallpaperUrl?.path,
                     isPlayingExp <- config.isPlaying,
-                    isMuteExp <- config.isMuted,
+                    isMutedExp <- config.isMuted,
                     volumeExp <- config.volume,
-                    videoFillModeExp <- config.videoFillMode.rawValue
+                    fillModeExp <- config.fillMode.rawValue,
+                    physicalResolutionExp <- config.physicalResolution.stringValue
                 )
                 try db.run(update)
                 Logger.info("Updated screen config for: \(config.id)")
             } else {
-                let insert = localScreenConfigTable.insert(
-                    screenIdExp <- config.id,
+                let insert = screenConfigTable.insert(
+                    idExp <- config.id,
                     playbackTypeExp <- config.playbackType.rawValue,
-                    contentUrlExp <- config.contentUrl?.path,
+                    wallpaperUrlExp <- config.wallpaperUrl?.path,
                     isPlayingExp <- config.isPlaying,
-                    isMuteExp <- config.isMuted,
+                    isMutedExp <- config.isMuted,
                     volumeExp <- config.volume,
-                    videoFillModeExp <- config.videoFillMode.rawValue
+                    fillModeExp <- config.fillMode.rawValue,
+                    physicalResolutionExp <- config.physicalResolution.stringValue
                 )
                 try db.run(insert)
                 Logger.info("Inserted screen config for: \(config.id)")
@@ -72,19 +75,20 @@ final class DatabaseManger {
     func getScreenConfig(for screenId: String) -> ScreenConfiguration? {
         guard let db = db else { return nil }
         do {
-            let query = localScreenConfigTable.filter(screenIdExp == screenId)
+            let query = screenConfigTable.filter(idExp == screenId)
             if let row = try db.pluck(query) {
                 let playbackType = PlaybackType(rawValue: row[playbackTypeExp]) ?? .video
-                let contentUrl = row[contentUrlExp].flatMap { URL(fileURLWithPath: $0) }
-                let videoFillMode = WallpaperFillMode(rawValue: row[videoFillModeExp]) ?? .fill
+                let wallpaperUrl = row[wallpaperUrlExp].flatMap { URL(fileURLWithPath: $0) }
+                let fillMode = WallpaperFillMode(rawValue: row[fillModeExp]) ?? .fill
                 return ScreenConfiguration(
                     id: screenId,
                     playbackType: playbackType,
-                    contentUrl: contentUrl,
+                    wallpaperUrl: wallpaperUrl,
                     isPlaying: row[isPlayingExp],
-                    isMuted: row[isMuteExp],
+                    isMuted: row[isMutedExp],
                     volume: row[volumeExp],
-                    videoFillMode: videoFillMode
+                    fillMode: fillMode,
+                    physicalResolution: CGSize.fromString(row[physicalResolutionExp]) ?? .zero
                 )
             }
         } catch {
@@ -92,11 +96,11 @@ final class DatabaseManger {
         }
         return nil
     }
-    
-    func isUrlInScreenConfig(url: URL) -> Bool {
+    // 考虑删除
+    func isSetWallpaperUrl(url: URL) -> Bool {
         guard let db = db else { return false }
         do {
-            let query = localScreenConfigTable.filter(contentUrlExp == url.path)
+            let query = screenConfigTable.filter(wallpaperUrlExp == url.path)
             let count = try db.scalar(query.count)
             return count > 0
         } catch {
@@ -108,7 +112,7 @@ final class DatabaseManger {
     func deleteScreenConfig(for screenId: String) {
         guard let db = db else { return }
         do {
-            let config = localScreenConfigTable.filter(screenIdExp == screenId)
+            let config = screenConfigTable.filter(idExp == screenId)
             try db.run(config.delete())
             Logger.info("Deleted screen config for: \(screenId)")
         } catch {
@@ -120,20 +124,21 @@ final class DatabaseManger {
         guard let db = db else { return [] }
         var configs: [ScreenConfiguration] = []
         do {
-            let rows = try db.prepare(localScreenConfigTable)
+            let rows = try db.prepare(screenConfigTable)
             for row in rows {
-                let screenId = row[screenIdExp]
+                let screenId = row[idExp]
                 let playbackType = PlaybackType(rawValue: row[playbackTypeExp]) ?? .video
-                let contentUrl = row[contentUrlExp].flatMap { URL(fileURLWithPath: $0) }
-                let videoFillMode = WallpaperFillMode(rawValue: row[videoFillModeExp]) ?? .fill
+                let wallpaperUrl = row[wallpaperUrlExp].flatMap { URL(fileURLWithPath: $0) }
+                let fillMode = WallpaperFillMode(rawValue: row[fillModeExp]) ?? .fill
                 let config = ScreenConfiguration(
                     id: screenId,
                     playbackType: playbackType,
-                    contentUrl: contentUrl,
+                    wallpaperUrl: wallpaperUrl,
                     isPlaying: row[isPlayingExp],
-                    isMuted: row[isMuteExp],
+                    isMuted: row[isMutedExp],
                     volume: row[volumeExp],
-                    videoFillMode: videoFillMode
+                    fillMode: fillMode,
+                    physicalResolution: CGSize.fromString(row[physicalResolutionExp]) ?? .zero
                 )
                 configs.append(config)
             }
@@ -143,17 +148,18 @@ final class DatabaseManger {
         return configs
     }
     
-    private func createLocalScreenConfigTable() {
+    private func createScreenConfigTable() {
         guard let db = db else { return }
         do {
-            try db.run(localScreenConfigTable.create(ifNotExists: true) { tab in
-                tab.column(screenIdExp, primaryKey: true)
+            try db.run(screenConfigTable.create(ifNotExists: true) { tab in
+                tab.column(idExp, primaryKey: true)
                 tab.column(playbackTypeExp)
-                tab.column(contentUrlExp)
+                tab.column(wallpaperUrlExp)
                 tab.column(isPlayingExp)
-                tab.column(isMuteExp)
+                tab.column(isMutedExp)
                 tab.column(volumeExp)
-                tab.column(videoFillModeExp)
+                tab.column(fillModeExp)
+                tab.column(physicalResolutionExp)
                 Logger.info("Create screen config table successfully.")
             })
         } catch {
@@ -161,73 +167,75 @@ final class DatabaseManger {
         }
     }
     
-    // MARK: - 本地 Bundle 数据
-    private let localBundleTable = Table("local_bundle_table")
-    private let fileNameExp = Expression<String>("fileName")
-    
-    private func createLocalBundleTable() {
-        guard let db = db else { return }
-        do {
-            try db.run(localBundleTable.create(ifNotExists: true){ tab in
-                tab.column(fileNameExp, primaryKey: true)
-                Logger.info("Create local bundle table successfully.")
-            })
-        } catch {
-            Logger.error("Failed to create local bundle table: \(error)")
-        }
-    }
-    
-    func addBundle(_ fileName: String) {
+    // MARK: - 本地壁纸数据
+    private let wallpaperTable = Table("wallpaper_table")
+    private let wallpaperNameExp = Expression<String>("wallpaperName")
+
+    // MARK: - public
+    func addWallpaper(_ wallpaperName: String) {
         guard let db = db else { return }
         
         do {
-            let query = localBundleTable.filter(fileNameExp == fileName)
+            let query = wallpaperTable.filter(wallpaperNameExp == wallpaperName)
             let count = try db.scalar(query.count)
             
             if count > 0 {
-                Logger.warning("Bundle already exists in database: \(fileName)")
+                Logger.warning("Wallpaper already exists in database: \(wallpaperName)")
                 return
             }
             
-            let insert = localBundleTable.insert(
-                fileNameExp <- fileName,
+            let insert = wallpaperTable.insert(
+                wallpaperNameExp <- wallpaperName,
             )
             
             try db.run(insert)
-            Logger.info("Bundle added successfully: \(fileName)")
+            Logger.info("Wallpaper added successfully: \(wallpaperName)")
             
         } catch {
-            Logger.error("Failed to insert local bundle: \(error)")
+            Logger.error("Failed to insert wallpaper: \(error)")
         }
     }
 
-    func getAllLocalBundles() -> [String] {
+    func getAllWallpapers() -> [String] {
         guard let db = db else { return [] }
-        var bundles: [String] = []
+        var wallpapers: [String] = []
         do {
-            let rows = try db.prepare(localBundleTable)
+            let rows = try db.prepare(wallpaperTable)
             for row in rows {
-                let bundle = row[fileNameExp]
-                bundles.append(bundle)
+                let wallpaper = row[wallpaperNameExp]
+                wallpapers.append(wallpaper)
             }
         } catch {
-            Logger.error("Failed to fetch local bundles: \(error)")
+            Logger.error("Failed to fetch wallpapers: \(error)")
         }
-        return bundles
+        return wallpapers
     }
     
-    func deleteLocalBundle(by fileName: String) {
+    func deleteWallpaper(by wallpaperName: String) {
         guard let db = db else { return }
-        let bundle = localBundleTable.filter(fileNameExp == fileName)
+        let wallpaper = wallpaperTable.filter(wallpaperNameExp == wallpaperName)
         do {
-            if let row = try db.pluck(bundle) {
-                let file = row[fileNameExp]
-                deleteBundleFile(at: file)
+            if let row = try db.pluck(wallpaper) {
+                let file = row[wallpaperNameExp]
+                deleteWallpaperFile(at: file)
             }
-            try db.run(bundle.delete())
-            Logger.info("Deleted local bundle: \(fileName)")
+            try db.run(wallpaper.delete())
+            Logger.info("Deleted wallpaper: \(wallpaperName)")
         } catch {
-            Logger.error("Failed to delete local bundle: \(error)")
+            Logger.error("Failed to delete wallpaper: \(error)") 
+        }
+    }
+    
+    // MARK: - private
+    private func createWallpaperTable() {
+        guard let db = db else { return }
+        do {
+            try db.run(wallpaperTable.create(ifNotExists: true){ tab in
+                tab.column(wallpaperNameExp, primaryKey: true)
+                Logger.info("Create wallpaper table successfully.")
+            })
+        } catch {
+            Logger.error("Failed to create wallpaper table: \(error)")
         }
     }
 }

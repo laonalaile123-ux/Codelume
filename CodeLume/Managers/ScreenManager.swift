@@ -123,11 +123,12 @@ class ScreenManager: ObservableObject {
         var config = ScreenConfiguration(
             id: screenId,
             playbackType: .video,
-            contentUrl: getDefaultBundleURL(),
+            wallpaperUrl: getDefaultWallpaperURL(),
             isPlaying: true,
             isMuted: false,
             volume: 0.3,
-            videoFillMode: .fill
+            fillMode: .fill,
+            physicalResolution: .zero
         )
         
         // 设置主屏幕标记
@@ -267,7 +268,7 @@ class ScreenManager: ObservableObject {
         guard let index = screenConfigurations.firstIndex(where: { $0.id == screenId }) else { return }
         
         var updatedConfig = screenConfigurations[index]
-        updatedConfig.contentUrl = contentUrl
+        updatedConfig.wallpaperUrl = contentUrl
         
         screenConfigurations[index] = updatedConfig
         databaseManager.setScreenConfig(updatedConfig)
@@ -293,7 +294,7 @@ class ScreenManager: ObservableObject {
         guard let index = screenConfigurations.firstIndex(where: { $0.id == screenId }) else { return }
         
         var updatedConfig = screenConfigurations[index]
-        updatedConfig.videoFillMode = fillMode
+        updatedConfig.fillMode = fillMode
         
         screenConfigurations[index] = updatedConfig
         databaseManager.setScreenConfig(updatedConfig)

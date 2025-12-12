@@ -27,7 +27,7 @@ struct ScreenConfigurationDetailView: View {
         _isPlaying = State(initialValue: configuration.isPlaying)
         _volume = State(initialValue: configuration.volume)
         _playbackType = State(initialValue: configuration.playbackType)
-        _videoFillMode = State(initialValue: configuration.videoFillMode)
+        _videoFillMode = State(initialValue: configuration.fillMode)
     }
     
     var body: some View {
@@ -98,7 +98,7 @@ struct ScreenConfigurationDetailView: View {
                     Text("Content Path:")
                         .font(.subheadline)
                     
-                    if let contentUrl = configuration.contentUrl {
+                    if let contentUrl = configuration.wallpaperUrl {
                         Text(contentUrl.path)
                             .font(.caption)
                             .foregroundColor(.secondary)
@@ -125,7 +125,7 @@ struct ScreenConfigurationDetailView: View {
                             clearContent()
                         }
                         .tint(.accentColor)
-                        .disabled(configuration.contentUrl == nil)
+                        .disabled(configuration.wallpaperUrl == nil)
                     }
                 }
             }
@@ -155,7 +155,7 @@ struct ScreenConfigurationDetailView: View {
                 self.isPlaying = newConfig.isPlaying
                 self.volume = newConfig.volume
                 self.playbackType = newConfig.playbackType
-                self.videoFillMode = newConfig.videoFillMode
+                self.videoFillMode = newConfig.fillMode
             }
         }
         .onChange(of: isPlaying) {

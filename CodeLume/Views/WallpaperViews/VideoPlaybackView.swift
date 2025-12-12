@@ -175,7 +175,7 @@ class VideoPlaybackView: NSView {
     }
     
     private func setupPlayer(with config: ScreenConfiguration) {
-        if let url = config.contentUrl {
+        if let url = config.wallpaperUrl {
             let player = AVPlayer(url: url)
             self.player = player
             

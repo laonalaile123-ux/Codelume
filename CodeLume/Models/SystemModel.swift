@@ -26,48 +26,51 @@ struct ScreenConfiguration: Codable, Hashable, Identifiable, Equatable {
     // 自定义Equatable实现，仅比较id属性
     static func == (lhs: ScreenConfiguration, rhs: ScreenConfiguration) -> Bool {
         return lhs.id == rhs.id
-    }
+    } 
     var id: String
     // 非持久化属性：实时信息，不存储在数据库中
     var isMainScreen: Bool = false
     var isConnected: Bool = false
+    var resolution: CGSize = .zero
     
     // 持久化属性：需要存储在数据库中的配置信息
     var playbackType: PlaybackType
-    var contentUrl: URL? = nil
+    var wallpaperUrl: URL? = nil
     var isPlaying: Bool = true
     var isMuted: Bool = false
     var volume: Double = 0.3
-    var videoFillMode: WallpaperFillMode = .fill
+    var physicalResolution: CGSize = .zero
+    var fillMode: WallpaperFillMode = .fill
 
     init(
         id: String, 
         playbackType: PlaybackType = .video, 
-        contentUrl: URL? = getDefaultBundleURL(),
+        wallpaperUrl: URL? = getWallpaperSaveURL(),
         isPlaying: Bool = true,
         isMuted: Bool = false,
         volume: Double = 0.3,
-        videoFillMode: WallpaperFillMode = .fill
+        fillMode: WallpaperFillMode = .fill,
+        physicalResolution: CGSize = .zero
     ) {
         self.id = id
-        // 实时信息不设置默认值，由ScreenManager实时计算
         self.playbackType = playbackType
-        self.contentUrl = contentUrl
+        self.wallpaperUrl = wallpaperUrl
         self.isPlaying = isPlaying
         self.isMuted = isMuted
         self.volume = volume
-        self.videoFillMode = videoFillMode
+        self.fillMode = fillMode
+        self.physicalResolution = resolution
     }
     
     // 重写CodingKeys，排除非持久化属性
     enum CodingKeys: String, CodingKey {
         case id
         case playbackType
-        case contentUrl
+        case wallpaperUrl
         case isPlaying
         case isMuted
         case volume
-        case videoFillMode
-        // 不包含isMainScreen和isConnected，它们是非持久化的
+        case fillMode
+        case physicalResolution
     }
 }

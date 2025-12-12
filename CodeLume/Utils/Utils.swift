@@ -15,52 +15,52 @@ func fileExists(at url: URL) -> Bool {
     return FileManager.default.fileExists(atPath: url.path)
 }
 
-func getBundleSaveURL() -> URL? {
+func getWallpaperSaveURL() -> URL? {
     let fileManager = FileManager.default
     guard let docDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
         return nil
     }
     
-    let bundleSaveURL = docDir.appendingPathComponent("Bundles")
-    if !fileManager.fileExists(atPath: bundleSaveURL.path) {
+    let wallpaperSaveURL = docDir.appendingPathComponent("Wallpapers")
+    if !fileManager.fileExists(atPath: wallpaperSaveURL.path) {
         do {
             try fileManager.createDirectory(
-                at: bundleSaveURL, withIntermediateDirectories: true, attributes: nil)
-                Logger.info("Created bundle save path: \(bundleSaveURL.path)")
+                at: wallpaperSaveURL, withIntermediateDirectories: true, attributes: nil)
+                Logger.info("Created wallpaper save path: \(wallpaperSaveURL.path)")
         } catch {
-            Logger.error("Failed to create bundle save path: \(error)")
+            Logger.error("Failed to create wallpaper save path: \(error)")
             return nil
         }
     }
     
-    return bundleSaveURL
+    return wallpaperSaveURL
 }
 
-func importExternalBundle() {
+func importExternalWallpaper() {
     let openPanel = NSOpenPanel()
-    openPanel.title = NSLocalizedString("Select a Bundle.", comment: "")
+    openPanel.title = NSLocalizedString("Select a Wallpaper Bundle.", comment: "")
     openPanel.allowedContentTypes = [.bundle]
     openPanel.allowsMultipleSelection = false
     openPanel.begin { response in
         if response == .OK, let selectedURL = openPanel.url {
             do {
-                if let bundleSaveURL = getBundleSaveURL() {
-                    let destinationURL = bundleSaveURL.appendingPathComponent(selectedURL.lastPathComponent)
+                if let wallpaperSaveURL = getWallpaperSaveURL() {
+                    let destinationURL = wallpaperSaveURL.appendingPathComponent(selectedURL.lastPathComponent)
                     if FileManager.default.fileExists(atPath: destinationURL.path) {
                         try FileManager.default.removeItem(at: destinationURL)
-                        Logger.info("Deleted existing file at: \(destinationURL.path)")
+                        Logger.info("Deleted existing wallpaper file at: \(destinationURL.path)")
                     }
                     try FileManager.default.copyItem(at: selectedURL, to: destinationURL)
                     Task { @MainActor in
-                        if let item = await getBundleFileName(from: destinationURL) {
-                            DatabaseManger.shared.addBundle(item)
+                        if let item = await getWallpaperFileName(from: destinationURL) {
+                            DatabaseManger.shared.addWallpaper(item)
                             Logger.info("External wallpaper imported successfully. Path: \(destinationURL.path)")
                             NotificationCenter.default.post(name: .refreshLocalWallpaperList, object: nil)
                             
                             // 显示导入成功的弹窗
                             let alert = NSAlert()
                             alert.messageText = NSLocalizedString("Import Successful", comment: "")
-                            alert.informativeText = NSLocalizedString("Bundle imported successfully. Please go to Local Wallpapers View to view it.", comment: "")
+                            alert.informativeText = NSLocalizedString("Wallpaper imported successfully. Please go to Local Wallpapers View to view it.", comment: "")
                             alert.alertStyle = .informational
                             alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
                             alert.runModal()
@@ -76,52 +76,53 @@ func importExternalBundle() {
     }
 }
 
-func deleteBundleFile(at fileName: String) {
-    if let bundleSaveURL = getBundleSaveURL() {
-        let fileURL = bundleSaveURL.appendingPathComponent(fileName)
+func deleteWallpaperFile(at fileName: String) {
+    if let wallpaperSaveURL = getWallpaperSaveURL() {
+        let fileURL = wallpaperSaveURL.appendingPathComponent(fileName)
         if fileExists(at: fileURL) {
             do {
                 try FileManager.default.removeItem(at: fileURL)
+                Logger.info("Deleted wallpaper file at: \(fileURL.path)")
             } catch {
-                Logger.error("Failed to delete file: \(error)")
+                Logger.error("Failed to delete wallpaper file: \(error)")
             }   
         }
     }
 }
 
-func getBundleFileName(from url: URL) async -> String? {
+func getWallpaperFileName(from url: URL) async -> String? {
     let fileName = url.deletingPathExtension().lastPathComponent
     return fileName
 }
 
-func addDefaultBundle() {
-    let bundleURL = Bundle.main.url(forResource: "thinking_cat", withExtension: "bundle")
-    let bundleSaveURL = getBundleSaveURL()
-    if let bundleSaveURL = bundleSaveURL, let bundleURL = bundleURL {
-        let destinationURL = bundleSaveURL.appendingPathComponent(bundleURL.lastPathComponent)
+func addDefaultWallpaper() {
+    let wallpaperURL = Bundle.main.url(forResource: "thinking_cat", withExtension: "bundle")
+    let wallpaperSaveURL = getWallpaperSaveURL()
+    if let wallpaperSaveURL = wallpaperSaveURL, let wallpaperURL = wallpaperURL {
+        let destinationURL = wallpaperSaveURL.appendingPathComponent(wallpaperURL.lastPathComponent)
         do {
             if FileManager.default.fileExists(atPath: destinationURL.path) {
                 try FileManager.default.removeItem(at: destinationURL)
-                Logger.info("Deleted existing file at: \(destinationURL.path)")
+                Logger.info("Deleted existing wallpaper file at: \(destinationURL.path)")
             }
-            try FileManager.default.copyItem(at: bundleURL, to: destinationURL)
+            try FileManager.default.copyItem(at: wallpaperURL, to: destinationURL)
             Task { @MainActor in
-                if let item = await getBundleFileName(from: destinationURL) {
-                    DatabaseManger.shared.addBundle(item)
-                    Logger.info("Default bundle imported successfully. Path: \(destinationURL.path)")
+                if let item = await getWallpaperFileName(from: destinationURL) {
+                    DatabaseManger.shared.addWallpaper(item)
+                    Logger.info("Default wallpaper imported successfully. Path: \(destinationURL.path)")
                     NotificationCenter.default.post(name: .refreshLocalWallpaperList, object: nil)
                 }
             }
         } catch {
-            Logger.error("Failed to add default video: \(error)")
+            Logger.error("Failed to add default wallpaper: \(error)")
         }
     }
 }
 
-func getDefaultBundleURL() -> URL? {
-    if let bundleURL = getBundleSaveURL() {
-        let bundlePath = bundleURL.appendingPathComponent("thinking_cat.bundle")
-        return bundlePath
+func getDefaultWallpaperURL() -> URL? {
+    if let wallpaperURL = getWallpaperSaveURL() {
+        let wallpaperPath = wallpaperURL.appendingPathComponent("thinking_cat.bundle")
+        return wallpaperPath
     }
     return nil
 }
