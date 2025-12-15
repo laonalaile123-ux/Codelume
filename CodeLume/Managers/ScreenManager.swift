@@ -11,7 +11,9 @@ class ScreenManager: ObservableObject {
     private init() {
         updateCurrentScreens()
         loadScreenConfigurations()
-        handleScreenChanges() // 确保所有当前连接的屏幕都有对应的配置
+        handleScreenChanges()
+        updateMainScreenFlag()
+        sortScreenConfigurations()
 
         NotificationCenter.default.addObserver(
             self,
@@ -25,6 +27,8 @@ class ScreenManager: ObservableObject {
         Logger.info("screen configurations changed")
         updateCurrentScreens()
         handleScreenChanges()
+        updateMainScreenFlag()
+        sortScreenConfigurations()
     }
     
     private func updateCurrentScreens() {
@@ -34,51 +38,48 @@ class ScreenManager: ObservableObject {
     private func handleScreenChanges() {
         let currentScreenIdentifiers = Set(currentScreens.map { $0.identifier })
         let configuredScreenIdentifiers = Set(screenConfigurations.map { $0.id })
-        
-        // Handle removed screens: update connection status instead of deleting
+
+        // 处理已断开连接的屏幕
         let removedScreenIdentifiers = configuredScreenIdentifiers.subtracting(currentScreenIdentifiers)
         for screenId in removedScreenIdentifiers {
             if let index = screenConfigurations.firstIndex(where: { $0.id == screenId }) {
                 var updatedConfig = screenConfigurations[index]
                 updatedConfig.isConnected = false
+                updatedConfig.isMainScreen = false
+                // 断开连接时，认为停止播放，但是不写回数据，下次加载时还是上次的状态
+                updatedConfig.isPlaying = false
+                
                 screenConfigurations[index] = updatedConfig
-                databaseManager.setScreenConfig(updatedConfig)
-                Logger.info("屏幕已断开连接: \(screenId)")
+                Logger.info("screen \(screenId) disconnected")
             }
         }
         
-        // Handle added screens (new or reconnected)
+        // 新增屏幕配置
         let addedScreenIdentifiers = currentScreenIdentifiers.subtracting(configuredScreenIdentifiers)
         for screenId in addedScreenIdentifiers {
             guard let screen = currentScreens.first(where: { $0.identifier == screenId }) else { continue }
-            
-            let isMainScreen = screen == NSScreen.main
-            let newConfig = createDefaultScreenConfiguration(screen: screen, isMainScreen: isMainScreen)
+
+            let newConfig = createDefaultScreenConfiguration(screen: screen)
             
             screenConfigurations.append(newConfig)
+            // 新增的屏幕需要存储到数据库
             databaseManager.setScreenConfig(newConfig)
-            Logger.info("屏幕已添加: \(screenId)")
+            Logger.info("screen \(screenId) added")
         }
         
-        // Handle reconnected screens (already in configured screens)
+        // 处理重新连接的屏幕
         let reconnectedScreenIdentifiers = currentScreenIdentifiers.intersection(configuredScreenIdentifiers)
         for screenId in reconnectedScreenIdentifiers {
             if let index = screenConfigurations.firstIndex(where: { $0.id == screenId }) {
                 var updatedConfig = screenConfigurations[index]
                 if !updatedConfig.isConnected {
                     updatedConfig.isConnected = true
+                    updatedConfig.isPlaying = databaseManager.getScreenConfig(for: screenId)?.isPlaying ?? false
                     screenConfigurations[index] = updatedConfig
-                    databaseManager.setScreenConfig(updatedConfig)
-                    Logger.info("屏幕已重新连接: \(screenId)")
+                    Logger.info("screen \(screenId) reconnected")
                 }
             }
         }
-        
-        // Update main screen flag for all screens
-        updateMainScreenFlag()
-        
-        // 排序屏幕配置，确保主屏幕在第一位
-        sortScreenConfigurations()
     }
     
     // 更新主屏幕标记
@@ -97,28 +98,21 @@ class ScreenManager: ObservableObject {
                     var updatedConfig = config
                     updatedConfig.isMainScreen = isMainScreen
                     screenConfigurations[index] = updatedConfig
-                    databaseManager.setScreenConfig(updatedConfig)
                 }
             } else {
-                // 断开连接的屏幕不能是主屏幕
                 if config.isMainScreen {
                     var updatedConfig = config
                     updatedConfig.isMainScreen = false
                     screenConfigurations[index] = updatedConfig
-                    databaseManager.setScreenConfig(updatedConfig)
                 }
             }
         }
     }
     
-    // MARK: - 配置管理
-    
-    // 创建默认屏幕配置
-    private func createDefaultScreenConfiguration(screen: NSScreen, isMainScreen: Bool) -> ScreenConfiguration {
+    private func createDefaultScreenConfiguration(screen: NSScreen) -> ScreenConfiguration {
         let screenId = screen.identifier
-        let screenResolution = getScreenResolution(screen: screen)
-        
-        Logger.info("create default screen: \(screenId), resolution: \(screenResolution), is main: \(isMainScreen)")
+        let screenResolution = getPhysicalScreenResolution(screen: screen)
+        Logger.info("create default screen: \(screenId), physical resolution: \(screenResolution)")
         
         var config = ScreenConfiguration(
             id: screenId,
@@ -128,11 +122,8 @@ class ScreenManager: ObservableObject {
             isMuted: false,
             volume: 0.3,
             fillMode: .fill,
-            physicalResolution: .zero
+            physicalResolution: screenResolution
         )
-        
-        // 设置主屏幕标记
-        config.isMainScreen = isMainScreen
         return config
     }
     
@@ -140,9 +131,6 @@ class ScreenManager: ObservableObject {
         let savedConfigs = databaseManager.getAllScreenConfigs()
         screenConfigurations = savedConfigs
         Logger.info("load \(savedConfigs.count) screen configurations from database")
-        
-        // 加载后实时更新连接状态和主屏幕标记
-        updateScreenRealTimeInfo()
     }
     
     private func updateScreenRealTimeInfo() {
@@ -209,34 +197,24 @@ class ScreenManager: ObservableObject {
     }
     
     // MARK: - 屏幕信息获取
-    
     func getScreenResolution(screen: NSScreen) -> String {
         let screenFrame = screen.frame
         let width = Int(screenFrame.width)
         let height = Int(screenFrame.height)
-        return "\(width)x\(height)"    }
+        return "\(width) x \(height)"
+    }
     
     func getPhysicalScreenResolution(screen: NSScreen) -> String {
         let screenFrame = screen.frame
         let backingScaleFactor = screen.backingScaleFactor
         let physicalWidth = Int(screenFrame.width * backingScaleFactor)
         let physicalHeight = Int(screenFrame.height * backingScaleFactor)
-        return "\(physicalWidth)x\(physicalHeight)"
+        return "\(physicalWidth) x \(physicalHeight)"
     }
-    
+
     func getCurrentScreenCount() -> Int {
         return currentScreens.count
     }
-    
-    func getConfiguration(for screen: NSScreen) -> ScreenConfiguration? {
-        return screenConfigurations.first(where: { $0.id == screen.identifier })
-    }
-    
-    func getConfiguration(for screenId: String) -> ScreenConfiguration? {
-        return screenConfigurations.first(where: { $0.id == screenId })
-    }
-    
-    // MARK: - 播放状态管理
     
     func updatePlaybackState(screenId: String, isPlaying: Bool) {
         guard let index = screenConfigurations.firstIndex(where: { $0.id == screenId }) else { return }
@@ -303,36 +281,31 @@ class ScreenManager: ObservableObject {
     }
     
     // MARK: - 屏幕配置重置
-    
     // 重置所有屏幕配置
     func resetAllScreenConfigurations() {
-        // 清除数据库中的配置
+ 
         for config in screenConfigurations {
             databaseManager.deleteScreenConfig(for: config.id)
         }
-        
-        // 重新创建默认配置
+  
         screenConfigurations.removeAll()
         
         for screen in NSScreen.screens {
-            let isMainScreen = screen == NSScreen.main
-            let newConfig = createDefaultScreenConfiguration(screen: screen, isMainScreen: isMainScreen)
+            let newConfig = createDefaultScreenConfiguration(screen: screen)
             screenConfigurations.append(newConfig)
             databaseManager.setScreenConfig(newConfig)
         }
         
-        Logger.info("已重置所有屏幕配置")
-        
-        // 排序屏幕配置，确保主屏幕在第一位
+        Logger.info("reset all screen configurations")
+        updateMainScreenFlag()
         sortScreenConfigurations()
     }
     
     // 重置特定屏幕配置
     func resetScreenConfiguration(screenId: String) {
-         guard let screen = NSScreen.screens.first(where: { $0.identifier == screenId }) else { return }
+        guard let screen = NSScreen.screens.first(where: { $0.identifier == screenId }) else { return }
         
-        // let isMainScreen = screen == NSScreen.main
-        let newConfig = createDefaultScreenConfiguration(screen: screen, isMainScreen: false)
+        let newConfig = createDefaultScreenConfiguration(screen: screen)
         
         if let index = screenConfigurations.firstIndex(where: { $0.id == screenId }) {
             screenConfigurations[index] = newConfig

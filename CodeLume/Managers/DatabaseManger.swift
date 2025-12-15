@@ -49,7 +49,7 @@ final class DatabaseManger {
                     isMutedExp <- config.isMuted,
                     volumeExp <- config.volume,
                     fillModeExp <- config.fillMode.rawValue,
-                    physicalResolutionExp <- config.physicalResolution.stringValue
+                    physicalResolutionExp <- config.physicalResolution
                 )
                 try db.run(update)
                 Logger.info("Updated screen config for: \(config.id)")
@@ -62,7 +62,7 @@ final class DatabaseManger {
                     isMutedExp <- config.isMuted,
                     volumeExp <- config.volume,
                     fillModeExp <- config.fillMode.rawValue,
-                    physicalResolutionExp <- config.physicalResolution.stringValue
+                    physicalResolutionExp <- config.physicalResolution
                 )
                 try db.run(insert)
                 Logger.info("Inserted screen config for: \(config.id)")
@@ -88,7 +88,7 @@ final class DatabaseManger {
                     isMuted: row[isMutedExp],
                     volume: row[volumeExp],
                     fillMode: fillMode,
-                    physicalResolution: CGSize.fromString(row[physicalResolutionExp]) ?? .zero
+                    physicalResolution: row[physicalResolutionExp]
                 )
             }
         } catch {
@@ -138,7 +138,7 @@ final class DatabaseManger {
                     isMuted: row[isMutedExp],
                     volume: row[volumeExp],
                     fillMode: fillMode,
-                    physicalResolution: CGSize.fromString(row[physicalResolutionExp]) ?? .zero
+                    physicalResolution: row[physicalResolutionExp]
                 )
                 configs.append(config)
             }

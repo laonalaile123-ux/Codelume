@@ -542,9 +542,6 @@
         }
       }
     },
-    "Is Main Screen:" : {
-
-    },
     "Language settings:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -608,6 +605,9 @@
       }
     },
     "Main Screen" : {
+
+    },
+    "Main Screen:" : {
 
     },
     "Mute" : {

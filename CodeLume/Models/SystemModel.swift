@@ -31,7 +31,7 @@ struct ScreenConfiguration: Codable, Hashable, Identifiable, Equatable {
     // 非持久化属性：实时信息，不存储在数据库中
     var isMainScreen: Bool = false
     var isConnected: Bool = false
-    var resolution: CGSize = .zero
+    var resolution: String = ""
     
     // 持久化属性：需要存储在数据库中的配置信息
     var playbackType: PlaybackType
@@ -39,7 +39,7 @@ struct ScreenConfiguration: Codable, Hashable, Identifiable, Equatable {
     var isPlaying: Bool = true
     var isMuted: Bool = false
     var volume: Double = 0.3
-    var physicalResolution: CGSize = .zero
+    var physicalResolution: String = ""
     var fillMode: WallpaperFillMode = .fill
 
     init(
@@ -50,7 +50,7 @@ struct ScreenConfiguration: Codable, Hashable, Identifiable, Equatable {
         isMuted: Bool = false,
         volume: Double = 0.3,
         fillMode: WallpaperFillMode = .fill,
-        physicalResolution: CGSize = .zero
+        physicalResolution: String = ""
     ) {
         self.id = id
         self.playbackType = playbackType
@@ -59,7 +59,7 @@ struct ScreenConfiguration: Codable, Hashable, Identifiable, Equatable {
         self.isMuted = isMuted
         self.volume = volume
         self.fillMode = fillMode
-        self.physicalResolution = resolution
+        self.physicalResolution = physicalResolution
     }
     
     // 重写CodingKeys，排除非持久化属性

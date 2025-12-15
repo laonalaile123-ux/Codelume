@@ -23,7 +23,7 @@ struct ScreenBasicInfoView: View {
             }
             
             HStack {
-                Text("Is Main Screen:")
+                Text("Main Screen:")
                     .frame(width: 100, alignment: .trailing)
                 Text(configuration.isMainScreen ? "Yes" : "No")
             }
@@ -37,7 +37,7 @@ struct ScreenBasicInfoView: View {
             HStack {
                 Text("Physical Resolution:")
                     .frame(width: 100, alignment: .trailing)
-                Text(getPhysicalScreenResolution(for: configuration.id))
+                Text(configuration.physicalResolution)
             }
             
             HStack {
@@ -53,13 +53,6 @@ struct ScreenBasicInfoView: View {
             return ScreenManager.shared.getScreenResolution(screen: screen)
         }
         return "Unknown Resolution"
-    }
-    
-    private func getPhysicalScreenResolution(for screenId: String) -> String {
-        if let screen = NSScreen.screens.first(where: { $0.identifier == screenId }) {
-            return ScreenManager.shared.getPhysicalScreenResolution(screen: screen)
-        }
-        return "Unknown Physical Resolution"
     }
     
     private func getScreenStatus(for screenId: String) -> String {
