@@ -34,6 +34,9 @@ struct MenuBarView: View {
             Button("Import external wallpaper") {
                 importExternalWallpaper()
             }
+            Button("Import external video as wallpaper") {
+                importExternalVideoAsWallpaper()
+            }
             Divider()
             Button("Rstart") {
                 restartApplication()

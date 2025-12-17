@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		86E2235B2EEA897000AFA3A3 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = 86E2235A2EEA897000AFA3A3 /* SwiftyBeaver */; };
 		86FBEE652EEA8CBD00F05936 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 86FBEE642EEA8CBD00F05936 /* SQLite */; };
+		86FBF03D2EF1838E00F05936 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 86FBF03C2EF1838E00F05936 /* Auth */; };
+		86FBF03F2EF1838E00F05936 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 86FBF03E2EF1838E00F05936 /* Functions */; };
+		86FBF0412EF1838E00F05936 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 86FBF0402EF1838E00F05936 /* PostgREST */; };
+		86FBF0432EF1838E00F05936 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 86FBF0422EF1838E00F05936 /* Realtime */; };
+		86FBF0452EF1838E00F05936 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 86FBF0442EF1838E00F05936 /* Storage */; };
+		86FBF0472EF1838E00F05936 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 86FBF0462EF1838E00F05936 /* Supabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +49,12 @@
 			files = (
 				86FBEE652EEA8CBD00F05936 /* SQLite in Frameworks */,
 				86E2235B2EEA897000AFA3A3 /* SwiftyBeaver in Frameworks */,
+				86FBF0452EF1838E00F05936 /* Storage in Frameworks */,
+				86FBF03F2EF1838E00F05936 /* Functions in Frameworks */,
+				86FBF0472EF1838E00F05936 /* Supabase in Frameworks */,
+				86FBF0432EF1838E00F05936 /* Realtime in Frameworks */,
+				86FBF03D2EF1838E00F05936 /* Auth in Frameworks */,
+				86FBF0412EF1838E00F05936 /* PostgREST in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +107,12 @@
 			packageProductDependencies = (
 				86E2235A2EEA897000AFA3A3 /* SwiftyBeaver */,
 				86FBEE642EEA8CBD00F05936 /* SQLite */,
+				86FBF03C2EF1838E00F05936 /* Auth */,
+				86FBF03E2EF1838E00F05936 /* Functions */,
+				86FBF0402EF1838E00F05936 /* PostgREST */,
+				86FBF0422EF1838E00F05936 /* Realtime */,
+				86FBF0442EF1838E00F05936 /* Storage */,
+				86FBF0462EF1838E00F05936 /* Supabase */,
 			);
 			productName = "codelume-app";
 			productReference = 2262B8652E4B94B2003E8F45 /* CodeLume.app */;
@@ -128,6 +146,7 @@
 			packageReferences = (
 				86E223592EEA897000AFA3A3 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				86FBEE632EEA8CBD00F05936 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				86FBF03B2EF1838E00F05936 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2262B8662E4B94B2003E8F45 /* Products */;
@@ -291,8 +310,19 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 7W3SSQJZ2M;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeLume/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CodeLume;
@@ -323,8 +353,19 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 7W3SSQJZ2M;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeLume/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CodeLume;
@@ -384,6 +425,14 @@
 				minimumVersion = 0.15.4;
 			};
 		};
+		86FBF03B2EF1838E00F05936 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -396,6 +445,36 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 86FBEE632EEA8CBD00F05936 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
 			productName = SQLite;
+		};
+		86FBF03C2EF1838E00F05936 /* Auth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 86FBF03B2EF1838E00F05936 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Auth;
+		};
+		86FBF03E2EF1838E00F05936 /* Functions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 86FBF03B2EF1838E00F05936 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Functions;
+		};
+		86FBF0402EF1838E00F05936 /* PostgREST */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 86FBF03B2EF1838E00F05936 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = PostgREST;
+		};
+		86FBF0422EF1838E00F05936 /* Realtime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 86FBF03B2EF1838E00F05936 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Realtime;
+		};
+		86FBF0442EF1838E00F05936 /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 86FBF03B2EF1838E00F05936 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Storage;
+		};
+		86FBF0462EF1838E00F05936 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 86FBF03B2EF1838E00F05936 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -15,6 +15,45 @@ func fileExists(at url: URL) -> Bool {
     return FileManager.default.fileExists(atPath: url.path)
 }
 
+// MARK: - 视频处理辅助函数
+
+/// 从视频 URL 生成缩略图
+/// - Parameter videoURL: 视频文件的 URL
+/// - Returns: 生成的缩略图 UIImage，与视频原始尺寸相同
+func generateThumbnail(from videoURL: URL) throws -> NSImage {
+    let asset = AVAsset(url: videoURL)
+    let imageGenerator = AVAssetImageGenerator(asset: asset)
+    imageGenerator.appliesPreferredTrackTransform = true
+    
+    // 移除最大尺寸限制，生成原图大小的缩略图
+    // imageGenerator.maximumSize = CGSize(width: 200, height: 200)
+    
+    let time = CMTime(seconds: 0.0, preferredTimescale: 600)
+    let cgImage = try imageGenerator.copyCGImage(at: time, actualTime: nil)
+    
+    // 获取原始视频尺寸
+    let videoSize = CGSize(width: cgImage.width, height: cgImage.height)
+    Logger.info("Generated thumbnail with original video size: \(videoSize)")
+    
+    return NSImage(cgImage: cgImage, size: videoSize)
+}
+
+// MARK: - NSImage 扩展
+
+extension NSImage {
+    /// 将 NSImage 转换为 JPEG 数据
+    /// - Parameter compressionQuality: JPEG 压缩质量 (0.0 - 1.0)
+    /// - Returns: 生成的 JPEG 数据
+    func toJPEGData(compressionQuality: CGFloat) -> Data? {
+        guard let tiffRepresentation = self.tiffRepresentation,
+              let bitmapImageRep = NSBitmapImageRep(data: tiffRepresentation) else {
+            return nil
+        }
+        
+        return bitmapImageRep.representation(using: .jpeg, properties: [.compressionFactor: compressionQuality])
+    }
+}
+
 func getWallpaperSaveURL() -> URL? {
     let fileManager = FileManager.default
     guard let docDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
@@ -85,6 +124,28 @@ func importExternalWallpaper() {
             } catch {
                 Logger.error("Failed to import external wallpaper. error: \(error)")
             }
+        }
+    }
+}
+
+func importExternalVideoAsWallpaper() {
+    let openPanel = NSOpenPanel()
+    openPanel.title = NSLocalizedString("Select a Video.", comment: "")
+    openPanel.allowedContentTypes = [.mpeg4Movie, .quickTimeMovie]
+    openPanel.allowsMultipleSelection = false
+    openPanel.begin { response in
+        if response == .OK, let selectedURL = openPanel.url {
+            createVideoTypeWallpaperBundle(videoURL: selectedURL)
+            // 传入文件名，不带后缀
+            DatabaseManger.shared.addWallpaper(selectedURL.deletingPathExtension().lastPathComponent)
+            NotificationCenter.default.post(name: .refreshLocalWallpaperList, object: nil)
+
+            let alert = NSAlert()
+            alert.messageText = NSLocalizedString("Import Successful", comment: "")
+            alert.informativeText = NSLocalizedString("Wallpaper imported successfully. Please go to Local Wallpapers View to view it.", comment: "")
+            alert.alertStyle = .informational
+            alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+            alert.runModal()
         }
     }
 }
@@ -232,4 +293,70 @@ func setStaticWallpaper(bundleURL: URL, screenLocalName: String) -> Bool {
         Logger.error("Error setting static wallpaper for screen \(screenLocalName): \(error).")
         return false
     }
+}
+
+// 创建基于视频的屏保资源包
+func createVideoTypeWallpaperBundle(videoURL: URL) -> URL? {
+    // 从视频URL中提取文件名（不包含扩展名）
+    let wallpaperBundleName = videoURL.deletingPathExtension().lastPathComponent
+    let bundleURL = getWallpaperSaveURL()?.appendingPathComponent("\(wallpaperBundleName).bundle")
+    // 如果bundle已经存在，先删除
+    if FileManager.default.fileExists(atPath: bundleURL!.path) {
+        do {
+            try FileManager.default.removeItem(at: bundleURL!)
+        } catch {
+            Logger.error("Failed to remove existing bundle directory. error: \(error)")
+            return nil
+        }
+    }
+    // 拷贝资源文件下的bundle到新的目录，并且改名
+    let resourceBundleURL = Bundle.main.url(forResource: "video_base", withExtension: "bundle")!
+    do {
+        try FileManager.default.copyItem(at: resourceBundleURL, to: bundleURL!)
+    } catch {
+        Logger.error("Failed to copy bundle directory. error: \(error)")
+        return nil
+    }
+
+    // 将视频文件拷贝到bundle目录下的video目录, 重命名为 wallpaper.*
+    let videoDirectory = bundleURL!.appendingPathComponent("video")
+    let videoDestinationURL = videoDirectory.appendingPathComponent("wallpaper.\(videoURL.pathExtension)")
+    do {
+        try FileManager.default.copyItem(at: videoURL, to: videoDestinationURL)
+    } catch {
+        Logger.error("Failed to copy video file. error: \(error)")
+        return nil
+    }
+
+    // 更新 video/video.json 文件
+    let videoJSONURL = videoDirectory.appendingPathComponent("video.json")
+    do {
+        let videoJSON = try String(contentsOf: videoJSONURL)
+        let updatedJSON = videoJSON.replacingOccurrences(of: "wallpaper.mp4", with: "wallpaper.\(videoURL.pathExtension)")
+        try updatedJSON.write(to: videoJSONURL, atomically: true, encoding: .utf8)
+    } catch {
+        Logger.error("Failed to update video.json file. error: \(error)")
+        return nil
+    }
+
+    // 更新 preview/thumbnail.jpg 文件
+    let previewDirectory = bundleURL!.appendingPathComponent("preview")
+    //获取视频首帧作为缩略图
+    // 保存缩略图到 preview/thumbnail.jpg
+    let thumbnailURL = previewDirectory.appendingPathComponent("thumbnail.jpg")
+    do {
+        let image = try generateThumbnail(from: videoURL)
+        
+        // 使用 JPEG 格式保存，确保格式与扩展名匹配
+        guard let jpegData = image.toJPEGData(compressionQuality: 0.8) else {
+            throw NSError(domain: "ThumbnailError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to generate JPEG data"])
+        }
+        
+        try jpegData.write(to: thumbnailURL)
+        Logger.info("Thumbnail saved as JPEG to: \(thumbnailURL.path)")
+    } catch {
+        Logger.error("Failed to save thumbnail file. error: \(error)")
+        return nil
+    }
+    return bundleURL
 }

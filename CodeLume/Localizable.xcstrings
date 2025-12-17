@@ -117,6 +117,9 @@
         }
       }
     },
+    "Bundle Name:" : {
+
+    },
     "Cancel" : {
       "localizations" : {
         "zh-Hans" : {
@@ -210,6 +213,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "码镜屏保"
+          }
+        }
+      }
+    },
+    "Coming soon." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "敬请期待"
           }
         }
       }
@@ -322,6 +335,9 @@
         }
       }
     },
+    "Download" : {
+
+    },
     "Download Screen Saver" : {
       "localizations" : {
         "zh-Hans" : {
@@ -343,6 +359,9 @@
         }
       }
     },
+    "Email" : {
+
+    },
     "English" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -363,6 +382,9 @@
           }
         }
       }
+    },
+    "Error: %@" : {
+
     },
     "File Path" : {
       "extractionState" : "manual",
@@ -483,6 +505,16 @@
         }
       }
     },
+    "Import external video as wallpaper" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入外部视频当作壁纸"
+          }
+        }
+      }
+    },
     "Import external wallpaper" : {
       "localizations" : {
         "zh-Hans" : {
@@ -555,6 +587,16 @@
         }
       }
     },
+    "Loading wallpapers..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载壁纸中…"
+          }
+        }
+      }
+    },
     "Loading..." : {
       "localizations" : {
         "zh-Hans" : {
@@ -565,15 +607,18 @@
         }
       }
     },
-    "LocalVideos" : {
+    "LocalWallpaper" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "本地视频"
+            "value" : "本地壁纸"
           }
         }
       }
+    },
+    "Login" : {
+
     },
     "Loop" : {
       "extractionState" : "manual",
@@ -712,6 +757,9 @@
           }
         }
       }
+    },
+    "Password" : {
+
     },
     "Pause" : {
       "localizations" : {
@@ -965,6 +1013,9 @@
         }
       }
     },
+    "Retry" : {
+
+    },
     "Rstart" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1135,6 +1186,9 @@
         }
       }
     },
+    "Select a Video." : {
+
+    },
     "Select a Wallpaper Bundle." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1154,6 +1208,9 @@
           }
         }
       }
+    },
+    "Select Video File" : {
+
     },
     "Sequence" : {
       "extractionState" : "manual",
@@ -1185,6 +1242,9 @@
           }
         }
       }
+    },
+    "Sign Up" : {
+
     },
     "SpriteKit" : {
       "localizations" : {
@@ -1302,6 +1362,9 @@
         }
       }
     },
+    "Username" : {
+
+    },
     "Version %@" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1322,12 +1385,25 @@
         }
       }
     },
+    "Video URL:" : {
+
+    },
     "Volume:" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "音量："
+          }
+        }
+      }
+    },
+    "Wallpaper Hub" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "壁纸中心"
           }
         }
       }
@@ -1342,6 +1418,20 @@
         }
       }
     },
+    "Wallpaper Maker" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "制作壁纸"
+          }
+        }
+      }
+    },
+    "Wallpaper Name:" : {
+
+    },
     "Yes" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1351,6 +1441,9 @@
           }
         }
       }
+    },
+    "资源包基本信息" : {
+
     }
   },
   "version" : "1.0"
