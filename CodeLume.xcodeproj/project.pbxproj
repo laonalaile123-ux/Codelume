@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		864DE0BF2EF447B3009B3349 /* CodelumeBundle in Frameworks */ = {isa = PBXBuildFile; productRef = 864DE0BE2EF447B3009B3349 /* CodelumeBundle */; };
 		86E2235B2EEA897000AFA3A3 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = 86E2235A2EEA897000AFA3A3 /* SwiftyBeaver */; };
 		86FBEE652EEA8CBD00F05936 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 86FBEE642EEA8CBD00F05936 /* SQLite */; };
 		86FBF03D2EF1838E00F05936 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 86FBF03C2EF1838E00F05936 /* Auth */; };
@@ -50,6 +51,7 @@
 				86FBEE652EEA8CBD00F05936 /* SQLite in Frameworks */,
 				86E2235B2EEA897000AFA3A3 /* SwiftyBeaver in Frameworks */,
 				86FBF0452EF1838E00F05936 /* Storage in Frameworks */,
+				864DE0BF2EF447B3009B3349 /* CodelumeBundle in Frameworks */,
 				86FBF03F2EF1838E00F05936 /* Functions in Frameworks */,
 				86FBF0472EF1838E00F05936 /* Supabase in Frameworks */,
 				86FBF0432EF1838E00F05936 /* Realtime in Frameworks */,
@@ -113,6 +115,7 @@
 				86FBF0422EF1838E00F05936 /* Realtime */,
 				86FBF0442EF1838E00F05936 /* Storage */,
 				86FBF0462EF1838E00F05936 /* Supabase */,
+				864DE0BE2EF447B3009B3349 /* CodelumeBundle */,
 			);
 			productName = "codelume-app";
 			productReference = 2262B8652E4B94B2003E8F45 /* CodeLume.app */;
@@ -147,6 +150,7 @@
 				86E223592EEA897000AFA3A3 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				86FBEE632EEA8CBD00F05936 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 				86FBF03B2EF1838E00F05936 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				864DE0BD2EF447B3009B3349 /* XCLocalSwiftPackageReference "../CodelumeBundle" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2262B8662E4B94B2003E8F45 /* Products */;
@@ -408,6 +412,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		864DE0BD2EF447B3009B3349 /* XCLocalSwiftPackageReference "../CodelumeBundle" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../CodelumeBundle;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		86E223592EEA897000AFA3A3 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -436,6 +447,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		864DE0BE2EF447B3009B3349 /* CodelumeBundle */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CodelumeBundle;
+		};
 		86E2235A2EEA897000AFA3A3 /* SwiftyBeaver */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 86E223592EEA897000AFA3A3 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */;

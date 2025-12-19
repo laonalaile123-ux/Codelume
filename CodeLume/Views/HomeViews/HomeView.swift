@@ -74,7 +74,7 @@ struct HomeView: View {
             LocalWallpapersView()
                 .navigationTitle("")
         }
-        .presentedWindowStyle(.automatic)
+        .frame(minWidth: 1050, minHeight: 600)
     }
 }
 

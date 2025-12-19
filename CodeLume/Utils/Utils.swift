@@ -10,6 +10,7 @@ import AppKit
 import Foundation
 import ServiceManagement
 import UniformTypeIdentifiers
+import CodelumeBundle
 
 func fileExists(at url: URL) -> Bool {
     return FileManager.default.fileExists(atPath: url.path)
@@ -135,17 +136,31 @@ func importExternalVideoAsWallpaper() {
     openPanel.allowsMultipleSelection = false
     openPanel.begin { response in
         if response == .OK, let selectedURL = openPanel.url {
-            createVideoTypeWallpaperBundle(videoURL: selectedURL)
-            // 传入文件名，不带后缀
-            DatabaseManger.shared.addWallpaper(selectedURL.deletingPathExtension().lastPathComponent)
+            let wallpaperBundele = VideoWallpaper()
+            let bundleName = selectedURL.deletingPathExtension().lastPathComponent
+            
+            var ret = wallpaperBundele.create(bundleName: bundleName, saveDir: WALLPAPER_SAVE_URL)
+            if !ret {
+                Alert(title: NSLocalizedString("Import Failed", comment: ""), message: NSLocalizedString("Failed to create wallpaper bundle.", comment: ""), style: .critical)
+                return
+            }
+
+            ret = wallpaperBundele.addVideo(videoUrl: selectedURL)
+            if !ret {
+                Alert(title: NSLocalizedString("Import Failed", comment: ""), message: NSLocalizedString("Failed to add video to wallpaper bundle.", comment: ""), style: .critical)
+                return
+            }
+
+            ret = wallpaperBundele.save()
+            if !ret {
+                Alert(title: NSLocalizedString("Import Failed", comment: ""), message: NSLocalizedString("Failed to save wallpaper bundle.", comment: ""), style: .critical)    
+                return
+            }
+            
+            DatabaseManger.shared.addWallpaper(bundleName)
             NotificationCenter.default.post(name: .refreshLocalWallpaperList, object: nil)
 
-            let alert = NSAlert()
-            alert.messageText = NSLocalizedString("Import Successful", comment: "")
-            alert.informativeText = NSLocalizedString("Wallpaper imported successfully. Please go to Local Wallpapers View to view it.", comment: "")
-            alert.alertStyle = .informational
-            alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
-            alert.runModal()
+            Alert(title: NSLocalizedString("Import Successful", comment: ""), message: NSLocalizedString("Wallpaper imported successfully. Please go to Local Wallpapers View to view it.", comment: ""), style: .informational)
         }
     }
 }
@@ -295,68 +310,11 @@ func setStaticWallpaper(bundleURL: URL, screenLocalName: String) -> Bool {
     }
 }
 
-// 创建基于视频的屏保资源包
-func createVideoTypeWallpaperBundle(videoURL: URL) -> URL? {
-    // 从视频URL中提取文件名（不包含扩展名）
-    let wallpaperBundleName = videoURL.deletingPathExtension().lastPathComponent
-    let bundleURL = getWallpaperSaveURL()?.appendingPathComponent("\(wallpaperBundleName).bundle")
-    // 如果bundle已经存在，先删除
-    if FileManager.default.fileExists(atPath: bundleURL!.path) {
-        do {
-            try FileManager.default.removeItem(at: bundleURL!)
-        } catch {
-            Logger.error("Failed to remove existing bundle directory. error: \(error)")
-            return nil
-        }
-    }
-    // 拷贝资源文件下的bundle到新的目录，并且改名
-    let resourceBundleURL = Bundle.main.url(forResource: "video_base", withExtension: "bundle")!
-    do {
-        try FileManager.default.copyItem(at: resourceBundleURL, to: bundleURL!)
-    } catch {
-        Logger.error("Failed to copy bundle directory. error: \(error)")
-        return nil
-    }
-
-    // 将视频文件拷贝到bundle目录下的video目录, 重命名为 wallpaper.*
-    let videoDirectory = bundleURL!.appendingPathComponent("video")
-    let videoDestinationURL = videoDirectory.appendingPathComponent("wallpaper.\(videoURL.pathExtension)")
-    do {
-        try FileManager.default.copyItem(at: videoURL, to: videoDestinationURL)
-    } catch {
-        Logger.error("Failed to copy video file. error: \(error)")
-        return nil
-    }
-
-    // 更新 video/video.json 文件
-    let videoJSONURL = videoDirectory.appendingPathComponent("video.json")
-    do {
-        let videoJSON = try String(contentsOf: videoJSONURL)
-        let updatedJSON = videoJSON.replacingOccurrences(of: "wallpaper.mp4", with: "wallpaper.\(videoURL.pathExtension)")
-        try updatedJSON.write(to: videoJSONURL, atomically: true, encoding: .utf8)
-    } catch {
-        Logger.error("Failed to update video.json file. error: \(error)")
-        return nil
-    }
-
-    // 更新 preview/thumbnail.jpg 文件
-    let previewDirectory = bundleURL!.appendingPathComponent("preview")
-    //获取视频首帧作为缩略图
-    // 保存缩略图到 preview/thumbnail.jpg
-    let thumbnailURL = previewDirectory.appendingPathComponent("thumbnail.jpg")
-    do {
-        let image = try generateThumbnail(from: videoURL)
-        
-        // 使用 JPEG 格式保存，确保格式与扩展名匹配
-        guard let jpegData = image.toJPEGData(compressionQuality: 0.8) else {
-            throw NSError(domain: "ThumbnailError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to generate JPEG data"])
-        }
-        
-        try jpegData.write(to: thumbnailURL)
-        Logger.info("Thumbnail saved as JPEG to: \(thumbnailURL.path)")
-    } catch {
-        Logger.error("Failed to save thumbnail file. error: \(error)")
-        return nil
-    }
-    return bundleURL
+func Alert(title: String, message: String, style: NSAlert.Style) {
+    let alert = NSAlert()
+    alert.messageText = title
+    alert.informativeText = message
+    alert.alertStyle = style
+    alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+    alert.runModal()
 }

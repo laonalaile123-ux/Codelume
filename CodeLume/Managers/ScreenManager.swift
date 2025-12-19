@@ -48,9 +48,6 @@ class ScreenManager: ObservableObject {
                 var updatedConfig = screenConfigurations[index]
                 updatedConfig.isConnected = false
                 updatedConfig.isMainScreen = false
-                // 断开连接时，认为停止播放，但是不写回数据，下次加载时还是上次的状态
-                updatedConfig.isPlaying = false
-                
                 screenConfigurations[index] = updatedConfig
                 Logger.info("screen \(screenId) disconnected")
             }
@@ -87,26 +84,16 @@ class ScreenManager: ObservableObject {
     // 更新主屏幕标记
     private func updateMainScreenFlag() {
         screenConfigurations.enumerated().forEach { index, config in
-            // 只更新已连接屏幕的主屏幕标记
-            if config.isConnected {
-                // 查找匹配的屏幕
-                let matchingScreen = currentScreens.first { screen in
-                    screen.identifier == config.id
-                }
-                
-                let isMainScreen = matchingScreen?.isMain ?? false
-                
-                if config.isMainScreen != isMainScreen {
-                    var updatedConfig = config
-                    updatedConfig.isMainScreen = isMainScreen
-                    screenConfigurations[index] = updatedConfig
-                }
-            } else {
-                if config.isMainScreen {
-                    var updatedConfig = config
-                    updatedConfig.isMainScreen = false
-                    screenConfigurations[index] = updatedConfig
-                }
+            let matchingScreen = currentScreens.first { screen in
+                screen.identifier == config.id
+            }
+            
+            let isMainScreen = matchingScreen?.isMain ?? false
+            
+            if config.isMainScreen != isMainScreen {
+                var updatedConfig = config
+                updatedConfig.isMainScreen = isMainScreen
+                screenConfigurations[index] = updatedConfig
             }
         }
     }
@@ -116,7 +103,7 @@ class ScreenManager: ObservableObject {
         let screenResolution = getPhysicalScreenResolution(screen: screen)
         Logger.info("create default screen: \(screenId), physical resolution: \(screenResolution)")
         
-        var config = ScreenConfiguration(
+        let config = ScreenConfiguration(
             id: screenId,
             playbackType: .video,
             wallpaperUrl: getDefaultWallpaperURL(),
@@ -243,6 +230,16 @@ class ScreenManager: ObservableObject {
         Logger.info("更新屏幕音量: \(screenId) -> \(updatedConfig.volume)")
     }
     
+    func updateMuteStatus(screenId: String, status: Bool) {
+        guard let index = screenConfigurations.firstIndex(where: { $0.id == screenId }) else { return }
+        
+        var updatedConfig = screenConfigurations[index]
+        updatedConfig.isMuted = status
+        
+        screenConfigurations[index] = updatedConfig
+        databaseManager.setScreenConfig(updatedConfig)
+    }
+    
     // 更新屏幕内容URL
     func updateScreenWallpaper(screenId: String, wallpaperURL: URL?) {
         guard let index = screenConfigurations.firstIndex(where: { $0.id == screenId }) else { return }
@@ -322,6 +319,7 @@ class ScreenManager: ObservableObject {
         }
         
         databaseManager.setScreenConfig(newConfig)
+        updateMainScreenFlag()
         Logger.info("Reset Screen Config: \(screenId)")
     }
     

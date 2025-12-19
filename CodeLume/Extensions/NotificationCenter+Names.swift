@@ -24,5 +24,7 @@ extension Notification.Name {
     static let playbackStateChanged = Notification.Name("com.codelume.notification.playStateChanged")
     // seek to zero
     static let seekToZero = Notification.Name("com.codelume.notification.seekToZero")
+    // 刷新屏幕管理界面
+    static let refreshScreenManagerView = Notification.Name("com.codelume.notification.refreshScreenManagerView")
 
 }

@@ -162,9 +162,6 @@
         }
       }
     },
-    "Clear" : {
-
-    },
     "Codec" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -267,12 +264,6 @@
         }
       }
     },
-    "Content Configuration" : {
-
-    },
-    "Content Path:" : {
-
-    },
     "Created At" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -314,6 +305,12 @@
           }
         }
       }
+    },
+    "Delete Failed" : {
+
+    },
+    "Delete Success" : {
+
     },
     "Delete this video?" : {
       "localizations" : {
@@ -386,6 +383,15 @@
     "Error: %@" : {
 
     },
+    "Failed to add video to wallpaper bundle." : {
+
+    },
+    "Failed to create wallpaper bundle." : {
+
+    },
+    "Failed to save wallpaper bundle." : {
+
+    },
     "File Path" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -428,9 +434,6 @@
           }
         }
       }
-    },
-    "Fill Mode:" : {
-
     },
     "Five minutes" : {
       "extractionState" : "manual",
@@ -556,6 +559,9 @@
         }
       }
     },
+    "Key" : {
+      "extractionState" : "manual"
+    },
     "Language settings:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -671,6 +677,9 @@
           }
         }
       }
+    },
+    "Muted" : {
+
     },
     "No" : {
       "localizations" : {
@@ -972,6 +981,9 @@
         }
       }
     },
+    "Reset Success" : {
+
+    },
     "Resolution" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1056,6 +1068,12 @@
         }
       }
     },
+    "Screen configuration has been deleted." : {
+
+    },
+    "Screen configuration has been reset." : {
+
+    },
     "Screen ID:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1075,6 +1093,9 @@
           }
         }
       }
+    },
+    "Screen is connected. Please disconnect it first." : {
+
     },
     "Screen Management" : {
       "localizations" : {
@@ -1177,6 +1198,7 @@
       }
     },
     "Select" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1349,7 +1371,7 @@
         }
       }
     },
-    "Unset Content" : {
+    "Unset wallpaper bundle" : {
 
     },
     "Update Configuration" : {
@@ -1397,6 +1419,12 @@
           }
         }
       }
+    },
+    "Wallpaper bundle:" : {
+
+    },
+    "Wallpaper Configuration" : {
+
     },
     "Wallpaper Hub" : {
       "localizations" : {

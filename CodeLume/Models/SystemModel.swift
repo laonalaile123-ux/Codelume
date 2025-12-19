@@ -23,10 +23,6 @@ enum Theme: String, CaseIterable {
 
 // MARK: - 屏幕配置
 struct ScreenConfiguration: Codable, Hashable, Identifiable, Equatable {
-    // 自定义Equatable实现，仅比较id属性
-    static func == (lhs: ScreenConfiguration, rhs: ScreenConfiguration) -> Bool {
-        return lhs.id == rhs.id
-    } 
     var id: String
     // 非持久化属性：实时信息，不存储在数据库中
     var isMainScreen: Bool = false
