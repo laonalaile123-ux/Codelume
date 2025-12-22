@@ -8,12 +8,16 @@
 import AppKit
 import AVKit
 import AVFoundation
+import CodelumeBundle
 
 class VideoPlaybackView: NSView {
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
     private var playScreen: NSScreen?
     private var screenConfiguration: ScreenConfiguration?
+    private var globalPlaybackState: Bool = true
+    private var temporaryPause: Bool = false // 临时暂停
+    private var seekToZero: Bool = false // 是否需要回到第一帧
     
     init(frame: NSRect, config: ScreenConfiguration, screen: NSScreen) {
         super.init(frame: frame)
@@ -52,10 +56,10 @@ class VideoPlaybackView: NSView {
             
             // Post visibility notification and start playback after delay
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                Logger.info("Post visibility notification and start playback after delay for screen: \(self.screenConfiguration?.id)")
-                NotificationCenter.default.post(name: .setWallpaperIsVisible, 
-                                              object: self.screenConfiguration?.id, 
-                                              userInfo: ["isVisible": true])
+                Logger.info("Post visibility notification and start playback after delay for screen: \(self.screenConfiguration!.id)")
+                NotificationCenter.default.post(name: .setWallpaperIsVisible,
+                                                object: self.screenConfiguration?.id,
+                                                userInfo: ["isVisible": true])
                 self.applyPlaybackSettings()
             }
         } catch {
@@ -76,25 +80,10 @@ class VideoPlaybackView: NSView {
     
     // MARK: - Video Loading
     private func loadVideoUrl(from bundleUrl: URL) throws -> URL {
-        // Load main configuration
-        let codelumeJsonUrl = bundleUrl.appendingPathComponent("codelume.json")
-        let codelumeJsonData = try Data(contentsOf: codelumeJsonUrl)
-        let codelumeJson = try JSONSerialization.jsonObject(with: codelumeJsonData) as? [String: Any]
         
-        guard let videoJsonPath = codelumeJson?["video"] as? String else {
-            throw NSError(domain: "VideoPlaybackView", code: 1, userInfo: [NSLocalizedDescriptionKey: "Missing video field in codelume.json"])
-        }
-        
-        // Load video details
-        let videoJsonUrl = bundleUrl.appendingPathComponent(videoJsonPath)
-        let videoJsonData = try Data(contentsOf: videoJsonUrl)
-        let videoJson = try JSONSerialization.jsonObject(with: videoJsonData) as? [String: Any]
-        
-        guard let videoPath = videoJson?["url"] as? String else {
-            throw NSError(domain: "VideoPlaybackView", code: 2, userInfo: [NSLocalizedDescriptionKey: "Missing url field in video.json"])
-        }
-        
-        return bundleUrl.appendingPathComponent(videoPath)
+        let wallpaper = VideoWallpaper()
+        _ = wallpaper.open(wallpaperUrl: bundleUrl)
+        return wallpaper.videoUrl!
     }
     
     // MARK: - Playback Settings
@@ -104,19 +93,24 @@ class VideoPlaybackView: NSView {
         // Volume control: global * screen level
         let globalVolume = UserDefaultsManager.shared.getVolume()
         let screenVolume = Float(config.volume)
-        Logger.info("Screen: \(config.id), volume: \(globalVolume * screenVolume)")
+        Logger.info("Screen: \(config.id), global volume: \(globalVolume), screen volume: \(screenVolume), final volume: \(globalVolume * screenVolume)")
         player.volume = globalVolume * screenVolume
         
         // Mute control: global takes precedence
         let globalMute = UserDefaultsManager.shared.getMuteStatus()
         player.isMuted = globalMute || config.isMuted
-        Logger.info("Screen: \(config.id), mute: \(player.isMuted)")
+        Logger.info("Screen: \(config.id), global mute: \(globalMute), screen mute: \(config.isMuted), final mute: \(player.isMuted)")
         
         // Playback control: global pause takes precedence
         let globalPause = UserDefaultsManager.shared.getPauseStatus()
-        let shouldPlay = !globalPause && config.isPlaying
-        Logger.info("Screen: \(config.id), play: \(shouldPlay)")
+        let shouldPlay = !globalPause && config.isPlaying && !temporaryPause
+        Logger.info("Screen: \(config.id), global pause: \(globalPause), screen play: \(config.isPlaying), temporary pause: \(temporaryPause), final play: \(shouldPlay)")
         
+        // Seek to zero if needed
+        if seekToZero {
+            player.seek(to: CMTime.zero)
+        }
+
         if shouldPlay {
             player.play()
         } else {
@@ -143,20 +137,11 @@ class VideoPlaybackView: NSView {
             name: .screenConfigChanged,
             object: nil
         )
-        
-        // Global playback state changed
+
         center.addObserver(
             self,
-            selector: #selector(handlePlaybackStateChanged),
-            name: .playbackStateChanged,
-            object: nil
-        )
-        
-        // Seek to zero
-        center.addObserver(
-            self,
-            selector: #selector(handleSeekToZero),
-            name: .seekToZero,
+            selector: #selector(handleScreenTemporaryStateChanged),
+            name: .screenTemporaryStateChanged,
             object: nil
         )
     }
@@ -169,26 +154,21 @@ class VideoPlaybackView: NSView {
         }
     }
     
-    @objc private func handleSeekToZero(notification: Notification) {
-        if playScreen?.identifier != notification.object as? String { return }
-        guard let player = player else { return }
-        
-        player.seek(to: CMTime.zero) { [weak self] _ in
-            self?.applyPlaybackSettings()
-        }
-    }
-    
     @objc private func handleScreenConfigChanged(notification: Notification) {
-        guard let screenId = notification.object as? String, 
-              screenId == playScreen?.identifier, 
-              let config = ScreenManager.shared.getScreenConfiguration(screenId: screenId) else { return }
+        guard let screenId = notification.object as? String,
+                screenId == playScreen?.identifier,
+                let config = ScreenManager.shared.getScreenConfiguration(screenId: screenId) else { return }
         
         screenConfiguration = config
         applyPlaybackSettings()
     }
     
-    @objc private func handlePlaybackStateChanged(notification: Notification) {
-        applyPlaybackSettings()
+    @objc private func handleScreenTemporaryStateChanged(notification: Notification) {
+        if let screenId = notification.userInfo?["screenId"] as? String, screenId == playScreen?.identifier || screenId == nil {
+            temporaryPause = notification.userInfo?["temporaryPause"] as? Bool ?? false
+            seekToZero = notification.userInfo?["seekToZero"] as? Bool ?? false
+            applyPlaybackSettings()
+        }
     }
     
     // MARK: - Resource Management

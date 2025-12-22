@@ -5,16 +5,9 @@ import Foundation
 struct MenuBarView: View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.openSettings) private var openSettings
-    @AppStorage("pause") private var pause: Bool = false {
-        didSet {
-           NotificationCenter.default.post(name: .pause, object: pause)
-        }
-    }
-    @AppStorage("mute") private var mute: Bool = false {
-        didSet {
-           NotificationCenter.default.post(name: .mute, object: mute)
-        }
-    }
+    @AppStorage(PAUSE) private var pause: Bool = false
+    @AppStorage(MUTE) private var mute: Bool = false
+    @AppStorage(VOLUME) private var volume: Double = 0.3
     
     var body: some View {
         VStack {
@@ -29,6 +22,13 @@ struct MenuBarView: View {
            .toggleStyle(.checkbox)
            .onChange(of: pause) { oldValue, newValue in
                pause = newValue
+           }
+           Toggle(isOn: $mute) {
+               Text("Mute")
+           }
+           .toggleStyle(.checkbox)
+           .onChange(of: mute) { oldValue, newValue in
+               mute = newValue
            }
             Divider()
             Button("Import external wallpaper") {

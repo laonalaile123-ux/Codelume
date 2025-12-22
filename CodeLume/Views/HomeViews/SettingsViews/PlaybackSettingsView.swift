@@ -1,50 +1,13 @@
 import SwiftUI
 
 struct PlaybackSettingsView: View {
-    @AppStorage("pause") private var pause: Bool = false {
-        didSet {
-            NotificationCenter.default.post(name: .pause, object: pause)
-        }
-    }
-    // @AppStorage("mute") private var mute: Bool = false {
-    //     didSet {
-    //         NotificationCenter.default.post(name: .mute, object: mute)
-    //     }
-    // }
-    @AppStorage("pauseIfOtherAppOnDesktop") private var pauseIfOtherAppOnDesktop: Bool = false {
-        didSet {
-            NotificationCenter.default.post(name: .pauseIfOtherAppOnDesktop, object: pauseIfOtherAppOnDesktop)
-        }
-    }
-    
-    @AppStorage("pauseIfOtherAppFullScreen") private var pauseIfOtherAppFullScreen: Bool = true {
-        didSet {
-            NotificationCenter.default.post(name: .pauseIfOtherAppFullScreen, object: pauseIfOtherAppFullScreen)
-        }
-    }
-    
-    @AppStorage("pauseIfBatteryPowered") private var pauseIfBatteryPowered: Bool = false {
-        didSet {
-            NotificationCenter.default.post(name: .pauseIfBatteryPowered, object: pauseIfBatteryPowered)
-        }
-    }
-    
-    @AppStorage("pauseIfPowerSaving") private var pauseIfPowerSaving: Bool = true {
-        didSet {
-            NotificationCenter.default.post(name: .pauseIfPowerSaving, object: pauseIfPowerSaving)
-        }
-    }
-    // @AppStorage("volume") private var volume: Double = 1.0 {
-    //     didSet {
-    //         NotificationCenter.default.post(name: .volume, object: volume)
-    //     }
-    // }
-    
-//    @AppStorage("switchInterval") private var switchInterval: String = Interval.fiveMinutes.rawValue {
-//        didSet {
-//            PlayingManager.shared.setSwitchInterval(Interval(rawValue: switchInterval)!)
-//        }
-//    }
+    @AppStorage(PAUSE) private var pause: Bool = false
+    @AppStorage(MUTE) private var mute: Bool = false
+    @AppStorage(VOLUME) private var volume: Double = 0.3
+    @AppStorage(PAUSE_IF_OTHER_APP_ON_DESKTOP) private var pauseIfOtherAppOnDesktop: Bool = false
+    @AppStorage(PAUSE_IF_OTHER_APP_FULL_SCREEN) private var pauseIfOtherAppFullScreen: Bool = true
+    @AppStorage(PAUSE_IF_BATTERY_POWERED) private var pauseIfBatteryPowered: Bool = false
+    @AppStorage(PAUSE_IF_POWER_SAVING) private var pauseIfPowerSaving: Bool = true
     
     var body: some View {
         VStack(alignment: .leading) {

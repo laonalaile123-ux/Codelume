@@ -267,8 +267,8 @@ func downloadScreensaver() {
 
 func setStaticWallpaper(bundleURL: URL, screenLocalName: String) -> Bool {
     // 构建缩略图文件路径：bundleURL/preview/thumbnail.jpg
-    let previewDirectory = bundleURL.appendingPathComponent("preview")
-    let thumbnailURL = previewDirectory.appendingPathComponent("thumbnail.jpg")
+    let previewDirectory = bundleURL.appendingPathComponent("Preview")
+    let thumbnailURL = previewDirectory.appendingPathComponent("Preview.jpg")
     
     do {
         // 检查缩略图文件是否存在

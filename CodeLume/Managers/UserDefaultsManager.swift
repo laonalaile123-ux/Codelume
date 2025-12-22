@@ -55,9 +55,10 @@ class UserDefaultsManager {
     }
     // MARK: - private
     private struct LogKeys {
-        static let directoryPath = "logDirectoryPath"
-        static let maxFileSize = "logMaxFileSize"
-        static let maxFileCount = "logMaxFileCount"
+        static let directoryPath = LOG_DIRECTORY_PATH
+        static let maxFileSize = LOG_MAX_FILE_SIZE
+        static let maxFileCount = LOG_MAX_FILE_COUNT
+        
     }
     
     private struct LogDefaults {
@@ -82,7 +83,7 @@ class UserDefaultsManager {
         userDefaults.removeObject(forKey: themeKey)
     }
     // MARK: - private
-    private let themeKey = "codelumeTheme"
+    private let themeKey = THEME
 
 // MARK: - 开机自启配置
     // MARK: - public
@@ -101,7 +102,7 @@ class UserDefaultsManager {
         userDefaults.removeObject(forKey: startAtLoginKey)
     }
     // MARK: - private
-    private let startAtLoginKey = "startAtLogin"
+    private let startAtLoginKey = START_AT_LOGIN
 
 // MARK: - 语言配置
     // MARK: - public
@@ -130,7 +131,7 @@ class UserDefaultsManager {
         userDefaults.removeObject(forKey: showLanguageKey)
     }
     // MARK: - private
-    private let languageKey = "AppleLanguages"
+    private let languageKey = APP_LANGUAGE
     private let showLanguageKey = "showLanguage"
 
 // MARK: - 欢迎配置
@@ -150,7 +151,7 @@ class UserDefaultsManager {
         userDefaults.removeObject(forKey: welcomeStatusKey)
     }
     // MARK: - private
-    private let welcomeStatusKey = "welcomeStatus"
+    private let welcomeStatusKey = WELCOME_STATUS
 
 // MARK: - 播放配置
     // MARK: - public
@@ -243,14 +244,14 @@ class UserDefaultsManager {
     }
 
     // MARK: - private
-    private let pauseKey = "pause"
-    private let muteKey = "mute"
-    private let volumeKey = "volume"
-    private let pauseIfOtherAppOnDesktopKey = "pauseIfOtherAppOnDesktop"
-    private let pauseIfOtherAppFullScreenKey = "pauseIfOtherAppFullScreen"
-    private let pauseIfBatteryPoweredKey = "pauseIfBatteryPowered"
-    private let pauseIfPowerSavingKey = "pauseIfPowerSaving"
-    private let switchIntervalKey = "switchInterval"
+    private let pauseKey = PAUSE
+    private let muteKey = MUTE
+    private let volumeKey = VOLUME
+    private let pauseIfOtherAppOnDesktopKey = PAUSE_IF_OTHER_APP_ON_DESKTOP
+    private let pauseIfOtherAppFullScreenKey = PAUSE_IF_OTHER_APP_FULL_SCREEN
+    private let pauseIfBatteryPoweredKey = PAUSE_IF_BATTERY_POWERED
+    private let pauseIfPowerSavingKey = PAUSE_IF_POWER_SAVING
+    private let switchIntervalKey = WALLPAPER_SWITCH_INTERVAL
 
     private struct PlaybackDefaults {
         static let pause: Bool = false

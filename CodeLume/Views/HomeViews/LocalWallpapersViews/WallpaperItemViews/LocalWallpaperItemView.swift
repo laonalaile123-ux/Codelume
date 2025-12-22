@@ -1,6 +1,7 @@
 import SwiftUI
 import AVKit
 import AppKit
+import CodelumeBundle
 
 struct LocalWallpaperItemView: View {
     let wallpaperURL: URL
@@ -83,42 +84,14 @@ struct LocalWallpaperItemView: View {
             return
         }
         
-        do {
-            // 尝试创建bundle对象
-            let bundle = Bundle(url: wallpaperURL)
-            
-            // 读取codelume.json文件
-            guard let codelumeJSONURL = bundle?.url(forResource: "codelume", withExtension: "json"),
-                  let jsonData = try? Data(contentsOf: codelumeJSONURL) else {
-                Logger.error("无法读取codelume.json文件")
-                return
+        let thumbnailUrl = wallpaperURL.appendingPathComponent("Preview/Preview.jpg")
+        // 加载预览图
+        if let nsImage = NSImage(contentsOfFile: thumbnailUrl.path) {
+            DispatchQueue.main.async {
+                self.thumbnailImage = Image(nsImage: nsImage)
             }
-            
-            // 解析JSON数据
-            let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
-            
-            // 获取预览图路径 - 根据实际JSON格式，previewImage是直接的字符串路径
-            guard let thumbnailPath = json?["previewImage"] as? String else {
-                Logger.error("无法从JSON中获取预览图路径")
-                return
-            }
-            
-            // 构建预览图的完整URL
-            if let thumbnailURL = bundle?.url(forResource: thumbnailPath, withExtension: nil) {
-                // 加载预览图
-                if let nsImage = NSImage(contentsOf: thumbnailURL) {
-                    DispatchQueue.main.async {
-                        self.thumbnailImage = Image(nsImage: nsImage)
-                    }
-                } else {
-                    Logger.error("无法加载预览图: \(thumbnailPath)")
-                }
-            } else {
-                Logger.error("无法构建预览图URL: \(thumbnailPath)")
-            }
-            
-        } catch {
-            Logger.error("处理预览图时发生错误: \(error)")
+        } else {
+            Logger.error("无法加载预览图: \(thumbnailUrl.path)")
         }
     }
     

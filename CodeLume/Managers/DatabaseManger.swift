@@ -67,6 +67,7 @@ final class DatabaseManger {
                 try db.run(insert)
                 Logger.info("Inserted screen config for: \(config.id)")
             }
+            NotificationCenter.default.post(name: .screenConfigChanged, object: config.id)
         } catch {
             Logger.error("Failed to save screen config: \(error)")
         }

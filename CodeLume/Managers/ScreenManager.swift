@@ -7,8 +7,18 @@ class ScreenManager: ObservableObject {
     @Published var screenConfigurations: [ScreenConfiguration] = []
     @Published var currentScreens: [NSScreen] = []
     private let databaseManager = DatabaseManger.shared
-    private var lastScreenChangeTime: TimeInterval = 0
-    private let screenChangeDebounceInterval: TimeInterval = 1
+    private var timer: Timer? // 定时器，用来周期性检测屏幕配置，做出响应的响应
+    private var screenLock: Bool = false
+    private var temporaryPause: Bool = false {
+        didSet {
+            if oldValue != temporaryPause {
+                NotificationCenter.default.post(name: .screenTemporaryStateChanged, object: nil, userInfo: ["temporaryPause": temporaryPause, "seekToZero": seekToZero])
+                Logger.info("Screen temporary state changed to: \(temporaryPause), seekToZero: \(seekToZero)")
+            }
+        }
+    }
+    private var seekToZero: Bool = false // 是否需要跳转到第一帧
+    private var screenTemporaryPause: [String: Bool] = [:] // 每个屏幕的临时暂停状态
     
     private init() {
         updateCurrentScreens()
@@ -16,21 +26,45 @@ class ScreenManager: ObservableObject {
         handleScreenChanges()
         updateMainScreenFlag()
         sortScreenConfigurations()
-        
+        startTimer()
+        startNotificationMonitor()
+    }
+    
+    deinit {
+        stopTimer()
+        stopNotificationMonitor()
+    }
+    
+    /// 启动通知监控
+    func startNotificationMonitor() {
+        // 监听屏幕参数变化通知
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(screensDidChange),
+            selector: #selector(screensParametersDidChange),
             name: NSApplication.didChangeScreenParametersNotification,
             object: nil
         )
+        
+        DistributedNotificationCenter.default.addObserver(
+            forName: .init("com.apple.screenIsLocked"),
+            object: nil,
+            queue: .main
+        ) { _ in
+            self.screenLock = true
+        }
+        
+        DistributedNotificationCenter.default.addObserver(
+            forName: .init("com.apple.screenIsUnlocked"),
+            object: nil,
+            queue: .main
+        ) { _ in
+            self.screenLock = false
+        }
     }
     
-    @objc private func screensDidChange() {
-        Logger.info("screen configurations changed")
-        updateCurrentScreens()
-        handleScreenChanges()
-        updateMainScreenFlag()
-        sortScreenConfigurations()
+    /// 停止通知监控
+    func stopNotificationMonitor() {
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func updateCurrentScreens() {
@@ -252,7 +286,7 @@ class ScreenManager: ObservableObject {
         
         Logger.info("更新屏幕壁纸URL: \(screenId) -> \(wallpaperURL?.path ?? "nil")")
     }
-
+    
     func updateAllScreensWallpaper(wallpaperURL: URL) {
         for screen in screenConfigurations {
             updateScreenWallpaper(screenId: screen.id, wallpaperURL: wallpaperURL)
@@ -332,5 +366,96 @@ class ScreenManager: ObservableObject {
     
     func getScreenConfiguration(screenId: String) -> ScreenConfiguration? {
         return screenConfigurations.first(where: { $0.id == screenId })
+    }
+    
+    /// 处理屏幕参数变化通知
+    @objc private func screensParametersDidChange() {
+        Logger.info("screen configurations changed")
+        updateCurrentScreens()
+        handleScreenChanges()
+        updateMainScreenFlag()
+        sortScreenConfigurations()
+    }
+    
+    // MARK: - 定时器，周期性检查屏幕的一些状态
+    private func startTimer() {
+        stopTimer()
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(checkStatus), userInfo: nil, repeats: true)
+        checkStatus()
+    }
+    
+    private func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    @objc private func checkStatus() {
+        checkScreens()
+        checkTheGlobalPlaybackState()
+    }
+    
+    private func checkScreens() {
+        let screens = NSScreen.screens
+        let pauseIfOtherAppOnDesktop = UserDefaultsManager.shared.getPauseIfOtherAppOnDesktopStatus()
+        let pauseIfOtherAppFullScreen = UserDefaultsManager.shared.getPauseIfOtherAppFullScreenStatus()
+        
+        for screen in screens {
+            let screenId = screen.identifier
+            guard let index = screenConfigurations.firstIndex(where: { $0.id == screenId }) else { continue }
+            
+            var temporaryPause = false
+            var seekToZero = false
+            
+            // 检查是否有其他应用在屏幕上
+            if pauseIfOtherAppOnDesktop && isOtherAppOnScreen(screen) {
+                Logger.debug("Other app detected on screen: \(screenId)")
+                temporaryPause = true
+                seekToZero = false
+            }
+            
+            // 检查是否有全屏应用
+            if pauseIfOtherAppFullScreen && isAnyAppFullScreenOnScreen(screen) {
+                Logger.debug("Full screen app detected on screen: \(screenId)")
+                temporaryPause = true
+                seekToZero = true
+            }
+            
+            // 只有当屏幕状态发生变化时，才发送特定屏幕的播放状态通知
+            if screenTemporaryPause[screenId] != temporaryPause {
+                NotificationCenter.default.post(name: .screenTemporaryStateChanged, object: nil, userInfo: ["screenId": screenId, "temporaryPause": temporaryPause, "seekToZero": seekToZero])
+                screenTemporaryPause[screenId] = temporaryPause
+                Logger.info("Screen Temporary State Changed: \(screenId) -> \(temporaryPause), seekToZero: \(seekToZero)")
+            }
+        }
+    }
+    
+    /// 检查动态壁纸的全局播放状态
+    private func checkTheGlobalPlaybackState() {
+        if screenLock {
+            temporaryPause = true
+            seekToZero = true
+            return
+        }
+        
+        // 检查电源相关设置
+        let pauseIfBatteryPowered = UserDefaultsManager.shared.getPauseIfBatteryPoweredStatus()
+        let pauseIfPowerSaving = UserDefaultsManager.shared.getPauseIfPowerSavingStatus()
+        
+        if pauseIfBatteryPowered && isBatteryPowered() {
+            Logger.debug("Pausing playback because device is on battery power")
+            temporaryPause = true
+            seekToZero = false
+            return
+        }
+        
+        if pauseIfPowerSaving && isPowerSavingMode() {
+            Logger.debug("Pausing playback because device is in power saving mode")
+            temporaryPause = true
+            seekToZero = false
+            return
+        }
+        
+        temporaryPause = false
+        return
     }
 }

@@ -31,15 +31,15 @@ class WindowController: NSObject {
             createWindowForScreen(screen)
         }
     }
-
+    
     private func loadConfigurations() {
-        screenConfigurations = [:] 
+        screenConfigurations = [:]
         let configs = DatabaseManger.shared.getAllScreenConfigs()
-
+        
         for config in configs {
             screenConfigurations[config.id] = config
         }
-
+        
         Logger.info("Configurations loaded successfully")
     }
     
@@ -49,14 +49,14 @@ class WindowController: NSObject {
             Logger.error("Screen configuration not found. Screen: \(id)")
             return nil
         }
-
+        
         let viewFrame = screen.frame
-
+        
         guard let contentUrl = config.wallpaperUrl else {
             Logger.error("Content url is nil. Screen: \(id)")
             return nil
         }
-
+        
         if !FileManager.default.fileExists(atPath: contentUrl.path) {
             Logger.error("File not found at URL: \(contentUrl). Screen: \(id)")
             return nil
@@ -78,7 +78,7 @@ class WindowController: NSObject {
     
     func updateScreenConfiguration(_ screen: NSScreen, playbackType: PlaybackType, contentUrl: URL? = nil) {
         NotificationCenter.default.post(name: .setWallpaperIsVisible, object: screen.identifier, userInfo: ["isVisible": false])
-
+        
         if let contentUrl = contentUrl {
             setStaticWallpaper(bundleURL: contentUrl, screenLocalName: screen.identifier)
         }
@@ -98,7 +98,7 @@ class WindowController: NSObject {
         }
         
         
-        if let window = windows[screen.identifier] {     
+        if let window = windows[screen.identifier] {
             Logger.debug("Update screen window: \(screen.identifier)")
             
             // 先释放旧视图的资源
@@ -224,7 +224,7 @@ class WindowController: NSObject {
             if currentScreens.count == 1 {
                 restartApplication()
             }
-
+            
             Logger.info("Same screens count: \(currentScreens.count)")
             screens = currentScreens
             for screen in screens {
@@ -283,7 +283,7 @@ class WindowController: NSObject {
                 }
             }
         } else {
-
+            
         }
     }
     
