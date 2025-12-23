@@ -14,6 +14,9 @@
         }
       }
     },
+    "%@:" : {
+
+    },
     "%lld" : {
 
     },
@@ -215,6 +218,7 @@
       }
     },
     "Coming soon." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -322,6 +326,9 @@
         }
       }
     },
+    "Details" : {
+
+    },
     "Display on all available screens" : {
       "localizations" : {
         "zh-Hans" : {
@@ -335,6 +342,9 @@
     "Download" : {
 
     },
+    "Download Failed" : {
+
+    },
     "Download Screen Saver" : {
       "localizations" : {
         "zh-Hans" : {
@@ -344,6 +354,12 @@
           }
         }
       }
+    },
+    "Download Success" : {
+
+    },
+    "Downloading" : {
+
     },
     "Duration" : {
       "extractionState" : "manual",
@@ -379,9 +395,6 @@
           }
         }
       }
-    },
-    "Error: %@" : {
-
     },
     "Failed to add video to wallpaper bundle." : {
 
@@ -690,6 +703,9 @@
           }
         }
       }
+    },
+    "No wallpapers available." : {
+
     },
     "Non-program-built-in local video cannot be recovered after deletion and need to be redownloaded or imported." : {
       "localizations" : {
@@ -1445,6 +1461,12 @@
           }
         }
       }
+    },
+    "Wallpaper is downloading, please wait." : {
+
+    },
+    "Wallpaper is downloading." : {
+
     },
     "Wallpaper Maker" : {
       "extractionState" : "stale",

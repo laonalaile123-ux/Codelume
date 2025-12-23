@@ -380,7 +380,7 @@ class ScreenManager: ObservableObject {
     // MARK: - 定时器，周期性检查屏幕的一些状态
     private func startTimer() {
         stopTimer()
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(checkStatus), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(checkStatus), userInfo: nil, repeats: true)
         checkStatus()
     }
     

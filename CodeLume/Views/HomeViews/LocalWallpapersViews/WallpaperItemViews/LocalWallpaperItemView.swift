@@ -35,7 +35,7 @@ struct LocalWallpaperItemView: View {
                     WallpaperNameLabel(text: wallpaperURL.lastPathComponent)
                     Spacer()
                     VideoFloatButton(text: "Preview", action: debouncedAction { isShowingPreview = true })
-                    //                    VideoFloatButton(text: "Details", action: debouncedAction(showDetails))
+                    VideoFloatButton(text: "Details", action: debouncedAction(showDetails))
                     VideoFloatButton(text: "Play", action: debouncedAction { isShowingScreenSelector = true })
                     VideoFloatButton(text: "Delete", color: .red, action: debouncedAction(deleteVideo))
                 }
@@ -50,9 +50,9 @@ struct LocalWallpaperItemView: View {
         }
         .sheet(isPresented: $isShowingDetails) {
             ZStack(alignment: .topLeading) {
-                //               DetailsView(item: item)
-                //                   .padding(20)
-                //               CloseButton(action: { isShowingDetails = false })
+                DetailsView(wallpaperURL: wallpaperURL)
+                    .padding(20)
+                CloseButton(action: { isShowingDetails = false })
             }
         }
         .sheet(isPresented: $isShowingScreenSelector) {
