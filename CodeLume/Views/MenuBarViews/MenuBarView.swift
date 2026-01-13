@@ -46,6 +46,9 @@ struct MenuBarView: View {
                 NSApplication.shared.terminate(nil)
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .openHomeWindow)) { _ in
+            openOrBringToFrontWindow(id: "home")
+        }
     }
     
     func openOrBringToFrontWindow(id: String) {

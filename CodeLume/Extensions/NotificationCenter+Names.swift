@@ -12,5 +12,5 @@ extension Notification.Name {
     static let wallpaperBundleChanged = Notification.Name("com.codelume.notification.wallpaperBundleChanged")
     static let screenTemporaryStateChanged = Notification.Name("com.codelume.notification.screenTemporaryStateChanged") // 临时状态的改变
     static let refreshScreenManagerView = Notification.Name("com.codelume.notification.refreshScreenManagerView")
-    
+    static let openHomeWindow = Notification.Name("com.codelume.notification.openHomeWindow")
 }

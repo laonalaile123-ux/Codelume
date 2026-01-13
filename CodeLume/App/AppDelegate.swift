@@ -70,4 +70,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         return !otherInstances.isEmpty
     }
+    
+    func applicationShouldHandleReopen(_ app: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        NotificationCenter.default.post(name: .openHomeWindow, object: nil)
+        return true
+    }
 }
