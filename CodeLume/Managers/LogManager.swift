@@ -68,17 +68,9 @@ class LogManager {
         let console = ConsoleDestination()
         console.format = "$Dyyyy-MM-dd HH:mm:ss.SSS$d $L $N.$F:$l - $M"
         console.minLevel = .info
-        
-        let file = FileDestination()
-        let logDirectory = getLogDirectory()
-        file.logFileURL = logDirectory.appendingPathComponent("codlelume.log")
-        file.logFileMaxSize = getMaxFileSize()
-        file.logFileAmount = getMaxFileCount()
-        file.format = "$Dyyyy-MM-dd HH:mm:ss.SSS$d $L $N.$F:$l - $M"
-        
+                
         log.removeAllDestinations()
         log.addDestination(console)
-        log.addDestination(file)
         
         log.info("log system initialized")
         log.info("log file path: \(file.logFileURL?.path ?? "unknown")")
