@@ -73,7 +73,6 @@ class LogManager {
         log.addDestination(console)
         
         log.info("log system initialized")
-        log.info("log file path: \(file.logFileURL?.path ?? "unknown")")
     }
 }
 // MARK: - 简化调用 API
