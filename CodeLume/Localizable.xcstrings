@@ -589,6 +589,7 @@
       }
     },
     "Hide Dock icon" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

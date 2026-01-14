@@ -33,10 +33,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         #endif
 
-        // set dock icon visible
-        let hideDockIcon = UserDefaults.standard.bool(forKey: "hideDockIcon")
-        NSApp.setActivationPolicy(hideDockIcon ? .prohibited : .regular)
-
         let showWelcomeView = UserDefaultsManager.shared.getWelcomeStatus()
         if showWelcomeView {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -73,10 +69,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         return !otherInstances.isEmpty
-    }
-    
-    func applicationShouldHandleReopen(_ app: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        NotificationCenter.default.post(name: .openHomeWindow, object: nil)
-        return true
     }
 }

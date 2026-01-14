@@ -6,9 +6,7 @@ struct GeneralSettingsView: View {
     @State private var selectedTheme: String = UserDefaultsManager.shared.getTheme().rawValue
     @State private var showWelcomeView: Bool = UserDefaultsManager.shared.getWelcomeStatus()
     @State private var startAtLogin: Bool = UserDefaultsManager.shared.getStartAtLogin()
-    @State private var lastHideDockIconToggleTime: Date = .distantPast
     @State private var showRestartAlert = false
-    @AppStorage("hideDockIcon") private var hideDockIcon: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -53,18 +51,6 @@ struct GeneralSettingsView: View {
                     .padding(.trailing, 20)
                     .onChange(of: showWelcomeView) { oldValue, newValue in
                         UserDefaultsManager.shared.saveWelcomeStatus(newValue)
-                    }
-            }
-            
-            HStack {
-                Label("Hide Dock icon", systemImage: "dock.rectangle")
-                Spacer()
-                Toggle("", isOn: $hideDockIcon)
-                    .toggleStyle(.switch)
-                    .frame(width: 50)
-                    .padding(.trailing, 20)
-                    .onChange(of: hideDockIcon) { oldValue, newValue in
-                        NSApp.setActivationPolicy(newValue ? .prohibited : .regular)
                     }
             }
             
