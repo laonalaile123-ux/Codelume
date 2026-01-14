@@ -76,7 +76,7 @@ func getWallpaperSaveURL() -> URL? {
     return wallpaperSaveURL
 }
 
-func importExternalWallpaper() {
+func importBundle() {
     let openPanel = NSOpenPanel()
     openPanel.title = NSLocalizedString("Select a Wallpaper Bundle.", comment: "")
     openPanel.allowedContentTypes = [.bundle]
@@ -129,7 +129,7 @@ func importExternalWallpaper() {
     }
 }
 
-func importExternalVideoAsWallpaper() {
+func importVideo() {
     let openPanel = NSOpenPanel()
     openPanel.title = NSLocalizedString("Select a Video.", comment: "")
     openPanel.allowedContentTypes = [.mpeg4Movie, .quickTimeMovie]
