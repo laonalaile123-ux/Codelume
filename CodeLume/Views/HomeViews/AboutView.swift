@@ -306,7 +306,7 @@ struct SocialButtonView: View {
                 if NSImage(named: iconName) != nil {
                     Image(nsImage: NSImage(named: iconName)!)
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
+                        .renderingMode(.template)
                         .frame(width: 16, height: 16)
                 } else {
                     Image(systemName: fallbackIcon)

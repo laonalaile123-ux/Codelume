@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct ScreenSaverView: View {
     var body: some View {
@@ -53,6 +54,45 @@ struct ScreenSaverView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.windowBackgroundColor))
+    }
+    
+    func downloadScreensaver() {
+        guard let saverURL = Bundle.main.url(forResource: "CodeLumeSaver", withExtension: "saver") else {
+            Logger.error("Failed to find screensaver in bundle")
+            return
+        }
+        
+        let savePanel = NSSavePanel()
+        savePanel.title = NSLocalizedString("Save Screen Saver", comment: "")
+        savePanel.nameFieldStringValue = "CodeLume.saver"
+        savePanel.allowedContentTypes = [UTType(filenameExtension: "saver") ?? .item]
+        
+        let desktopURL = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first
+        savePanel.directoryURL = desktopURL
+        
+        savePanel.begin { response in
+            if response == .OK, let destinationURL = savePanel.url {
+                do {
+                    if FileManager.default.fileExists(atPath: destinationURL.path) {
+                        try FileManager.default.removeItem(at: destinationURL)
+                    }
+                    
+                    try FileManager.default.copyItem(at: saverURL, to: destinationURL)
+                    Logger.info("Screensaver saved successfully to: \(destinationURL.path)")
+
+                    DispatchQueue.main.async {
+                        let alert = NSAlert()
+                        alert.messageText = NSLocalizedString("Screensaver Saved", comment: "")
+                        alert.informativeText = NSLocalizedString("Screensaver saved successfully!", comment: "")
+                        alert.alertStyle = .informational
+                        alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
+                        alert.runModal()
+                    }
+                } catch {
+                    Logger.error("Failed to save screensaver: \(error)")
+                }
+            }
+        }
     }
 }
 
