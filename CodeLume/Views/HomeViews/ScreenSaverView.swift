@@ -1,6 +1,4 @@
 import SwiftUI
-import Foundation
-import AppKit
 
 struct ScreenSaverView: View {
     var body: some View {
@@ -30,39 +28,22 @@ struct ScreenSaverView: View {
                     Spacer()
                     Button(action: downloadScreensaver) {
                         Text("Download Screen Saver")
-                            .padding()
+                            .padding(6)
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.regular)
                     Spacer()
                 }
                 
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Installation Method")
-                        .font(.headline)
-                        .fontWeight(.medium)
-                    
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text("1. Click the download button to download the screen saver file to your desktop;")
-                        Image("ScreenSaver_1")
-                            .resizable()
-                            .scaledToFit()
-                        Text("2. Double-click the downloaded .saver file to install;")
-                        Image("ScreenSaver_2")
-                            .resizable()
-                            .scaledToFit()
-                        Text("3. Select your video file to set up;")
-                        Image("ScreenSaver_3")
-                            .resizable()
-                            .scaledToFit()
-                        Text("4. Click \"Preview\" to view the effect.")
-                        Image("ScreenSaver_4")
-                            .resizable()
-                            .scaledToFit()
-                    }
-                    .font(.body)
-                    .foregroundColor(.secondary)
+                HStack {
+                    Spacer()
+                    Link("View installation instructions on GitHub.",
+                         destination: URL(string: "https://github.com/guang-zi-yu/CodelumeSaver.git")!)
+                    .font(.caption)
+                    .foregroundColor(.blue)
+                    Spacer()
                 }
+                .padding(.top, 5)
                 
                 Spacer()
                     .frame(height: 40)

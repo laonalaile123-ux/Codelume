@@ -30,46 +30,6 @@
         }
       }
     },
-    "1. Click the download button to download the screen saver file to your desktop;" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "1. 点击下载按钮将屏保文件下载到您的桌面；"
-          }
-        }
-      }
-    },
-    "2. Double-click the downloaded .saver file to install;" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "2. 双击已下载的.saver文件进行安装；"
-          }
-        }
-      }
-    },
-    "3. Select your video file to set up;" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "3. 选择您的视频文件进行设置"
-          }
-        }
-      }
-    },
-    "4. Click \"Preview\" to view the effect." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "4. 点击预览查看效果。"
-          }
-        }
-      }
-    },
     "About" : {
       "localizations" : {
         "zh-Hans" : {
@@ -711,16 +671,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "导入视频"
-          }
-        }
-      }
-    },
-    "Installation Method" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "安装步骤"
           }
         }
       }
@@ -1696,6 +1646,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "视频"
+          }
+        }
+      }
+    },
+    "View installation instructions on GitHub." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 GitHub上查看安装说明。"
           }
         }
       }
