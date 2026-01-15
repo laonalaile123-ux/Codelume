@@ -136,7 +136,7 @@ func importVideo() {
     openPanel.allowsMultipleSelection = false
     openPanel.begin { response in
         if response == .OK, let selectedURL = openPanel.url {
-            let wallpaperBundele = VideoWallpaper()
+            let wallpaperBundele = VideoBundle()
             let bundleName = selectedURL.deletingPathExtension().lastPathComponent
             
             var ret = wallpaperBundele.create(bundleName: bundleName, saveDir: WALLPAPER_SAVE_URL)

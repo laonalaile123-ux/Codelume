@@ -70,16 +70,6 @@
         }
       }
     },
-    "A dynamic wallpaper software dedicated to the macOS platform." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "一款专注于macos平台的动态壁纸软件"
-          }
-        }
-      }
-    },
     "About" : {
       "localizations" : {
         "zh-Hans" : {
@@ -100,6 +90,16 @@
         }
       }
     },
+    "App Store Version" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Store 版本"
+          }
+        }
+      }
+    },
     "Available Screens:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -116,16 +116,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "浏览"
-          }
-        }
-      }
-    },
-    "Bundle Name:" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "资源包名称："
           }
         }
       }
@@ -172,6 +162,16 @@
         }
       }
     },
+    "Close" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        }
+      }
+    },
     "Codec" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -190,6 +190,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "码镜"
+          }
+        }
+      }
+    },
+    "CodeLume is a native, open-source dynamic wallpaper application built exclusively for macOS." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "码镜是一款原生开源动态壁纸应用，专为 macOS 系统设计。"
           }
         }
       }
@@ -224,6 +234,26 @@
         }
       }
     },
+    "Completely free. Clone, build, and customize from GitHub." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完全免费。可从 GitHub 克隆、构建和自定义。"
+          }
+        }
+      }
+    },
+    "Compose Message" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "撰写邮件"
+          }
+        }
+      }
+    },
     "Conditions for pausing playback" : {
       "localizations" : {
         "zh-Hans" : {
@@ -254,12 +284,42 @@
         }
       }
     },
-    "Contact Us" : {
+    "Contact & Support" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "联系我们"
+            "value" : "联系与支持"
+          }
+        }
+      }
+    },
+    "Contact Information" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "联系方式"
+          }
+        }
+      }
+    },
+    "Contact via Email" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通过电子邮件联系"
+          }
+        }
+      }
+    },
+    "Copy Email Address" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制邮箱地址"
           }
         }
       }
@@ -356,24 +416,12 @@
         }
       }
     },
-    "Download" : {
-      "extractionState" : "stale",
+    "Douyin" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下载"
-          }
-        }
-      }
-    },
-    "Download Failed" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "下载失败"
+            "value" : "抖音"
           }
         }
       }
@@ -384,28 +432,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "下载屏保"
-          }
-        }
-      }
-    },
-    "Download Success" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "下载成功"
-          }
-        }
-      }
-    },
-    "Downloading" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在下载"
           }
         }
       }
@@ -427,6 +453,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "邮箱"
+          }
+        }
+      }
+    },
+    "Email Support" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "邮件支持"
           }
         }
       }
@@ -547,6 +583,26 @@
         }
       }
     },
+    "Follow us for updates, demos, and community content." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关注我们以获取更新、演示和社区内容。"
+          }
+        }
+      }
+    },
+    "For technical support, collaboration inquiries, or feedback." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如需技术支持、合作咨询或提供反馈，请联系我们。"
+          }
+        }
+      }
+    },
     "From the list on the left, select a screen to view and edit its configuration information" : {
       "localizations" : {
         "zh-Hans" : {
@@ -567,12 +623,32 @@
         }
       }
     },
+    "Get CodeLume" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "获取码镜"
+          }
+        }
+      }
+    },
     "Get Started" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "开始使用"
+          }
+        }
+      }
+    },
+    "GitHub" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub"
           }
         }
       }
@@ -584,17 +660,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "半小时"
-          }
-        }
-      }
-    },
-    "Hide Dock icon" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "隐藏程序坞图标"
           }
         }
       }
@@ -660,17 +725,6 @@
         }
       }
     },
-    "Key" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "健"
-          }
-        }
-      }
-    },
     "Language settings:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -698,17 +752,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "浅色"
-          }
-        }
-      }
-    },
-    "Loading wallpapers..." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "加载壁纸中…"
           }
         }
       }
@@ -750,6 +793,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "循环"
+          }
+        }
+      }
+    },
+    "Made with ♥ for the macOS" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "倾心为 macOS 打造"
           }
         }
       }
@@ -811,17 +864,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "否"
-          }
-        }
-      }
-    },
-    "No wallpapers available." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有壁纸"
           }
         }
       }
@@ -898,6 +940,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "一周"
+          }
+        }
+      }
+    },
+    "Open in Mail" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在邮件中打开"
+          }
+        }
+      }
+    },
+    "Open Source Version" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开源版本"
+          }
+        }
+      }
+    },
+    "Paid download to support Apple Developer Program costs. Auto-updated." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "付费下载以支持苹果开发者计划费用。自动更新。"
           }
         }
       }
@@ -1184,17 +1256,6 @@
         }
       }
     },
-    "Retry" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "重试"
-          }
-        }
-      }
-    },
     "Rstart" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1415,16 +1476,6 @@
         }
       }
     },
-    "Select Video File" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择一个视频文件"
-          }
-        }
-      }
-    },
     "Sequence" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1486,6 +1537,26 @@
         }
       }
     },
+    "Subject" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主题"
+          }
+        }
+      }
+    },
+    "Support Email" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "支持邮箱"
+          }
+        }
+      }
+    },
     "Tags" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1504,6 +1575,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "十分钟"
+          }
+        }
+      }
+    },
+    "The app runs strictly within the macOS sandbox, requires no network permissions, and never collects user data." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该应用严格运行于 macOS 沙盒环境内，无需任何网络权限，且绝不会收集用户数据。"
           }
         }
       }
@@ -1619,12 +1700,32 @@
         }
       }
     },
-    "Video URL:" : {
+    "View on App Store" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "视频链接："
+            "value" : "在 App Store 上查看"
+          }
+        }
+      }
+    },
+    "View on GitHub" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 GitHub 上查看"
+          }
+        }
+      }
+    },
+    "Visit Codelume's Douyin" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "访问 Codelume 的抖音"
           }
         }
       }
@@ -1669,13 +1770,12 @@
         }
       }
     },
-    "Wallpaper Hub" : {
-      "extractionState" : "stale",
+    "Wallpaper Content" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "壁纸中心"
+            "value" : "壁纸内容"
           }
         }
       }
@@ -1690,34 +1790,22 @@
         }
       }
     },
-    "Wallpaper is downloading, please wait." : {
-      "extractionState" : "stale",
+    "We focus solely on the playback engine. For video wallpapers, we recommend using compatible content from platforms like **Wallpaper Engine**. We welcome collaboration with original creators." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "壁纸正在下载，请稍等"
+            "value" : "我们仅专注于播放引擎功能。对于视频壁纸，我们建议您使用来自诸如 **Wallpaper Engine** 等平台的兼容内容。我们欢迎与原创作者进行合作。"
           }
         }
       }
     },
-    "Wallpaper is downloading." : {
-      "extractionState" : "stale",
+    "We typically respond within 1-2 business days." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "壁纸正在下载"
-          }
-        }
-      }
-    },
-    "Wallpaper Name:" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "壁纸名称："
+            "value" : "我们通常在1-2个工作日内回复。"
           }
         }
       }
@@ -1732,8 +1820,15 @@
         }
       }
     },
-    "资源包基本信息" : {
-
+    "Your message will open in your default email client." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的邮件将在默认的邮件客户端中打开。"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -7,7 +7,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var welcomeWindow: NSWindow?
 
     func applicationWillFinishLaunching(_ notification: Notification) {
-        let _ = LogManager.shared
+        let _ = SwiftyBeaverLog.shared
         let _ = UserDefaultsManager.shared
         let _ = DatabaseManger.shared
         let _ = ScreenManager.shared

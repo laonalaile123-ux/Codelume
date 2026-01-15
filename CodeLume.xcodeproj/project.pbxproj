@@ -401,8 +401,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/guang-zi-yu/CodelumeBundle.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				branch = main;
+				kind = branch;
 			};
 		};
 		86E223592EEA897000AFA3A3 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {

@@ -27,7 +27,7 @@ struct WallpaperPreviewView: View {
     }
     
     private func extractWallpaperURL() {
-        let wallpaper = VideoWallpaper()
+        let wallpaper = VideoBundle()
         if !wallpaper.open(wallpaperUrl: url) {
             errorMessage = "Error opening wallpaper: \(url)"
             return
