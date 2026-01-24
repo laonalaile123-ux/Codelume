@@ -5,7 +5,7 @@ import SwiftyBeaver
 class AppDelegate: NSObject, NSApplicationDelegate {
     let windowController = WindowController()
     private var welcomeWindow: NSWindow?
-
+    
     func applicationWillFinishLaunching(_ notification: Notification) {
         let _ = SwiftyBeaverLog.shared
         let _ = UserDefaultsManager.shared
@@ -19,7 +19,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        #if !DEBUG
+        let theme = UserDefaultsManager.shared.getTheme()
+        switch theme {
+        case .light:
+            NSApp.appearance = NSAppearance(named: .aqua)
+        case .dark:
+            NSApp.appearance = NSAppearance(named: .darkAqua)
+        default:
+            NSApp.appearance = nil
+        }
+#if !DEBUG
         if isAppAlreadyRunning() {
             let alert = NSAlert()
             alert.messageText = NSLocalizedString("CodeLume is Running", comment: "")
@@ -27,12 +36,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             alert.alertStyle = .warning
             alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
             alert.runModal()
-
+            
             NSApp.terminate(nil)
             return
         }
-        #endif
-
+#endif
+        
         let showWelcomeView = UserDefaultsManager.shared.getWelcomeStatus()
         if showWelcomeView {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -51,11 +60,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             backing: .buffered,
             defer: false
         )
-
+        
         window.contentViewController = hostingController
         window.center()
         window.makeKeyAndOrderFront(nil)
-
+        
         welcomeWindow = window
     }
     
