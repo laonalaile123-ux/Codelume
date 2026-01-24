@@ -6,17 +6,17 @@
 	<dict>
 		<key>Resources/Base.lproj/Preferences.nib</key>
 		<data>
-		IYQ5rKb+cGb3HQm3Tm0Pz5yZr24=
+		pq5ag4G4ceke9pIIbPxF/l3rqKE=
 		</data>
-		<key>Resources/codelume_1.mp4</key>
+		<key>Resources/codelume.mov</key>
 		<data>
-		Tzm57QN7qPNkcDYPRjazTGN1urE=
+		7dGiHIpx5jQFke5MV1JB0qEJj94=
 		</data>
 		<key>Resources/en.lproj/InfoPlist.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			2R3XOjwjpp8DjDyavXtR1I/g9E0=
+			47QoTso1wFrl8CU4+vpUNCABoms=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -29,7 +29,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			cHi5tyJvCNnllKe3fOcWHG0tv9A=
+			KBE2G3KnB59u9LdBu1aHJmj0kVA=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -38,7 +38,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			wcGYRWOrnUxCFidHR1MYwgTsq7M=
+			X3y8VoV2vBj12oiGGxPguO0toFA=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -50,21 +50,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			KF0UYOfAMgIJ3KCN+Tv6Y/fK2aDYwUl4x5wGTFKYFAA=
+			XKB/jsj2f0/DbTTa4n8jC41OCzzoTI3610XvnSuAQ9E=
 			</data>
 		</dict>
-		<key>Resources/codelume_1.mp4</key>
+		<key>Resources/codelume.mov</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			LVC9sCcrAfOkb2h5WcLHvbSeCv5DDzjKD64QWggmHBo=
+			GdqVTw2Iqeapx7oexlA/mZzPCYrpTjj4Ha3aPv3R67I=
 			</data>
 		</dict>
 		<key>Resources/en.lproj/InfoPlist.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Y2Lol5TP5TLA1fggP8mkvLkSw+4jmRgtp0txNaYDuuM=
+			853G0pCnrQpJxZvbtsEQ9tthddh/h9fynYdTqxVYsrA=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -80,7 +80,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			lji6Fw8SLVdSjSNTNALJMZ5W/ZtNDihrMpjt5ABEDH4=
+			XsvVV46Ae4WtpHBjkwSGm6vE8++VXlGWTIyn687lJnM=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -89,7 +89,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			s4r0Guc5/WXf1qyCDFCe490y+JiWnCwYeei12FEBWb4=
+			DStZnVuVCP15D2oB6W78KPPdQD6N7V+oNhMIKZjg5NE=
 			</data>
 			<key>optional</key>
 			<true/>
