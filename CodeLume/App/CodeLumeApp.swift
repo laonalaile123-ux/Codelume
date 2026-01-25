@@ -1,14 +1,14 @@
 import SwiftUI
 
 @main
-struct CodeLumeApp: App {
+struct CodelumeApp: App {
     @NSApplicationDelegateAdaptor private var appDelegate: AppDelegate
     var body: some Scene {
-        MenuBarExtra("CodeLume", image: "CodeLumeIcon") {
+        MenuBarExtra("Codelume", image: "CodelumeIcon") {
             MenuBarView()
         }
         
-        WindowGroup("CodeLume", id: "home") {
+        WindowGroup("Codelume", id: "home") {
             HomeView()
         }
         .windowStyle(.titleBar)

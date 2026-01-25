@@ -18,7 +18,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		222E28FF2E4E67F100F67F3F /* Exceptions for "CodeLume" folder in "Codelume" target */ = {
+		222E28FF2E4E67F100F67F3F /* Exceptions for "Codelume" folder in "Codelume" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -28,12 +28,12 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		2262B8672E4B94B2003E8F45 /* CodeLume */ = {
+		2262B8672E4B94B2003E8F45 /* Codelume */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				222E28FF2E4E67F100F67F3F /* Exceptions for "CodeLume" folder in "Codelume" target */,
+				222E28FF2E4E67F100F67F3F /* Exceptions for "Codelume" folder in "Codelume" target */,
 			);
-			path = CodeLume;
+			path = Codelume;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -56,7 +56,7 @@
 		2262B85C2E4B94B2003E8F45 = {
 			isa = PBXGroup;
 			children = (
-				2262B8672E4B94B2003E8F45 /* CodeLume */,
+				2262B8672E4B94B2003E8F45 /* Codelume */,
 				86EDECDA2EC641BA00B3EAD8 /* Frameworks */,
 				2262B8662E4B94B2003E8F45 /* Products */,
 			);
@@ -93,7 +93,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				2262B8672E4B94B2003E8F45 /* CodeLume */,
+				2262B8672E4B94B2003E8F45 /* Codelume */,
 			);
 			name = Codelume;
 			packageProductDependencies = (
@@ -292,7 +292,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = CodeLume/CodeLume.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Codelume/Codelume.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -312,8 +312,8 @@
 				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CodeLume/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = CodeLume;
+				INFOPLIST_FILE = Codelume/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Codelume;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -323,7 +323,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 1.4.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.codelume.CodeLume;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codelume.Codelume;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -336,7 +336,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = CodeLume/CodeLume.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Codelume/Codelume.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -356,8 +356,8 @@
 				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CodeLume/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = CodeLume;
+				INFOPLIST_FILE = Codelume/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Codelume;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -367,7 +367,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 1.4.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.codelume.CodeLume;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codelume.Codelume;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;

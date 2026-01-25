@@ -11,11 +11,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let _ = UserDefaultsManager.shared
         let _ = DatabaseManger.shared
         let _ = ScreenManager.shared
-        Logger.info("CodeLume application started")
+        Logger.info("Codelume application started")
     }
     
     func applicationWillTerminate(_ notification: Notification) {
-        Logger.info("CodeLume application terminated")
+        Logger.info("Codelume application terminated")
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -31,8 +31,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 #if !DEBUG
         if isAppAlreadyRunning() {
             let alert = NSAlert()
-            alert.messageText = NSLocalizedString("CodeLume is Running", comment: "")
-            alert.informativeText = NSLocalizedString("The application is already running. Please access CodeLume through the top status bar.", comment: "")
+            alert.messageText = NSLocalizedString("Codelume is Running", comment: "")
+            alert.informativeText = NSLocalizedString("The application is already running. Please access Codelume through the top status bar.", comment: "")
             alert.alertStyle = .warning
             alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
             alert.runModal()

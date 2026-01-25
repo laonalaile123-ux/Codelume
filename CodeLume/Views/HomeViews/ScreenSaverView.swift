@@ -5,7 +5,7 @@ struct ScreenSaverView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Text("CodeLume Screen Saver")
+                Text("Codelume Screen Saver")
                     .font(.title)
                     .fontWeight(.bold)
                     .padding(.bottom, 10)
@@ -19,7 +19,7 @@ struct ScreenSaverView: View {
                         .font(.body)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.leading)
-                    Text("CodeLume offers a dedicated screen saver module that allows users to set their current dynamic wallpapers as screen savers after downloading and installing it. This creates a seamless visual transition between active desktop environments and idle states, extending dynamic aesthetics throughout the entire device usage cycle while ensuring privacy security and maintaining a consistent immersive visual experience.")
+                    Text("Codelume offers a dedicated screen saver module that allows users to set their current dynamic wallpapers as screen savers after downloading and installing it. This creates a seamless visual transition between active desktop environments and idle states, extending dynamic aesthetics throughout the entire device usage cycle while ensuring privacy security and maintaining a consistent immersive visual experience.")
                         .font(.body)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.leading)
@@ -57,14 +57,14 @@ struct ScreenSaverView: View {
     }
     
     func downloadScreensaver() {
-        guard let saverURL = Bundle.main.url(forResource: "CodeLumeSaver", withExtension: "saver") else {
+        guard let saverURL = Bundle.main.url(forResource: "CodelumeSaver", withExtension: "saver") else {
             Logger.error("Failed to find screensaver in bundle")
             return
         }
         
         let savePanel = NSSavePanel()
         savePanel.title = NSLocalizedString("Save Screen Saver", comment: "")
-        savePanel.nameFieldStringValue = "CodeLume.saver"
+        savePanel.nameFieldStringValue = "Codelume.saver"
         savePanel.allowedContentTypes = [UTType(filenameExtension: "saver") ?? .item]
         
         let desktopURL = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first

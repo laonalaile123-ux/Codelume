@@ -143,7 +143,7 @@
         }
       }
     },
-    "CodeLume" : {
+    "Codelume" : {
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
@@ -154,7 +154,7 @@
         }
       }
     },
-    "CodeLume is a native, open-source dynamic wallpaper application built exclusively for macOS." : {
+    "Codelume is a native, open-source dynamic wallpaper application built exclusively for macOS." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -164,7 +164,7 @@
         }
       }
     },
-    "CodeLume is Running" : {
+    "Codelume is Running" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -174,7 +174,7 @@
         }
       }
     },
-    "CodeLume offers a dedicated screen saver module that allows users to set their current dynamic wallpapers as screen savers after downloading and installing it. This creates a seamless visual transition between active desktop environments and idle states, extending dynamic aesthetics throughout the entire device usage cycle while ensuring privacy security and maintaining a consistent immersive visual experience." : {
+    "Codelume offers a dedicated screen saver module that allows users to set their current dynamic wallpapers as screen savers after downloading and installing it. This creates a seamless visual transition between active desktop environments and idle states, extending dynamic aesthetics throughout the entire device usage cycle while ensuring privacy security and maintaining a consistent immersive visual experience." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -184,7 +184,7 @@
         }
       }
     },
-    "CodeLume Screen Saver" : {
+    "Codelume Screen Saver" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -224,7 +224,7 @@
         }
       }
     },
-    "Congratulations on discovering this free treasure of an app! CodeLume is a dynamic wallpaper application designed exclusively for macOS, boasting a sleek and elegant design with comprehensive functionality. As a menu bar application, please remember to launch and use it from the menu bar—it won't be visible in your Dock." : {
+    "Congratulations on discovering this free treasure of an app! Codelume is a dynamic wallpaper application designed exclusively for macOS, boasting a sleek and elegant design with comprehensive functionality. As a menu bar application, please remember to launch and use it from the menu bar—it won't be visible in your Dock." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -583,7 +583,7 @@
         }
       }
     },
-    "Get CodeLume" : {
+    "Get Codelume" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1542,7 +1542,7 @@
         }
       }
     },
-    "The application is already running. Please access CodeLume through the top status bar." : {
+    "The application is already running. Please access Codelume through the top status bar." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

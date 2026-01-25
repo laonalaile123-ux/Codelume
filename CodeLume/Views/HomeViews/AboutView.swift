@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AboutView: View {
-    private let githubURL = URL(string: "https://github.com/guang-zi-yu/CodeLumeApp.git")!
+    private let githubURL = URL(string: "https://github.com/guang-zi-yu/CodelumeApp.git")!
     private let douyinURL = URL(string: "https://www.douyin.com/user/MS4wLjABAAAAl1srMN6bnoQL8gBUFGUa3wQZp7KJ4WHfXyfz16Us2syzqhhKKM-iDCW64v5enW9w?from_tab_name=main&vid=7573053246886006052")!
     private let appStoreURL = URL(string: "https://apps.apple.com/us/app/%E7%A0%81%E9%95%9C/id6751061329?mt=12")!
     private let emailAddress = "codelume@163.com"
@@ -19,7 +19,7 @@ struct AboutView: View {
                         .shadow(color: .primary.opacity(0.1), radius: 4, y: 2)
                     
                     VStack(spacing: 6) {
-                        Text("CodeLume")
+                        Text("Codelume")
                             .font(.system(size: 28, weight: .bold))
                         Text("Version \(Bundle.main.appVersion)")
                             .font(.callout)
@@ -30,7 +30,7 @@ struct AboutView: View {
                 
                 VStack(alignment: .leading, spacing: 8) {
                     SectionTitleView(title: "About")
-                    Text("CodeLume is a native, open-source dynamic wallpaper application built exclusively for macOS.")
+                    Text("Codelume is a native, open-source dynamic wallpaper application built exclusively for macOS.")
                         .font(.body)
                         .fixedSize(horizontal: false, vertical: true)
                         .foregroundColor(.primary)
@@ -45,7 +45,7 @@ struct AboutView: View {
                 .padding(.horizontal)
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    SectionTitleView(title: "Get CodeLume")
+                    SectionTitleView(title: "Get Codelume")
                     
                     OptionView(
                         icon: "GithubIcon",
@@ -223,7 +223,7 @@ struct EmailContactView: View {
     }
     
     private func openEmailClient() {
-        let subject = emailSubject.isEmpty ? "CodeLume Inquiry" : emailSubject
+        let subject = emailSubject.isEmpty ? "Codelume Inquiry" : emailSubject
         let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let encodedBody = emailBody.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         
