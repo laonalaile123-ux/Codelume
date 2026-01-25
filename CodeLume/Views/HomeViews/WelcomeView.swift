@@ -15,7 +15,7 @@ struct WelcomeView: View {
                 Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
                     .resizable()
                     .frame(width: 64, height: 64)
-                Text("Codelume is a dynamic wallpaper application designed exclusively for macOS, boasting a sleek and elegant design with comprehensive functionality. As a menu bar application, please remember to launch and use it from the menu bar—it won't be visible in your Dock.")
+                Text("Codelume is a dynamic wallpaper application designed exclusively for macOS, featuring a sleek design with comprehensive functionality. As a menu bar application, please remember to launch and use it from the menu bar—it won't be visible in your Dock.")
                     .font(.title3)
                     .multilineTextAlignment(.leading)
                     .foregroundColor(.secondary)
