@@ -269,13 +269,5 @@ func Alert(title: String, message: String, style: NSAlert.Style = .informational
     alert.informativeText = NSLocalizedString(message, comment: "")
     alert.alertStyle = style
     alert.addButton(withTitle: NSLocalizedString("OK", comment: "").rawValue)
-    
-    if let window = NSApplication.shared.keyWindow ??
-        NSApplication.shared.mainWindow ??
-        NSApplication.shared.windows.first {
-        
-        alert.beginSheetModal(for: window)
-    } else {
-        alert.runModal()
-    }
+    alert.runModal()
 }
