@@ -263,11 +263,19 @@ func setStaticWallpaper(bundleURL: URL, screenLocalName: String) -> Bool {
     }
 }
 
-func Alert(title: String, message: String, style: NSAlert.Style) {
+func Alert(title: String, message: String, style: NSAlert.Style = .informational) {
     let alert = NSAlert()
-    alert.messageText = title
-    alert.informativeText = message
+    alert.messageText = NSLocalizedString(title, comment: "")
+    alert.informativeText = NSLocalizedString(message, comment: "")
     alert.alertStyle = style
-    alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
-    alert.runModal()
+    alert.addButton(withTitle: NSLocalizedString("OK", comment: "").rawValue)
+    
+    if let window = NSApplication.shared.keyWindow ??
+        NSApplication.shared.mainWindow ??
+        NSApplication.shared.windows.first {
+        
+        alert.beginSheetModal(for: window)
+    } else {
+        alert.runModal()
+    }
 }
