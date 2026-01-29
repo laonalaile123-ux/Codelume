@@ -71,14 +71,14 @@ class VideoPlaybackView: NSView {
     private func applyPlaybackSettings() {
         guard let player = player, let config = screenConfiguration else { return }
         
-        let globalVolume = UserDefaults.standard.float(forKey: "Volume")
+        let globalVolume = UserDefaultsManager.shared.getVolume()
         let screenVolume = Float(config.volume)
         player.volume = globalVolume * screenVolume
         
-        let globalMute = UserDefaults.standard.bool(forKey: "Mute")
+        let globalMute = UserDefaultsManager.shared.getMuteStatus()
         player.isMuted = globalMute || config.isMuted
         
-        let globalPause = UserDefaults.standard.bool(forKey: "Pause")
+        let globalPause = UserDefaultsManager.shared.getPauseStatus()
         let shouldPlay = !globalPause && config.isPlaying && !temporaryPause
         Logger.info("Screen: \(config.id), global volume: \(globalVolume), screen volume: \(screenVolume), final volume: \(globalVolume * screenVolume)")
         Logger.info("Screen: \(config.id), global mute: \(globalMute), screen mute: \(config.isMuted), final mute: \(player.isMuted)")

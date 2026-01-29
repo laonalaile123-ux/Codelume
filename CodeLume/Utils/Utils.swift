@@ -297,7 +297,7 @@ func setStaticWallpaper(bundleURL: URL, screenLocalName: String) -> Bool {
     }
 }
 
-func Alert(title: String, message: String, style: NSAlert.Style = .informational) {
+func Alert(title: String, message: String = "", style: NSAlert.Style = .informational) {
     DispatchQueue.main.async {
         let alert = NSAlert()
         alert.messageText = NSLocalizedString(title, comment: "")

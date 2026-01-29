@@ -354,6 +354,7 @@
       }
     },
     "Delete Failed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -364,6 +365,7 @@
       }
     },
     "Delete Success" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1259,6 +1261,7 @@
       }
     },
     "Reset Success" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1360,6 +1363,7 @@
       }
     },
     "Screen configuration has been deleted." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1370,6 +1374,7 @@
       }
     },
     "Screen configuration has been reset." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1400,6 +1405,7 @@
       }
     },
     "Screen is connected. Please disconnect it first." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

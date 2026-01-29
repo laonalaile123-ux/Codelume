@@ -10,9 +10,9 @@ import Foundation
 
 struct MenuBarView: View {
     @Environment(\.openWindow) private var openWindow
-    @AppStorage("Pause") private var pause: Bool = false
-    @AppStorage("Mute") private var mute: Bool = false
-    @AppStorage("Volume") private var volume: Double = 0.3
+    @AppStorage(PAUSE) private var pause: Bool = UserDefaultsManager.shared.getPauseStatus()
+    @AppStorage(MUTE) private var mute: Bool = UserDefaultsManager.shared.getMuteStatus()
+    @AppStorage(VOLUME) private var volume: Double = Double(UserDefaultsManager.shared.getVolume())
     
     var body: some View {
         VStack {

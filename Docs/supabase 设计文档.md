@@ -757,3 +757,54 @@ serve(async (req) => {
 4. **安全系统**: 认证、权限、数据保护
 
 通过Supabase的一体化服务，大大简化了后端开发复杂度，同时提供了可靠的性能和安全性。系统设计考虑了可扩展性，可以随着用户量的增长平滑升级。
+
+#
+创建触发器函数：
+```
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- 插入数据到users表
+  INSERT INTO public.users (
+    id,
+    email,
+    username,
+    avatar_url,
+    created_at,
+    updated_at
+  )
+  VALUES (
+    new.id,  -- 来自auth.users的UUID
+    
+    -- 从认证数据中提取邮箱
+    COALESCE(new.email, new.raw_user_meta_data->>'email', ''),
+    
+    -- 从认证元数据中提取用户名
+    COALESCE(
+      new.raw_user_meta_data->>'username',
+      new.raw_user_meta_data->>'user_name',
+      SPLIT_PART(new.email, '@', 1)  -- 如果没提供用户名，使用邮箱前缀
+    ),
+    
+    -- 从认证元数据中提取头像URL
+    COALESCE(new.raw_user_meta_data->>'avatar_url', ''),
+    
+    now(),  -- 创建时间
+    now()   -- 更新时间
+  );
+  
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+```
+
+-- 如果触发器已存在，先删除
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+
+-- 创建触发器
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW
+  EXECUTE FUNCTION public.handle_new_user();
+
+  
