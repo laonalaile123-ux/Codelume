@@ -71,7 +71,7 @@ struct ScreenConfigurationDetailView: View {
                                 .foregroundColor(.secondary)
                                 .lineLimit(2)
                                 .padding(8)
-                                .background(Color.gray.opacity(1.2))
+                                .background(Color.gray.opacity(0.2))
                                 .cornerRadius(4)
                                 .frame(width: 300,alignment: .leading)
                         }
