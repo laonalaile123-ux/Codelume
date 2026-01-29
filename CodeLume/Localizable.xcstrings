@@ -482,6 +482,7 @@
 
     },
     "Failed to add video to wallpaper bundle." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -492,6 +493,7 @@
       }
     },
     "Failed to create wallpaper bundle." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -501,7 +503,11 @@
         }
       }
     },
+    "Failed to import the following files:" : {
+
+    },
     "Failed to save wallpaper bundle." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -668,11 +674,22 @@
       }
     },
     "Import bundle" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "导入资源包"
+          }
+        }
+      }
+    },
+    "Import Completed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入完成"
           }
         }
       }
@@ -699,11 +716,22 @@
       }
     },
     "Import video" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "导入视频"
+          }
+        }
+      }
+    },
+    "Import Wallpapers" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入壁纸"
           }
         }
       }
@@ -844,7 +872,14 @@
       }
     },
     "New Password" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新密码"
+          }
+        }
+      }
     },
     "No" : {
       "localizations" : {
@@ -963,7 +998,14 @@
       }
     },
     "Password" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "密码"
+          }
+        }
+      }
     },
     "Pause" : {
       "localizations" : {
@@ -1116,7 +1158,14 @@
       }
     },
     "Please confirm your password" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请确认您的密码"
+          }
+        }
+      }
     },
     "Please restart the app to apply the new language settings." : {
       "localizations" : {
@@ -1180,10 +1229,24 @@
       }
     },
     "Register" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "注册"
+          }
+        }
+      }
     },
     "Register now" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "现在注册"
+          }
+        }
+      }
     },
     "Reset Configuration" : {
       "localizations" : {
@@ -1447,6 +1510,7 @@
       }
     },
     "Select a Video." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1457,6 +1521,7 @@
       }
     },
     "Select a Wallpaper Bundle." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1472,6 +1537,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "选择屏幕"
+          }
+        }
+      }
+    },
+    "Select Wallpaper Files" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择壁纸文件"
           }
         }
       }
@@ -1537,6 +1612,32 @@
         }
       }
     },
+    "Successfully imported %d wallpaper(s), failed %d:" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Successfully imported %1$d wallpaper(s), failed %2$d:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成功导入 %1$d 张壁纸，失败 %2$d 张："
+          }
+        }
+      }
+    },
+    "Successfully imported %d wallpaper(s)." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成功导入 %d 张壁纸"
+          }
+        }
+      }
+    },
     "Support Email" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1590,6 +1691,7 @@
       }
     },
     "The selected file is not a valid wallpaper bundle." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1781,6 +1883,7 @@
       }
     },
     "Wallpaper imported successfully. Please go to Local Wallpapers View to view it." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1819,6 +1922,9 @@
           }
         }
       }
+    },
+    "You can select multiple .bundle, .mp4, or .mov files to import as wallpapers." : {
+
     },
     "Your message will open in your default email client." : {
       "localizations" : {

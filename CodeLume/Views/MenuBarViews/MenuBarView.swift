@@ -1,3 +1,10 @@
+//
+//  UserAuthView.swift
+//  Codelume
+//
+//  Created by 广子俞 on 2026/1/27.
+//
+
 import SwiftUI
 import Foundation
 
@@ -37,12 +44,8 @@ struct MenuBarView: View {
             
             Divider()
             
-            Button("Import bundle") {
-                importBundle()
-            }
-            
-            Button("Import video") {
-                importVideo()
+            Button("Import Wallpapers") {
+                importWallpapers()
             }
             
             Divider()
