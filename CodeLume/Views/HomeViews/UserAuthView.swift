@@ -18,7 +18,7 @@ struct UserAuthView: View {
             return "Authenticating..."
         } else {
             if supabase.isAuthenticated {
-                return LocalizedStringKey(supabase.currentUser?.email ?? "Unknown")
+                return "Authenticated"
             } else {
                 return "Sign in"
             }
