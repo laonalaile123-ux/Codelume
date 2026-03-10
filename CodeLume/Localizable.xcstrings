@@ -405,9 +405,6 @@
         }
       }
     },
-    "Don't have an account yet?" : {
-
-    },
     "Douyin" : {
       "localizations" : {
         "zh-Hans" : {
@@ -790,9 +787,6 @@
       }
     },
     "Log in" : {
-
-    },
-    "Login" : {
 
     },
     "Login now" : {
@@ -1241,6 +1235,7 @@
       }
     },
     "Register now" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1767,6 +1762,9 @@
           }
         }
       }
+    },
+    "Use your Apple account to sign in" : {
+
     },
     "Username" : {
       "localizations" : {

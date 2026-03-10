@@ -124,6 +124,35 @@ class SupabaseManager: ObservableObject {
         }
         return true
     }
+
+    func signInWithApple(idToken: String, nonce: String?) async -> Bool {
+        await MainActor.run {
+            self.isLoading = true
+        }
+
+        do {
+            let credentials = OpenIDConnectCredentials(
+                provider: .apple,
+                idToken: idToken,
+                nonce: nonce
+            )
+
+            let session = try await client.auth.signInWithIdToken(credentials: credentials)
+            await MainActor.run {
+                self.isLoading = false
+                self.isAuthenticated = true
+                self.currentUser = session.user
+            }
+        } catch {
+            await MainActor.run {
+                self.isLoading = false
+                Alert(title: "Apple login failed!", message: error.localizedDescription)
+            }
+            return false
+        }
+
+        return true
+    }
     
     func signOut() {
         isLoading = true
