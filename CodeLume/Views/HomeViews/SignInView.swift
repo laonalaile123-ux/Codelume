@@ -1,5 +1,5 @@
 //
-//  LoginView.swift
+//  SignInView.swift
 //  Codelume
 //
 //  Created by 广子俞 on 2026/1/27.
@@ -9,7 +9,7 @@ import SwiftUI
 import AuthenticationServices
 import CryptoKit
 
-struct LoginView: View {
+struct SignInView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var appleSignInNonce: String?
     private let supabase = SupabaseManager.shared
@@ -52,13 +52,13 @@ struct LoginView: View {
         switch result {
         case .success(let authorization):
             guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else {
-                Alert(title: "Apple login failed!", message: "Invalid Apple credential.")
+                Alert(title: "Apple sign in failed!", message: "Invalid Apple credential.")
                 return
             }
             
             guard let tokenData = credential.identityToken,
                   let idToken = String(data: tokenData, encoding: .utf8) else {
-                Alert(title: "Apple login failed!", message: "Unable to read Apple identity token.")
+                Alert(title: "Apple sign in failed!", message: "Unable to read Apple identity token.")
                 return
             }
             
@@ -70,7 +70,7 @@ struct LoginView: View {
             }
             
         case .failure(let error):
-            Alert(title: "Apple login failed!", message: error.localizedDescription)
+            Alert(title: "Apple sign in failed!", message: error.localizedDescription)
         }
     }
     
@@ -105,5 +105,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    SignInView()
 }

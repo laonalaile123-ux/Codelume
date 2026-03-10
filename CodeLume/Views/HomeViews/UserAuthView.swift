@@ -10,8 +10,8 @@ import SwiftUI
 struct UserAuthView: View {
     @Environment(\.openWindow) private var openWindow
     @StateObject private var supabase = SupabaseManager.shared
-    @State private var showLoginView = false
-    @State private var showLogoutView = false
+    @State private var showSignInView = false
+    @State private var showSignOutView = false
     
     private var authDisplayText: LocalizedStringKey {
         if supabase.isLoading {
@@ -20,7 +20,7 @@ struct UserAuthView: View {
             if supabase.isAuthenticated {
                 return LocalizedStringKey(supabase.currentUser?.email ?? "Unknown")
             } else {
-                return "Log in"
+                return "Sign in"
             }
         }
     }
@@ -30,9 +30,9 @@ struct UserAuthView: View {
             Button {
                 if !supabase.isLoading {
                     if supabase.isAuthenticated {
-                        showLogoutView = true
+                        showSignOutView = true
                     } else {
-                        showLoginView = true
+                        showSignInView = true
                     }
                 }
             } label: {
@@ -65,11 +65,11 @@ struct UserAuthView: View {
                 .padding(.vertical, 5)
             Spacer()
         }
-        .sheet(isPresented: $showLoginView) {
-            LoginView()
+        .sheet(isPresented: $showSignInView) {
+            SignInView()
         }
-        .sheet(isPresented: $showLogoutView) {
-            LogoutView()
+        .sheet(isPresented: $showSignOutView) {
+            SignOutView()
         }
     }
 }

@@ -89,7 +89,7 @@ class SupabaseManager: ObservableObject {
             )
             await MainActor.run {
                 self.isLoading = false
-                Alert(title: "Register success!", message: "Please log in with your email and password.")
+                Alert(title: "Register success!", message: "Please sign in with your email and password.")
             }
         } catch {
             await MainActor.run {
@@ -118,7 +118,7 @@ class SupabaseManager: ObservableObject {
         } catch {
             await MainActor.run {
                 self.isLoading = false
-                Alert(title: "Login failed!", message: error.localizedDescription)
+                Alert(title: "Sign in failed!", message: error.localizedDescription)
             }
             return false
         }
@@ -146,7 +146,7 @@ class SupabaseManager: ObservableObject {
         } catch {
             await MainActor.run {
                 self.isLoading = false
-                Alert(title: "Apple login failed!", message: error.localizedDescription)
+                Alert(title: "Apple sign in failed!", message: error.localizedDescription)
             }
             return false
         }
@@ -161,7 +161,7 @@ class SupabaseManager: ObservableObject {
                 try await client.auth.signOut()
             } catch {
                 await MainActor.run {
-                    Alert(title: "Login failed.", message: error.localizedDescription)
+                    Alert(title: "Sign out failed.", message: error.localizedDescription)
                 }
             }
             await MainActor.run {

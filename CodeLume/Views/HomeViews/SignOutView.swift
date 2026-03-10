@@ -1,5 +1,5 @@
 //
-//  LogoutView.swift
+//  SignOutView.swift
 //  Codelume
 //
 //  Created by 广子俞 on 2026/1/28.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LogoutView: View {
+struct SignOutView: View {
     @Environment(\.dismiss) private var dismiss
     private let supabase = SupabaseManager.shared
     
@@ -56,5 +56,5 @@ struct LogoutView: View {
 }
 
 #Preview {
-    LogoutView()
+    SignOutView()
 }
