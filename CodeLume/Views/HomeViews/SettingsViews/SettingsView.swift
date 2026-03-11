@@ -13,6 +13,7 @@ struct SettingsView: View {
                 }.tag(2)
             }
         }
+        .frame(minWidth: 800, minHeight: 500)
     }
 }
 

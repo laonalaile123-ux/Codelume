@@ -50,8 +50,8 @@ struct ScreenSaverView: View {
                     .frame(height: 40)
             }
             .padding()
-            .frame(maxWidth: .infinity)
         }
+        .frame(minWidth: 800, minHeight: 500)
     }
     
     func downloadScreensaver() {

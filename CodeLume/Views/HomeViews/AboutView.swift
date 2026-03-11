@@ -137,6 +137,7 @@ struct AboutView: View {
         .sheet(isPresented: $showingEmailSheet) {
             EmailContactView(emailAddress: emailAddress)
         }
+        .frame(minWidth: 800, minHeight: 500)
     }
 }
 

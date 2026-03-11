@@ -50,7 +50,6 @@ struct HomeView: View {
                     .navigationTitle("")
             }
         }
-        .frame(minWidth: 1050, minHeight: 600)
     }
 }
 

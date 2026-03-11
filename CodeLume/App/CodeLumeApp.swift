@@ -12,7 +12,6 @@ struct CodelumeApp: App {
             HomeView()
         }
         .windowStyle(.titleBar)
-        .defaultSize(width: 1000, height: 600)
         .windowResizability(.contentSize)
     }
 }

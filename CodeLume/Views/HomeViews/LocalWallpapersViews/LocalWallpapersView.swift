@@ -25,6 +25,7 @@ struct LocalWallpapersView: View {
             Logger.info("Received refresh local wallpapers notification.")
             loadLocalWallpapers()
         }
+        .frame(minWidth: 800, minHeight: 500)
     }
     
     private func loadLocalWallpapers() {
