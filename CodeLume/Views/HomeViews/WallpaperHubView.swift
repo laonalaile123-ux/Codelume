@@ -52,7 +52,10 @@ struct WallpaperHubView: View {
                             )
                         }
                     }
-                    .padding()
+                    .padding(.horizontal, 24)
+                    .padding(.top, 0)
+                    .padding(.bottom, 20)
+                    .frame(maxWidth: .infinity)
                 }
             }
         }
