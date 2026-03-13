@@ -11,8 +11,6 @@ struct CodelumeApp: App {
         WindowGroup("Codelume", id: "home") {
             HomeView()
         }
-        .windowStyle(.titleBar)
-        .defaultSize(width: 1000, height: 600)
         .windowResizability(.contentSize)
     }
 }

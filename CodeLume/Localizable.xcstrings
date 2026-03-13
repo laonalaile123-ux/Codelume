@@ -14,8 +14,15 @@
         }
       }
     },
-    "%@:" : {
-
+    "%@ | %@ | %@ | %@ | %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ | %2$@ | %3$@ | %4$@ | %5$@"
+          }
+        }
+      }
     },
     "%lld" : {
 
@@ -30,11 +37,45 @@
         }
       }
     },
-    "4-20 chars" : {
-
+    "• Format: .mp4 or .mov" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• 格式：.mp4 或 .mov"
+          }
+        }
+      }
     },
-    "6+ chars" : {
-
+    "• Max size: 50 MB" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• 大小：不超过 50 MB"
+          }
+        }
+      }
+    },
+    "• Min resolution: 1080P (4K recommended)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• 分辨率：不低于 1080P（推荐 4K）"
+          }
+        }
+      }
+    },
+    "• Must support seamless looping" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• 支持无缝循环播放"
+          }
+        }
+      }
     },
     "About" : {
       "localizations" : {
@@ -42,6 +83,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关于"
+          }
+        }
+      }
+    },
+    "All contact methods are listed at the bottom of this page." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有联系方式都列在本页面底部。"
           }
         }
       }
@@ -56,9 +107,6 @@
         }
       }
     },
-    "Already have an account?" : {
-
-    },
     "App Store Version" : {
       "localizations" : {
         "zh-Hans" : {
@@ -69,11 +117,45 @@
         }
       }
     },
-    "Are you sure you want to logout?" : {
-
+    "Apple ID sign in failed!" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple ID 登录失败"
+          }
+        }
+      }
+    },
+    "Are you sure you want to sign out?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你确定要退出登录吗？"
+          }
+        }
+      }
+    },
+    "Authenticated" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已认证"
+          }
+        }
+      }
     },
     "Authenticating..." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "认证中"
+          }
+        }
+      }
     },
     "Available Screens:" : {
       "localizations" : {
@@ -94,6 +176,29 @@
           }
         }
       }
+    },
+    "Built with a privacy-first approach, Codelume runs inside the macOS sandbox and does not collect personal data. It is open source, transparent, and built for long-term reliability." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "码镜秉持隐私优先原则，运行于 macOS 沙盒环境内，不收集个人数据。应用开源透明，并以长期稳定可靠为目标构建。"
+          }
+        }
+      }
+    },
+    "Buy" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "购买"
+          }
+        }
+      }
+    },
+    "Buy failed" : {
+
     },
     "Cancel" : {
       "localizations" : {
@@ -125,12 +230,6 @@
           }
         }
       }
-    },
-    "Change Avatar" : {
-
-    },
-    "Change Password" : {
-
     },
     "Chinese" : {
       "extractionState" : "manual",
@@ -185,12 +284,22 @@
         }
       }
     },
-    "Codelume is a native, open-source dynamic wallpaper application built exclusively for macOS." : {
+    "Codelume is a native macOS dynamic wallpaper app designed for smooth playback, low resource usage, and a polished desktop experience." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "码镜是一款原生开源动态壁纸应用，专为 macOS 系统设计。"
+            "value" : "码镜是一款原生 macOS 动态壁纸应用，专注于流畅播放、低资源占用和精致的桌面体验。"
+          }
+        }
+      }
+    },
+    "Codelume is a platform dedicated to the playback engine; we do not produce wallpaper content ourselves. We recognize that the creator's work is paramount to the user experience. Therefore, we invite creators to submit their original wallpapers via email for potential inclusion. Creators have full control over the pricing of their work. Codelume will retain a small commission on each sale to support server maintenance and platform operations, with the remainder of the proceeds compensated directly to the creator. To ensure accessibility, a curated collection of free wallpapers will always be available on the platform." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "码镜是一个专注于播放引擎的平台，我们自身并不生产壁纸内容。我们深知，创作者的成果对用户体验至关重要。因此，我们欢迎创作者通过邮件提交原创壁纸，以纳入平台。创作者拥有对其作品的完全定价权。每笔销售，码镜将抽取少量佣金用于服务器维护和平台运营，其余收入将直接归创作者所有。同时，为确保平台的开放性与可访问性，我们将始终提供一批精选的免费壁纸。"
           }
         }
       }
@@ -225,16 +334,6 @@
         }
       }
     },
-    "Completely free. Clone, build, and customize from GitHub." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "完全免费。可从 GitHub 克隆、构建和自定义。"
-          }
-        }
-      }
-    },
     "Compose Message" : {
       "localizations" : {
         "zh-Hans" : {
@@ -254,9 +353,6 @@
           }
         }
       }
-    },
-    "Confirm Password" : {
-
     },
     "Connected" : {
       "localizations" : {
@@ -319,7 +415,7 @@
         }
       }
     },
-    "Current Password" : {
+    "Credits: %lld" : {
 
     },
     "Dark" : {
@@ -354,26 +450,10 @@
       }
     },
     "Delete Failed" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除失败"
-          }
-        }
-      }
+
     },
     "Delete Success" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除成功"
-          }
-        }
-      }
+
     },
     "Delete this video?" : {
       "localizations" : {
@@ -415,12 +495,38 @@
         }
       }
     },
+    "Download" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载"
+          }
+        }
+      }
+    },
+    "Download failed" : {
+
+    },
     "Download Screen Saver" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "下载屏保"
+          }
+        }
+      }
+    },
+    "Download success" : {
+
+    },
+    "Due to limited testing resources, this app is only tested on the latest macOS systems. Older systems may experience compatibility issues. We recommend upgrading your system or compiling from source to resolve any issues." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由于精力有限，本软件只在最新的 macOS 系统上进行测试。较旧的系统可能存在兼容性问题。建议升级系统或通过源码编译来解决问题。"
           }
         }
       }
@@ -446,16 +552,6 @@
         }
       }
     },
-    "Email Support" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "邮件支持"
-          }
-        }
-      }
-    },
     "English" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -477,44 +573,8 @@
         }
       }
     },
-    "example@email.com" : {
-
-    },
-    "Failed to add video to wallpaper bundle." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "给资源包中添加视频失败。"
-          }
-        }
-      }
-    },
-    "Failed to create wallpaper bundle." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "创建壁纸资源包失败。"
-          }
-        }
-      }
-    },
     "Failed to import the following files:" : {
 
-    },
-    "Failed to save wallpaper bundle." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "保存壁纸资源包失败。"
-          }
-        }
-      }
     },
     "File Path" : {
       "extractionState" : "manual",
@@ -581,26 +641,6 @@
         }
       }
     },
-    "Follow us for updates, demos, and community content." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "关注我们以获取更新、演示和社区内容。"
-          }
-        }
-      }
-    },
-    "For technical support, collaboration inquiries, or feedback." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "如需技术支持、合作咨询或提供反馈，请联系我们。"
-          }
-        }
-      }
-    },
     "From the list on the left, select a screen to view and edit its configuration information" : {
       "localizations" : {
         "zh-Hans" : {
@@ -617,16 +657,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通用设置"
-          }
-        }
-      }
-    },
-    "Get Codelume" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "获取码镜"
           }
         }
       }
@@ -651,6 +681,16 @@
         }
       }
     },
+    "GitHub Open-Source Version" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub 开源版本"
+          }
+        }
+      }
+    },
     "Half an hour" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -668,17 +708,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "主界面"
-          }
-        }
-      }
-    },
-    "Import bundle" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "导入资源包"
           }
         }
       }
@@ -714,23 +743,32 @@
         }
       }
     },
-    "Import video" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "导入视频"
-          }
-        }
-      }
-    },
     "Import Wallpapers" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "导入壁纸"
+          }
+        }
+      }
+    },
+    "Integrated with Supabase services, offering both free and paid wallpapers with a richer and continuously expanding content ecosystem." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接入 Supabase 服务，提供免费与付费壁纸，内容生态更丰富且持续扩展。"
+          }
+        }
+      }
+    },
+    "Invalid Apple credential." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无效的 Apple 凭证"
           }
         }
       }
@@ -766,12 +804,26 @@
         }
       }
     },
+    "Load failed" : {
+
+    },
     "Loading..." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "加载中…"
+          }
+        }
+      }
+    },
+    "Local" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地"
           }
         }
       }
@@ -785,15 +837,6 @@
           }
         }
       }
-    },
-    "Log in" : {
-
-    },
-    "Login now" : {
-
-    },
-    "Logout" : {
-
     },
     "Loop" : {
       "extractionState" : "manual",
@@ -867,12 +910,12 @@
         }
       }
     },
-    "New Password" : {
+    "New wallpapers, version updates, and technical insights." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新密码"
+            "value" : "壁纸上新、版本更新和技术分享。"
           }
         }
       }
@@ -887,12 +930,25 @@
         }
       }
     },
+    "No matching credit package found." : {
+
+    },
     "Non-program-built-in local video cannot be recovered after deletion and need to be redownloaded or imported." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "非程序内置的本地视频删除后无法恢复，需重新下载或导入。"
+          }
+        }
+      }
+    },
+    "Note: Paid features are currently in development. All wallpapers are available for free at this time." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "注：付费功能还在开发中，暂时所有壁纸免费使用。"
           }
         }
       }
@@ -969,36 +1025,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在邮件中打开"
-          }
-        }
-      }
-    },
-    "Open Source Version" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开源版本"
-          }
-        }
-      }
-    },
-    "Paid download to support Apple Developer Program costs. Auto-updated." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "付费下载以支持苹果开发者计划费用。自动更新。"
-          }
-        }
-      }
-    },
-    "Password" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "密码"
           }
         }
       }
@@ -1153,16 +1179,6 @@
         }
       }
     },
-    "Please confirm your password" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "请确认您的密码"
-          }
-        }
-      }
-    },
     "Please restart the app to apply the new language settings." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1183,6 +1199,9 @@
         }
       }
     },
+    "Please sign in with your email and password." : {
+
+    },
     "Preferences" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1202,6 +1221,9 @@
           }
         }
       }
+    },
+    "Purchase failed" : {
+
     },
     "Quit" : {
       "localizations" : {
@@ -1224,23 +1246,18 @@
         }
       }
     },
-    "Register" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "注册"
-          }
-        }
-      }
+    "Register failed!" : {
+
     },
-    "Register now" : {
-      "extractionState" : "stale",
+    "Register success!" : {
+
+    },
+    "Report issues, request features, or contribute code." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "现在注册"
+            "value" : "报告问题、请求功能或贡献代码。"
           }
         }
       }
@@ -1256,15 +1273,7 @@
       }
     },
     "Reset Success" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "重置成功"
-          }
-        }
-      }
+
     },
     "Resolution" : {
       "extractionState" : "manual",
@@ -1307,22 +1316,15 @@
         }
       }
     },
+    "Retry" : {
+
+    },
     "Rstart" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "重启"
-          }
-        }
-      }
-    },
-    "Save" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "保存"
           }
         }
       }
@@ -1357,27 +1359,8 @@
         }
       }
     },
-    "Screen configuration has been deleted." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "屏幕平之已经删除。"
-          }
-        }
-      }
-    },
     "Screen configuration has been reset." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "屏幕配置已经重置。"
-          }
-        }
-      }
+
     },
     "Screen ID:" : {
       "localizations" : {
@@ -1400,15 +1383,7 @@
       }
     },
     "Screen is connected. Please disconnect it first." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "屏幕正在使用，请先断开屏幕。"
-          }
-        }
-      }
+
     },
     "Screen Management" : {
       "localizations" : {
@@ -1491,6 +1466,7 @@
       }
     },
     "Screensaver saved successfully!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1506,28 +1482,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "副屏幕"
-          }
-        }
-      }
-    },
-    "Select a Video." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择一个视频"
-          }
-        }
-      }
-    },
-    "Select a Wallpaper Bundle." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "请选择一个壁纸包文件"
           }
         }
       }
@@ -1583,6 +1537,59 @@
         }
       }
     },
+    "Sign in" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录"
+          }
+        }
+      }
+    },
+    "Sign in failed!" : {
+
+    },
+    "Sign in to access the Wallpaper Hub." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录后访问壁纸中心"
+          }
+        }
+      }
+    },
+    "Sign Out" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出登录"
+          }
+        }
+      }
+    },
+    "Sign out failed." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出登录失败"
+          }
+        }
+      }
+    },
+    "Some materials are sourced from the internet. If any content infringes on your rights, please contact us using the contact methods at the bottom of this page." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "部分素材来源于网络。如有侵权，请通过本页面底部的联系方式与我们联系。"
+          }
+        }
+      }
+    },
     "SpriteKit" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1603,12 +1610,43 @@
         }
       }
     },
+    "Stored in local wallpaper bundles." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储于本地壁纸 Bundle。"
+          }
+        }
+      }
+    },
     "Subject" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "主题"
+          }
+        }
+      }
+    },
+    "Submission Requirements:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "投递要求："
+          }
+        }
+      }
+    },
+    "Submit wallpapers or report copyright issues." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "投递壁纸或举报版权问题。"
           }
         }
       }
@@ -1649,6 +1687,16 @@
         }
       }
     },
+    "Supports custom builds and full code-level customization. This version does not connect to the server, so Wallpaper Hub content is unavailable." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "支持自定义构建与代码级深度定制。该版本不接入服务器，因此无法访问壁纸中心内容。"
+          }
+        }
+      }
+    },
     "Tags" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1671,33 +1719,12 @@
         }
       }
     },
-    "The app runs strictly within the macOS sandbox, requires no network permissions, and never collects user data." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "该应用严格运行于 macOS 沙盒环境内，无需任何网络权限，且绝不会收集用户数据。"
-          }
-        }
-      }
-    },
     "The application is already running. Please access Codelume through the top status bar." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "该应用已在运行。请通过顶部状态栏访问码镜"
-          }
-        }
-      }
-    },
-    "The selected file is not a valid wallpaper bundle." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "所选文件不是有效的壁纸包文件"
           }
         }
       }
@@ -1733,12 +1760,28 @@
         }
       }
     },
+    "Top up" : {
+
+    },
+    "Top up unavailable" : {
+
+    },
     "Total Screens" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "总屏幕数"
+          }
+        }
+      }
+    },
+    "Unable to read Apple identity token." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法读取 Apple 身份令牌"
           }
         }
       }
@@ -1764,14 +1807,11 @@
       }
     },
     "Use your Apple account to sign in" : {
-
-    },
-    "Username" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用户名"
+            "value" : "使用你的 Apple 账号登录"
           }
         }
       }
@@ -1786,52 +1826,22 @@
         }
       }
     },
+    "Versions" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本介绍"
+          }
+        }
+      }
+    },
     "Video" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "视频"
-          }
-        }
-      }
-    },
-    "View installation instructions on GitHub." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在 GitHub上查看安装说明。"
-          }
-        }
-      }
-    },
-    "View on App Store" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在 App Store 上查看"
-          }
-        }
-      }
-    },
-    "View on GitHub" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在 GitHub 上查看"
-          }
-        }
-      }
-    },
-    "Visit Codelume's Douyin" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "访问 Codelume 的抖音"
           }
         }
       }
@@ -1886,23 +1896,15 @@
         }
       }
     },
-    "Wallpaper imported successfully. Please go to Local Wallpapers View to view it." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "壁纸导入成功，请前往本地壁纸库查看"
-          }
-        }
-      }
+    "Wallpaper has been imported to local library." : {
+
     },
-    "We focus solely on the playback engine. For video wallpapers, we recommend using compatible content from platforms like **Wallpaper Engine**. We welcome collaboration with original creators." : {
+    "Wallpaper Hub" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "我们仅专注于播放引擎功能。对于视频壁纸，我们建议您使用来自诸如 **Wallpaper Engine** 等平台的兼容内容。我们欢迎与原创作者进行合作。"
+            "value" : "壁纸中心"
           }
         }
       }
@@ -1928,17 +1930,27 @@
       }
     },
     "You can select multiple .bundle, .mp4, or .mov files to import as wallpapers." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你可以选择多个 .bundle、.mp4 或 .mov 文件作为壁纸导入。"
+          }
+        }
+      }
     },
     "Your message will open in your default email client." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "您的邮件将在默认的邮件客户端中打开。"
+            "value" : "你的邮件将在默认的邮件客户端中打开。"
           }
         }
       }
+    },
+    "已下载" : {
+
     }
   },
   "version" : "1.0"

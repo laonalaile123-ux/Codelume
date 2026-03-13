@@ -4,6 +4,7 @@ import CodelumeBundle
 
 struct WallpaperPreviewView: View {
     let url: URL
+    @Environment(\.dismiss) var dismiss
     @State private var player = AVPlayer()
     @State private var videoURL: URL?
     @State private var errorMessage: String?
@@ -12,8 +13,10 @@ struct WallpaperPreviewView: View {
     var body: some View {
         Group {
             if let videoURL = videoURL {
-                VideoPreviewView(videoURL: videoURL)
-                    
+                ZStack(alignment: .topLeading) {
+                    VideoPreviewView(videoURL: videoURL)
+                    CloseButton(action: { dismiss() })
+                }
             } else if let errorMessage = errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)

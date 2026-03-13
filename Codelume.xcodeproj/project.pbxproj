@@ -13,8 +13,7 @@
 		86406E3F2F289FF700C3CB3A /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 86406E3E2F289FF700C3CB3A /* Realtime */; };
 		86406E412F289FF700C3CB3A /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 86406E402F289FF700C3CB3A /* Storage */; };
 		86406E432F289FF700C3CB3A /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 86406E422F289FF700C3CB3A /* Supabase */; };
-		864DE0BF2EF447B3009B3349 /* CodelumeBundle in Frameworks */ = {isa = PBXBuildFile; productRef = 864DE0BE2EF447B3009B3349 /* CodelumeBundle */; };
-		86C722CA2F1642FC008BE5B5 /* CodelumeBundle in Frameworks */ = {isa = PBXBuildFile; productRef = 86C722C92F1642FC008BE5B5 /* CodelumeBundle */; };
+		8692A2CF2F625C9700F3D9E9 /* CodelumeBundle in Frameworks */ = {isa = PBXBuildFile; productRef = 8692A2CE2F625C9700F3D9E9 /* CodelumeBundle */; };
 		86E2235B2EEA897000AFA3A3 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = 86E2235A2EEA897000AFA3A3 /* SwiftyBeaver */; };
 		86FBEE652EEA8CBD00F05936 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 86FBEE642EEA8CBD00F05936 /* SQLite */; };
 /* End PBXBuildFile section */
@@ -40,11 +39,6 @@
 			path = Codelume;
 			sourceTree = "<group>";
 		};
-		86406E652F28AC4000C3CB3A /* CodelumeTest */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CodelumeTest;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,13 +49,12 @@
 				86406E432F289FF700C3CB3A /* Supabase in Frameworks */,
 				86406E3B2F289FF700C3CB3A /* Functions in Frameworks */,
 				86FBEE652EEA8CBD00F05936 /* SQLite in Frameworks */,
+				8692A2CF2F625C9700F3D9E9 /* CodelumeBundle in Frameworks */,
 				86406E3D2F289FF700C3CB3A /* PostgREST in Frameworks */,
 				86406E3F2F289FF700C3CB3A /* Realtime in Frameworks */,
 				86E2235B2EEA897000AFA3A3 /* SwiftyBeaver in Frameworks */,
-				86C722CA2F1642FC008BE5B5 /* CodelumeBundle in Frameworks */,
 				86406E412F289FF700C3CB3A /* Storage in Frameworks */,
 				86406E392F289FF700C3CB3A /* Auth in Frameworks */,
-				864DE0BF2EF447B3009B3349 /* CodelumeBundle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				2262B8672E4B94B2003E8F45 /* Codelume */,
-				86406E652F28AC4000C3CB3A /* CodelumeTest */,
 				86EDECDA2EC641BA00B3EAD8 /* Frameworks */,
 				2262B8662E4B94B2003E8F45 /* Products */,
 			);
@@ -123,14 +115,13 @@
 			packageProductDependencies = (
 				86E2235A2EEA897000AFA3A3 /* SwiftyBeaver */,
 				86FBEE642EEA8CBD00F05936 /* SQLite */,
-				864DE0BE2EF447B3009B3349 /* CodelumeBundle */,
-				86C722C92F1642FC008BE5B5 /* CodelumeBundle */,
 				86406E382F289FF700C3CB3A /* Auth */,
 				86406E3A2F289FF700C3CB3A /* Functions */,
 				86406E3C2F289FF700C3CB3A /* PostgREST */,
 				86406E3E2F289FF700C3CB3A /* Realtime */,
 				86406E402F289FF700C3CB3A /* Storage */,
 				86406E422F289FF700C3CB3A /* Supabase */,
+				8692A2CE2F625C9700F3D9E9 /* CodelumeBundle */,
 			);
 			productName = "codelume-app";
 			productReference = 2262B8652E4B94B2003E8F45 /* Codelume.app */;
@@ -148,9 +139,6 @@
 			);
 			dependencies = (
 				86406E692F28AC4000C3CB3A /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				86406E652F28AC4000C3CB3A /* CodelumeTest */,
 			);
 			name = CodelumeTest;
 			packageProductDependencies = (
@@ -191,8 +179,8 @@
 			packageReferences = (
 				86E223592EEA897000AFA3A3 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				86FBEE632EEA8CBD00F05936 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
-				86C722C82F1642FC008BE5B5 /* XCRemoteSwiftPackageReference "CodelumeBundle" */,
 				86406E372F289FF700C3CB3A /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				8692A2CD2F625C9700F3D9E9 /* XCLocalSwiftPackageReference "../CodelumeBundle" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2262B8662E4B94B2003E8F45 /* Products */;
@@ -392,7 +380,7 @@
 				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
 				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = NO;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Codelume/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Codelume;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -437,7 +425,7 @@
 				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
 				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = NO;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Codelume/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Codelume;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -534,6 +522,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		8692A2CD2F625C9700F3D9E9 /* XCLocalSwiftPackageReference "../CodelumeBundle" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../CodelumeBundle;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		86406E372F289FF700C3CB3A /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -541,14 +536,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.5.1;
-			};
-		};
-		86C722C82F1642FC008BE5B5 /* XCRemoteSwiftPackageReference "CodelumeBundle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/singulay-tech/CodelumeBundle.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.1;
 			};
 		};
 		86E223592EEA897000AFA3A3 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
@@ -600,13 +587,8 @@
 			package = 86406E372F289FF700C3CB3A /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Supabase;
 		};
-		864DE0BE2EF447B3009B3349 /* CodelumeBundle */ = {
+		8692A2CE2F625C9700F3D9E9 /* CodelumeBundle */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = CodelumeBundle;
-		};
-		86C722C92F1642FC008BE5B5 /* CodelumeBundle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 86C722C82F1642FC008BE5B5 /* XCRemoteSwiftPackageReference "CodelumeBundle" */;
 			productName = CodelumeBundle;
 		};
 		86E2235A2EEA897000AFA3A3 /* SwiftyBeaver */ = {
