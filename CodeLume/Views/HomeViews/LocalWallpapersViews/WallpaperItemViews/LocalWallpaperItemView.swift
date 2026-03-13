@@ -49,11 +49,6 @@ struct LocalWallpaperItemView: View {
             }
         }
         .sheet(isPresented: $isShowingDetails) {
-            ZStack(alignment: .topLeading) {
-                DetailsView(wallpaperURL: wallpaperURL)
-                    .padding(20)
-                CloseButton(action: { isShowingDetails = false })
-            }
         }
         .sheet(isPresented: $isShowingScreenSelector) {
             ScreenSelectorView(screens: NSScreen.screens, onSelect: handleScreenSelection)

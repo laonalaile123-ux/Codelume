@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SectionTitleView: View {
+struct SectionTitle: View {
     let title: LocalizedStringKey
     var body: some View {
         Text(title)
@@ -11,7 +11,7 @@ struct SectionTitleView: View {
 }
 
 #Preview {
-    SectionTitleView(title: "Codelume")
+    SectionTitle(title: "Codelume")
 }
 
 

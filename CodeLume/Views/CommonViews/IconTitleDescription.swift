@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct IconTitleDescriptionView: View {
+struct IconTitleDescription: View {
     let icon: String
     let isSystemIcon: Bool
     let title: LocalizedStringKey
@@ -59,7 +59,7 @@ struct IconTitleDescriptionView: View {
 }
 
 #Preview {
-    IconTitleDescriptionView(
+    IconTitleDescription(
         icon: "GithubIcon",
         isSystemIcon: false,
         title: "GitHub",

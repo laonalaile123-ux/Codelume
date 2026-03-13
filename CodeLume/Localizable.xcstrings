@@ -14,10 +14,17 @@
         }
       }
     },
-    "%lld" : {
-
+    "%@ | %@ | %@ | %@ | %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ | %2$@ | %3$@ | %4$@ | %5$@"
+          }
+        }
+      }
     },
-    "%lld results" : {
+    "%lld" : {
 
     },
     "%lldx%lld" : {
@@ -79,9 +86,6 @@
           }
         }
       }
-    },
-    "All Categories" : {
-
     },
     "All contact methods are listed at the bottom of this page." : {
       "localizations" : {
@@ -213,9 +217,6 @@
           }
         }
       }
-    },
-    "Category %lld" : {
-
     },
     "Chinese" : {
       "extractionState" : "manual",
@@ -768,9 +769,6 @@
         }
       }
     },
-    "Loading video info..." : {
-
-    },
     "Loading..." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1179,9 +1177,6 @@
         }
       }
     },
-    "Price" : {
-
-    },
     "Quit" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1516,9 +1511,6 @@
         }
       }
     },
-    "Sort" : {
-
-    },
     "SpriteKit" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1721,9 +1713,6 @@
         }
       }
     },
-    "Use the toolbar search field to find wallpapers." : {
-
-    },
     "Use your Apple account to sign in" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1763,19 +1752,6 @@
           }
         }
       }
-    },
-    "Video Info: %@ | %@ | %@ | %@ | %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Video Info: %1$@ | %2$@ | %3$@ | %4$@ | %5$@"
-          }
-        }
-      }
-    },
-    "Video Info: Unavailable" : {
-
     },
     "Volume" : {
       "localizations" : {

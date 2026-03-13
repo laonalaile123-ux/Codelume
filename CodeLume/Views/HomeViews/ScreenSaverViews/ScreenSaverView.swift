@@ -4,10 +4,10 @@ import UniformTypeIdentifiers
 struct ScreenSaverView: View {
     var body: some View {
             VStack(alignment: .leading, spacing: 16) {
-                TitleView(title: "Codelume Screen Saver")
-                SectionTitleView(title: "Screen Saver Introduction")
-                DescriptionTextView(desc: "Screen savers originated in the CRT monitor era, primarily designed to prevent 'burn-in' caused by static images remaining on the screen for extended periods. This phenomenon occurs when electron beams continuously bombard the same phosphor areas, causing permanent physical damage. As technology evolved to LCD and OLED displays, screen savers transformed from mere hardware protection to versatile platforms that integrate security, energy management, information display, and personalized experiences.")
-                DescriptionTextView(desc: "Codelume offers a dedicated screen saver module that allows users to set their current dynamic wallpapers as screen savers after downloading and installing it. This creates a seamless visual transition between active desktop environments and idle states, extending dynamic aesthetics throughout the entire device usage cycle while ensuring privacy security and maintaining a consistent immersive visual experience.")
+                Title(title: "Codelume Screen Saver")
+                SectionTitle(title: "Screen Saver Introduction")
+                DescriptionText(desc: "Screen savers originated in the CRT monitor era, primarily designed to prevent 'burn-in' caused by static images remaining on the screen for extended periods. This phenomenon occurs when electron beams continuously bombard the same phosphor areas, causing permanent physical damage. As technology evolved to LCD and OLED displays, screen savers transformed from mere hardware protection to versatile platforms that integrate security, energy management, information display, and personalized experiences.")
+                DescriptionText(desc: "Codelume offers a dedicated screen saver module that allows users to set their current dynamic wallpapers as screen savers after downloading and installing it. This creates a seamless visual transition between active desktop environments and idle states, extending dynamic aesthetics throughout the entire device usage cycle while ensuring privacy security and maintaining a consistent immersive visual experience.")
 
                 Spacer()
                 

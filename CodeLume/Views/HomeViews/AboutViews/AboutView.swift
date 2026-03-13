@@ -25,7 +25,7 @@ struct AboutView: View {
                 .frame(maxWidth: .infinity)
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    SectionTitleView(title: "About")
+                    SectionTitle(title: "About")
                     Text("Codelume is a native macOS dynamic wallpaper app designed for smooth playback, low resource usage, and a polished desktop experience.")
                         .font(.body)
                         .fixedSize(horizontal: false, vertical: true)
@@ -41,16 +41,16 @@ struct AboutView: View {
                 .aboutSectionCard()
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    SectionTitleView(title: "Versions")
+                    SectionTitle(title: "Versions")
                     
-                    IconTitleDescriptionView(
+                    IconTitleDescription(
                         icon: "GithubIcon",
                         isSystemIcon: false,
                         title: "GitHub Open-Source Version",
                         description: "Supports custom builds and full code-level customization. This version does not connect to the server, so Wallpaper Hub content is unavailable."
                     )
                     
-                    IconTitleDescriptionView(
+                    IconTitleDescription(
                         icon: "apple.logo",
                         isSystemIcon: true,
                         title: "App Store Version",
@@ -66,7 +66,7 @@ struct AboutView: View {
                 .aboutSectionCard()
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    SectionTitleView(title: "Wallpaper Content")
+                    SectionTitle(title: "Wallpaper Content")
                     Text("Codelume is a platform dedicated to the playback engine; we do not produce wallpaper content ourselves. We recognize that the creator's work is paramount to the user experience. Therefore, we invite creators to submit their original wallpapers via email for potential inclusion. Creators have full control over the pricing of their work. Codelume will retain a small commission on each sale to support server maintenance and platform operations, with the remainder of the proceeds compensated directly to the creator. To ensure accessibility, a curated collection of free wallpapers will always be available on the platform.")
                         .font(.callout)
                         .foregroundColor(.secondary)
@@ -102,23 +102,23 @@ struct AboutView: View {
                 .aboutSectionCard()
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    SectionTitleView(title: "Contact & Support")
+                    SectionTitle(title: "Contact & Support")
                     
-                    IconTitleDescriptionView(
+                    IconTitleDescription(
                         icon: "envelope",
                         isSystemIcon: true,
                         title: "Email",
                         description: "Submit wallpapers or report copyright issues."
                     )
                     
-                    IconTitleDescriptionView(
+                    IconTitleDescription(
                         icon: "douyinIcon",
                         isSystemIcon: false,
                         title: "Douyin",
                         description: "New wallpapers, version updates, and technical insights."
                     )
                     
-                    IconTitleDescriptionView(
+                    IconTitleDescription(
                         icon: "GithubIcon",
                         isSystemIcon: false,
                         title: "GitHub",

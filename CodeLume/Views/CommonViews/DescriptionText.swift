@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct DescriptionTextView: View {
+struct DescriptionText: View {
     let desc: LocalizedStringKey
     var body: some View {
         Text(desc)
@@ -11,5 +11,5 @@ struct DescriptionTextView: View {
 }
 
 #Preview {
-    DescriptionTextView(desc: "Codelume")
+    DescriptionText(desc: "Codelume")
 }
