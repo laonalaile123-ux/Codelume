@@ -30,18 +30,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NSApp.appearance = nil
         }
         
-//        if isAppAlreadyRunning() {
-//            let alert = NSAlert()
-//            alert.messageText = NSLocalizedString("Codelume is Running", comment: "")
-//            alert.informativeText = NSLocalizedString("The application is already running. Please access Codelume through the top status bar.", comment: "")
-//            alert.alertStyle = .warning
-//            alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
-//            alert.runModal()
-//            
-//            NSApp.terminate(nil)
-//            return
-//        }
-        
         let showWelcomeView = UserDefaultsManager.shared.getWelcomeStatus()
         if showWelcomeView {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -74,17 +62,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.makeKeyAndOrderFront(nil)
         
         welcomeWindow = window
-    }
-    
-    private func isAppAlreadyRunning() -> Bool {
-        let bundleID = Bundle.main.bundleIdentifier!
-        let runningApps = NSWorkspace.shared.runningApplications
-        
-        let otherInstances = runningApps.filter {
-            $0.bundleIdentifier == bundleID
-            && $0.processIdentifier != ProcessInfo.processInfo.processIdentifier
-        }
-        
-        return !otherInstances.isEmpty
     }
 }
