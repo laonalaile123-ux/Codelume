@@ -8,6 +8,7 @@ class VideoPlaybackView: NSView {
     private var playerLayer: AVPlayerLayer?
     private var playScreen: NSScreen?
     private var screenConfiguration: ScreenConfiguration?
+    private var rateRampTimer: Timer?
     private var globalPlaybackState: Bool = true
     private var globalTemporaryPause: Bool = false
     private var screenTemporaryPause: Bool = false
@@ -53,6 +54,39 @@ class VideoPlaybackView: NSView {
         }
     }
     
+    private func rampPlayerRate(to targetRate: Float,
+                                duration: TimeInterval = 1.5,
+                                completion: (() -> Void)? = nil) {
+        guard let player = player else { return }
+        
+        rateRampTimer?.invalidate()
+        
+        let steps = 40
+        let interval = duration / Double(steps)
+        let startRate = player.rate
+        let delta = (targetRate - startRate) / Float(steps)
+        var currentStep = 0
+        
+        let timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] timer in
+            guard let self, let player = self.player else {
+                timer.invalidate()
+                return
+            }
+            currentStep += 1
+            let newRate = startRate + delta * Float(currentStep)
+            player.rate = newRate
+            
+            if currentStep >= steps {
+                player.rate = targetRate
+                timer.invalidate()
+                self.rateRampTimer = nil
+                completion?()
+            }
+        }
+        rateRampTimer = timer
+        RunLoop.main.add(timer, forMode: .common)
+    }
+    
     private func setupPlayerLayer() {
         guard let player = player else { return }
         
@@ -89,10 +123,17 @@ class VideoPlaybackView: NSView {
         Logger.info("Screen: \(config.id), global pause: \(globalPause), screen play: \(config.isPlaying), global temporary pause: \(globalTemporaryPause), screen temporary pause: \(screenTemporaryPause), final play: \(shouldPlay)")
         
         if shouldSeekToZero {
+            player.pause()
             player.seek(to: CMTime.zero)
         }
         
-        shouldPlay ? player.play() : player.pause()
+        if shouldPlay {
+            rampPlayerRate(to: 1.0, duration: 3.0)
+        } else {
+            rampPlayerRate(to: 0.0, duration: 3.0) { [weak self] in
+                self?.player?.pause()
+            }
+        }
     }
     
     private func setupNotificationObservers() {
@@ -168,6 +209,8 @@ class VideoPlaybackView: NSView {
         Logger.info("Release video playback view resources. Screen: \(playScreen?.identifier ?? "unknown")")
         
         NotificationCenter.default.removeObserver(self)
+        rateRampTimer?.invalidate()
+        rateRampTimer = nil
         player?.pause()
         player = nil
         playerLayer?.removeFromSuperlayer()

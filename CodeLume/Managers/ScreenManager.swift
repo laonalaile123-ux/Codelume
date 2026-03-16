@@ -27,6 +27,7 @@ class ScreenManager: ObservableObject {
     }
     private var seekToZero: Bool = false // 是否需要跳转到第一帧
     private var screenTemporaryPause: [String: Bool] = [:] // 每个屏幕的临时暂停状态
+    private var screenSeekToZero: [String: Bool] = [:] // 每个屏幕是否需要 seek 到 0
 
     var selectedConfiguration: ScreenConfiguration? {
         get {
@@ -462,11 +463,14 @@ class ScreenManager: ObservableObject {
                 seekToZero = true
             }
             
-            // 只有当屏幕状态发生变化时，才发送特定屏幕的播放状态通知
-            if screenTemporaryPause[screenId] != temporaryPause {
+            // 当暂停状态或 seekToZero 任一变化时发送通知（如：先「桌面有其他应用」仅暂停，再进全屏时需补发 seekToZero）
+            let pauseChanged = screenTemporaryPause[screenId] != temporaryPause
+            let seekChanged = screenSeekToZero[screenId] != seekToZero
+            if pauseChanged || seekChanged {
                 NotificationCenter.default.post(name: .screenTemporaryStateChanged, object: nil, userInfo: ["screenId": screenId, "temporaryPause": temporaryPause, "seekToZero": seekToZero])
                 screenTemporaryPause[screenId] = temporaryPause
-                Logger.info("Screen Temporary State Changed: \(screenId) -> \(temporaryPause), seekToZero: \(seekToZero)")
+                screenSeekToZero[screenId] = seekToZero
+                Logger.info("Screen Temporary State Changed: \(screenId) -> temporaryPause: \(temporaryPause), seekToZero: \(seekToZero)")
             }
         }
     }
