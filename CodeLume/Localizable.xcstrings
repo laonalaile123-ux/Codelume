@@ -305,6 +305,7 @@
       }
     },
     "Codelume is Running" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1720,6 +1721,7 @@
       }
     },
     "The application is already running. Please access Codelume through the top status bar." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
