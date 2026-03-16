@@ -123,13 +123,14 @@ class VideoPlaybackView: NSView {
         Logger.info("Screen: \(config.id), global pause: \(globalPause), screen play: \(config.isPlaying), global temporary pause: \(globalTemporaryPause), screen temporary pause: \(screenTemporaryPause), final play: \(shouldPlay)")
         
         if shouldSeekToZero {
+            player.pause()
             player.seek(to: CMTime.zero)
         }
         
         if shouldPlay {
-            rampPlayerRate(to: 1.0, duration: 2.0)
+            rampPlayerRate(to: 1.0, duration: 3.0)
         } else {
-            rampPlayerRate(to: 0.0, duration: 2.0) { [weak self] in
+            rampPlayerRate(to: 0.0, duration: 3.0) { [weak self] in
                 self?.player?.pause()
             }
         }
