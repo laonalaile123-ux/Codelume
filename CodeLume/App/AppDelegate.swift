@@ -3,7 +3,7 @@ import SwiftUI
 import SwiftyBeaver
 
 class AppDelegate: NSObject, NSApplicationDelegate {
-    let windowController = WindowController()
+    lazy var windowController: WindowController = WindowController()
     private var welcomeWindow: NSWindow?
     
     func applicationWillFinishLaunching(_ notification: Notification) {
@@ -11,6 +11,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let _ = UserDefaultsManager.shared
         let _ = DatabaseManger.shared
         let _ = ScreenManager.shared
+        let _ = windowController
         Logger.info("Codelume application started")
     }
     
