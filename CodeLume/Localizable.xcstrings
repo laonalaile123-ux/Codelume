@@ -1581,6 +1581,16 @@
         }
       }
     },
+    "Smooth start/stop transition" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放启停平滑过渡"
+          }
+        }
+      }
+    },
     "Some materials are sourced from the internet. If any content infringes on your rights, please contact us using the contact methods at the bottom of this page." : {
       "localizations" : {
         "zh-Hans" : {
