@@ -131,7 +131,13 @@ class VideoPlaybackView: NSView {
         if !smoothTransitionEnabled {
             rateRampTimer?.invalidate()
             rateRampTimer = nil
-            shouldPlay ? player.play() : player.pause()
+            if shouldPlay {
+                rampPlayerRate(to: 0.0, duration: 1.0) { [weak self] in
+                    self?.player?.play()
+                }
+            } else {
+                player.pause()
+            }
             return
         }
         
