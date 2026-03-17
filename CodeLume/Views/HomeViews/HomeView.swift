@@ -1,10 +1,14 @@
 import SwiftUI
 
 struct HomeView: View {
+    @AppStorage(ENABLE_BACKGROUND_EFFECTS) private var enableBackgroundEffects: Bool = true
+    
     var body: some View {
         ZStack {
-            GlowOrbs()
-            AuroraView()
+            if enableBackgroundEffects {
+                GlowOrbs()
+                AuroraView()
+            }
             NavigationSplitView {
                 VStack {
                     List {

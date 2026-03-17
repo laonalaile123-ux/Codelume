@@ -107,6 +107,16 @@
         }
       }
     },
+    "Dynamic Background" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "动态背景"
+          }
+        }
+      }
+    },
     "App Store Version" : {
       "localizations" : {
         "zh-Hans" : {

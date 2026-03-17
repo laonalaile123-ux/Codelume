@@ -3,11 +3,14 @@ import SwiftUI
 struct WelcomeView: View {
     @State private var showAgain = true
     @Environment(\.dismiss) private var dismiss
+    @AppStorage(ENABLE_BACKGROUND_EFFECTS) private var enableBackgroundEffects: Bool = true
     
     var body: some View {
         ZStack {
-            GlowOrbs()
-            AuroraView()
+            if enableBackgroundEffects {
+                GlowOrbs()
+                AuroraView()
+            }
             VStack(spacing: 10) {
                 Image("Welcome")
                     .resizable()

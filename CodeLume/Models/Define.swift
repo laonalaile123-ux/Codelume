@@ -19,6 +19,7 @@ let PAUSE_IF_OTHER_APP_FULL_SCREEN = "PauseIfOtherAppFullScreen" // 其他应用
 let PAUSE_IF_BATTERY_POWERED = "PauseIfBatteryPowered" // 电池供电时暂停播放
 let PAUSE_IF_POWER_SAVING = "PauseIfPowerSaving" // 节能模式时暂停播放
 let SMOOTH_PLAYBACK_TRANSITION = "SmoothPlaybackTransition" // 播放开始/停止是否平滑过渡
+let ENABLE_BACKGROUND_EFFECTS = "EnableBackgroundEffects" // 是否启用背景效果（GlowOrbs + Aurora）
 let WALLPAPER_SWITCH_INTERVAL = "SwitchInterval" // 壁纸切换间隔
 let WELCOME_STATUS = "WelcomeStatus" // 欢迎状态
 let APP_LANGUAGE = "AppleLanguages" // 应用语言
