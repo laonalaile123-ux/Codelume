@@ -162,6 +162,13 @@ private struct LocalWallpaperHubCard: View {
                 }
                 .buttonStyle(.bordered)
 
+                Button {
+                    exportBundle()
+                } label: {
+                    Label("Export", systemImage: "square.and.arrow.up")
+                }
+                .buttonStyle(.bordered)
+
                 Button(role: .destructive) {
                     deleteVideo()
                 } label: {
@@ -206,6 +213,31 @@ private struct LocalWallpaperHubCard: View {
         }
 
         isShowingScreenSelector = false
+    }
+
+    private func exportBundle() {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = false
+        panel.canCreateDirectories = true
+        panel.prompt = NSLocalizedString("Export", comment: "")
+        panel.message = NSLocalizedString("Choose a folder to export this wallpaper bundle.", comment: "")
+
+        panel.begin { response in
+            guard response == .OK, let directoryURL = panel.url else { return }
+
+            let destinationURL = directoryURL.appendingPathComponent(wallpaperURL.lastPathComponent)
+            do {
+                if FileManager.default.fileExists(atPath: destinationURL.path) {
+                    try FileManager.default.removeItem(at: destinationURL)
+                }
+                try FileManager.default.copyItem(at: wallpaperURL, to: destinationURL)
+                Alert(title: "Export Success", message: "Wallpaper bundle exported successfully.")
+            } catch {
+                Alert(title: "Export Failed", dynamicMessage: error.localizedDescription, style: .warning)
+            }
+        }
     }
 
     private func deleteVideo() {
