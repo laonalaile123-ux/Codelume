@@ -878,6 +878,16 @@
         }
       }
     },
+    "No Loop" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不循环"
+          }
+        }
+      }
+    },
     "Local" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -906,6 +916,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "循环"
+          }
+        }
+      }
+    },
+    "Encrypted" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已加密"
+          }
+        }
+      }
+    },
+    "Not Encrypted" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未加密"
           }
         }
       }

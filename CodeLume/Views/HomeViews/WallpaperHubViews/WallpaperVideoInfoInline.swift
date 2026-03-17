@@ -7,7 +7,9 @@ struct WallpaperVideoInfoInline: View {
     var body: some View {
         Group {
             if let info {
-                Text("\(info.resolutionText) | \(formattedSize(info.sizeMB)) | \(formattedDuration(info.duration)) | \(info.loop ? "Loop" : "No Loop") | \(info.isEncrypted ? "Encrypted" : "Not Encrypted")")
+                let loopText = info.loop ? String(localized: "Loop") : String(localized: "No Loop")
+                let encryptedText = info.isEncrypted ? String(localized: "Encrypted") : String(localized: "Not Encrypted")
+                Text("\(info.resolutionText) | \(formattedSize(info.sizeMB)) | \(formattedDuration(info.duration)) | \(loopText) | \(encryptedText)")
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .lineLimit(1)

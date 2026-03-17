@@ -1,6 +1,7 @@
 import AppKit
 import Foundation
 import SwiftUI
+import CodelumeBundle
 
 struct LocalWallpapersView: View {
     @State private var wallpaperItems: [URL] = []
@@ -49,80 +50,7 @@ private struct LocalWallpaperHubCard: View {
     let wallpaperURL: URL
     @State private var isShowingPreview = false
     @State private var isShowingScreenSelector = false
-
-    private var wallpaperInfoPlist: [String: Any]? {
-        let infoPlistURL = wallpaperURL.appendingPathComponent("Info.plist")
-
-        guard let plistData = try? Data(contentsOf: infoPlistURL),
-              let plist = try? PropertyListSerialization.propertyList(from: plistData, format: nil) as? [String: Any] else {
-            return nil
-        }
-
-        return plist
-    }
-
-    private var wallpaperDisplayName: String {
-        if let plist = wallpaperInfoPlist {
-            if let displayName = plist["name"] as? String,
-               !displayName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                return displayName
-            }
-
-            if let bundleName = plist["CFBundleName"] as? String,
-               !bundleName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                return bundleName
-            }
-        }
-
-        return wallpaperURL.deletingPathExtension().lastPathComponent
-    }
-
-    private var wallpaperType: String {
-        if let type = wallpaperInfoPlist?["type"] as? String {
-            return type.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        }
-
-        return ""
-    }
-
-    private var wallpaperDescription: String {
-        if let description = wallpaperInfoPlist?["description"] as? String,
-           !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return description
-        }
-
-        return "Stored in local wallpaper bundles."
-    }
-
-    private var wallpaperVideoInfo: WallpaperVideoInfoTable? {
-        guard wallpaperType == "video" else { return nil }
-
-        let videoPlistURL = wallpaperURL.appendingPathComponent("Video/Video.plist")
-
-        guard let plistData = try? Data(contentsOf: videoPlistURL),
-              let plist = try? PropertyListSerialization.propertyList(from: plistData, format: nil) as? [String: Any],
-              let width = plist["width"] as? Int,
-              let height = plist["height"] as? Int,
-              let duration = plist["duration"] as? Int,
-              let format = plist["format"] as? String,
-              let loop = plist["loop"] as? Bool,
-              let isEncrypted = plist["encrypted"] as? Bool else {
-            return nil
-        }
-
-        let sizeValue = (plist["size"] as? NSNumber)?.decimalValue ?? .zero
-
-        return WallpaperVideoInfoTable(
-            wallpaperId: UUID(),
-            width: width,
-            height: height,
-            sizeMB: sizeValue,
-            duration: duration,
-            format: format,
-            loop: loop,
-            isEncrypted: isEncrypted
-        )
-    }
+    @StateObject private var viewModel: LocalWallpaperHubCardViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -131,14 +59,16 @@ private struct LocalWallpaperHubCard: View {
                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
 
             HStack {
-                Text(wallpaperDisplayName)
+                Text(viewModel.displayName)
                     .font(.headline)
                     .lineLimit(1)
+
+                WallpaperTypeLabel(type: viewModel.typeLabel)
 
                 Spacer()
             }
 
-            if let wallpaperVideoInfo {
+            if let wallpaperVideoInfo = viewModel.videoInfo {
                 WallpaperVideoInfoInline(info: wallpaperVideoInfo, isLoading: false)
             } else {
                 Text("")
@@ -147,7 +77,7 @@ private struct LocalWallpaperHubCard: View {
                     .lineLimit(1)
             }
 
-            Text(wallpaperDescription)
+            Text(viewModel.descriptionText)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .lineLimit(1)
@@ -196,6 +126,14 @@ private struct LocalWallpaperHubCard: View {
         .sheet(isPresented: $isShowingScreenSelector) {
             ScreenSelectorView(screens: NSScreen.screens, onSelect: handleScreenSelection)
         }
+        .task(id: wallpaperURL) {
+            await viewModel.loadIfNeeded(bundleURL: wallpaperURL)
+        }
+    }
+
+    init(wallpaperURL: URL) {
+        self.wallpaperURL = wallpaperURL
+        _viewModel = StateObject(wrappedValue: LocalWallpaperHubCardViewModel())
     }
 
     private func handleScreenSelection(screen: NSScreen?) {
@@ -276,6 +214,7 @@ private struct LocalWallpaperHubCard: View {
 private struct LocalBundleStaticPreview: View {
     let bundleURL: URL
     @State private var previewImage: Image?
+    @State private var loadTask: Task<Void, Never>?
 
     var body: some View {
         ZStack {
@@ -292,29 +231,139 @@ private struct LocalBundleStaticPreview: View {
             }
         }
         .onAppear {
-            loadPreviewImage()
+            loadTask?.cancel()
+            loadTask = Task {
+                await loadPreviewImage()
+            }
+        }
+        .onDisappear {
+            loadTask?.cancel()
+            loadTask = nil
         }
     }
 
-    private func loadPreviewImage() {
-        let pngURL = bundleURL.appendingPathComponent("Preview/Preview.png")
-        let jpgURL = bundleURL.appendingPathComponent("Preview/Preview.jpg")
-
-        let imageURL: URL
-        if FileManager.default.fileExists(atPath: pngURL.path) {
-            imageURL = pngURL
-        } else {
-            imageURL = jpgURL
-        }
-
-        guard let nsImage = NSImage(contentsOf: imageURL) else {
+    private func loadPreviewImage() async {
+        if let cached = LocalWallpaperPreviewImageCache.shared.image(for: bundleURL) {
+            await MainActor.run { previewImage = Image(nsImage: cached) }
             return
         }
-        previewImage = Image(nsImage: nsImage)
+
+        // Prefer CodelumeBundle standard preview path: preview/preview.png
+        let standardPreviewURL = bundleURL.appendingPathComponent(BundleResources.preview)
+        // Backward compatibility: older bundles used Preview/Preview.(png|jpg)
+        let legacyPNG = bundleURL.appendingPathComponent("Preview/Preview.png")
+        let legacyJPG = bundleURL.appendingPathComponent("Preview/Preview.jpg")
+
+        let imageURL: URL
+        if FileManager.default.fileExists(atPath: standardPreviewURL.path) {
+            imageURL = standardPreviewURL
+        } else if FileManager.default.fileExists(atPath: legacyPNG.path) {
+            imageURL = legacyPNG
+        } else {
+            imageURL = legacyJPG
+        }
+
+        let nsImage: NSImage? = await Task.detached(priority: .utility) {
+            return NSImage(contentsOf: imageURL)
+        }.value
+
+        guard let nsImage else { return }
+        LocalWallpaperPreviewImageCache.shared.setImage(nsImage, for: bundleURL)
+        await MainActor.run { previewImage = Image(nsImage: nsImage) }
     }
 }
 
+#if DEBUG
 #Preview {
     LocalWallpapersView()
+}
+#endif
+
+@MainActor
+private final class LocalWallpaperHubCardViewModel: ObservableObject {
+    @Published var displayName: String = ""
+    @Published var descriptionText: String = "Stored in local wallpaper bundles."
+    @Published var videoInfo: WallpaperVideoInfoTable?
+    @Published var typeLabel: String = ""
+
+    private var loadedBundleURL: URL?
+
+    func loadIfNeeded(bundleURL: URL) async {
+        guard loadedBundleURL != bundleURL else { return }
+        loadedBundleURL = bundleURL
+
+        let fallbackName = bundleURL.deletingPathExtension().lastPathComponent
+        displayName = fallbackName
+        descriptionText = "Stored in local wallpaper bundles."
+        videoInfo = nil
+        typeLabel = ""
+
+        let info: LocalWallpaperBundleInfo? = await Task.detached(priority: .utility) {
+            return LocalWallpaperBundleInfoLoader.load(bundleURL: bundleURL)
+        }.value
+
+        guard let info else { return }
+
+        displayName = info.displayName.isEmpty ? fallbackName : info.displayName
+        descriptionText = info.descriptionText.isEmpty ? "Stored in local wallpaper bundles." : info.descriptionText
+        videoInfo = info.videoInfo
+        typeLabel = info.type
+    }
+}
+
+private struct LocalWallpaperBundleInfo {
+    let displayName: String
+    let descriptionText: String
+    let type: String
+    let videoInfo: WallpaperVideoInfoTable?
+}
+
+private enum LocalWallpaperBundleInfoLoader {
+    static func load(bundleURL: URL) -> LocalWallpaperBundleInfo? {
+        let base = BaseBundle()
+        guard base.open(wallpaperUrl: bundleURL) else { return nil }
+
+        let displayName = base.bundleInfo.name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let descriptionText = base.bundleInfo.description.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        let type = base.bundleInfo.type.rawValue.lowercased()
+
+        let videoInfo: WallpaperVideoInfoTable? = {
+            guard base.bundleInfo.type == .video else { return nil }
+            let video = VideoBundle()
+            guard video.open(wallpaperUrl: bundleURL) else { return nil }
+            let info = video.videoInfo
+            return WallpaperVideoInfoTable(
+                wallpaperId: UUID(),
+                width: info.width,
+                height: info.height,
+                sizeMB: Decimal(Double(info.size)),
+                duration: info.duration,
+                format: info.format.rawValue,
+                loop: info.loop,
+                isEncrypted: info.encrypted
+            )
+        }()
+
+        return LocalWallpaperBundleInfo(
+            displayName: displayName,
+            descriptionText: descriptionText,
+            type: type,
+            videoInfo: videoInfo
+        )
+    }
+}
+
+private final class LocalWallpaperPreviewImageCache {
+    static let shared = LocalWallpaperPreviewImageCache()
+    private let cache = NSCache<NSString, NSImage>()
+
+    func image(for bundleURL: URL) -> NSImage? {
+        cache.object(forKey: bundleURL.path as NSString)
+    }
+
+    func setImage(_ image: NSImage, for bundleURL: URL) {
+        cache.setObject(image, forKey: bundleURL.path as NSString)
+    }
 }
 
