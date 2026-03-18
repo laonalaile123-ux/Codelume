@@ -64,6 +64,10 @@ class SupabaseManager: ObservableObject {
     @Published var isLoading = false
     @Published var currentUser: User?
     @Published var isAuthenticated = false
+    @Published var creditsBalance: Int?
+    @Published var isCreditsLoading: Bool = false
+    
+    private var creditsRefreshTask: Task<Void, Never>?
     
     lazy var client: SupabaseClient = {
         return SupabaseClient(
@@ -87,47 +91,34 @@ class SupabaseManager: ObservableObject {
                         self.isAuthenticated = (session?.user != nil)
                         self.isLoading = false
                     }
+                    if session?.user != nil {
+                        Task { await self.refreshCreditsBalance() }
+                    } else {
+                        await MainActor.run {
+                            self.creditsBalance = nil
+                            self.isCreditsLoading = false
+                        }
+                    }
                 case .signedIn, .userUpdated:
                     await MainActor.run {
                         self.currentUser = session?.user
                         self.isAuthenticated = true
                         self.isLoading = false
                     }
+                    Task { await self.refreshCreditsBalance() }
                 case .signedOut:
                     await MainActor.run {
                         self.currentUser = nil
                         self.isAuthenticated = false
                         self.isLoading = false
+                        self.creditsBalance = nil
+                        self.isCreditsLoading = false
                     }
                 default:
                     break
                 }
             }
         }
-    }
-    
-    func signUp(username: String, email: String, password: String) async -> Bool {
-        await MainActor.run {
-            self.isLoading = true
-        }
-        
-        do {
-            let _ = try await client.auth.signUp(
-                email: email,
-                password: password
-            )
-            await MainActor.run {
-                self.isLoading = false
-                Alert(title: "Register success!", message: "Please sign in with your email and password.")
-            }
-        } catch {
-            await MainActor.run {
-                self.isLoading = false
-                Alert(title: "Register failed!", dynamicMessage: error.localizedDescription)
-            }
-            return false
-        }
-        return true
     }
     
     func signIn(email: String, password: String) async -> Bool {
@@ -292,6 +283,35 @@ class SupabaseManager: ObservableObject {
             .execute()
             .value
         return balances.first?.credits ?? 0
+    }
+
+    func refreshCreditsBalance() async {
+        guard isAuthenticated else {
+            await MainActor.run {
+                self.creditsBalance = nil
+                self.isCreditsLoading = false
+            }
+            return
+        }
+
+        creditsRefreshTask?.cancel()
+        creditsRefreshTask = Task {
+            await MainActor.run { self.isCreditsLoading = true }
+            do {
+                let credits = try await self.getUserCredits()
+                guard !Task.isCancelled else { return }
+                await MainActor.run {
+                    self.creditsBalance = credits
+                    self.isCreditsLoading = false
+                }
+            } catch {
+                guard !Task.isCancelled else { return }
+                await MainActor.run {
+                    self.isCreditsLoading = false
+                }
+            }
+        }
+        await creditsRefreshTask?.value
     }
 
     func hasPurchasedWallpaper(wallpaperId: UUID) async throws -> Bool {

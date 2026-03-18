@@ -24,6 +24,10 @@ struct HomeView: View {
                             .navigationTitle("")) {
                                 Label("Wallpaper Hub", systemImage: "icloud.and.arrow.down")
                             }
+                        NavigationLink(destination: TopUpCreditsView()
+                            .navigationTitle("")) {
+                                Label("Top up", systemImage: "creditcard")
+                            }
                         NavigationLink(destination: ScreenSaverView()
                             .navigationTitle("")) {
                                 Label("Screen Saver", systemImage: "sparkles")

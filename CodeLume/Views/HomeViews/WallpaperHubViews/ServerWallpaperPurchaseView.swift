@@ -62,22 +62,39 @@ struct ServerWallpaperPurchaseView: View {
         return wallpaper.creditsCost
     }
 
-    private var selectedProduct: Product? {
-        iapManager.products.first(where: { product in
-            if let package = iapManager.creditPackages.first(where: { $0.productId == product.id }) {
-                return package.credits >= creditsCost
-            }
-            return false
-        })
+    private var salePriceDisplay: String {
+        if creditsCost <= 0 {
+            return String(localized: "Free")
+        }
+        return "\(creditsCost) \(String(localized: "Credits"))"
     }
 
     var body: some View {
-        HStack() {
-            Text("Credits: \(creditsCost)")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+        HStack(alignment: .center, spacing: 12) {
+            HStack(spacing: 10) {
+                HStack(spacing: 5) {
+                    Image(systemName: "bag.fill")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text("\(String(localized: "Purchased quantity"))：\(wallpaper.totalPurchases)")
+                        .monospacedDigit()
+                }
+                Text("·")
+                    .foregroundStyle(.tertiary)
+                    .font(.caption.weight(.bold))
+                HStack(spacing: 5) {
+                    Image(systemName: "tag.fill")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text("\(String(localized: "Sale price"))：\(salePriceDisplay)")
+                        .monospacedDigit()
+                }
+            }
+            .font(.subheadline)
+            .foregroundColor(.secondary)
+            .lineLimit(1)
 
-            Spacer()
+            Spacer(minLength: 8)
 
             if hasPurchased {
                 HStack(spacing: 8) {
@@ -91,34 +108,21 @@ struct ServerWallpaperPurchaseView: View {
                     Button {
                         startDownloadTask()
                     } label: {
-                        Text(isDownloadedLocally ? "已下载" : "Download")
+                        Text(isDownloadedLocally ? "Downloaded" : "Download")
                             .frame(width: actionButtonWidth)
                     }
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(isLoading)
             } else {
-                HStack(spacing: 8) {
-                    Button {
-                        Task { await buyWallpaper() }
-                    } label: {
-                        Text("Buy")
-                            .frame(width: actionButtonWidth)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(isLoading)
-
-                    if creditsBalance < creditsCost {
-                        Button {
-                            Task { await topUpCredits() }
-                        } label: {
-                            Text("Top up")
-                                .frame(width: actionButtonWidth)
-                        }
-                        .buttonStyle(.bordered)
-                        .disabled(isLoading || selectedProduct == nil)
-                    }
+                Button {
+                    Task { await buyWallpaper() }
+                } label: {
+                    Text("Buy")
+                        .frame(width: actionButtonWidth)
                 }
+                .buttonStyle(.borderedProminent)
+                .disabled(isLoading || creditsBalance < creditsCost)
             }
         }
         .onChange(of: wallpaper.id) { _, _ in
@@ -168,20 +172,6 @@ struct ServerWallpaperPurchaseView: View {
         } catch {
             guard !isCancellationError(error) else { return }
             Alert(title: "Load failed", dynamicMessage: error.localizedDescription)
-        }
-    }
-
-    private func topUpCredits() async {
-        guard let product = selectedProduct else {
-            Alert(title: "Top up unavailable", message: "No matching credit package found.")
-            return
-        }
-
-        let success = await iapManager.purchase(product: product)
-        if success {
-            await refreshState()
-        } else if let message = iapManager.lastErrorMessage {
-            Alert(title: "Purchase failed", dynamicMessage: message)
         }
     }
 

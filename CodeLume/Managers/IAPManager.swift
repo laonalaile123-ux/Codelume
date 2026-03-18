@@ -55,11 +55,13 @@ final class IAPManager: ObservableObject {
             switch result {
             case .success(let verificationResult):
                 let transaction = try checkVerified(verificationResult)
-                _ = try await supabase.verifyIAPPurchase(
+                let response = try await supabase.verifyIAPPurchase(
                     productId: transaction.productID,
                     transactionId: String(transaction.id),
                     originalTransactionId: String(transaction.originalID)
                 )
+                supabase.creditsBalance = response.balance
+                supabase.isCreditsLoading = false
                 await transaction.finish()
                 lastErrorMessage = nil
                 return true
@@ -79,15 +81,17 @@ final class IAPManager: ObservableObject {
     }
 
     private func observeTransactionUpdates() -> Task<Void, Never> {
-        Task {
+        Task { @MainActor in
             for await verificationResult in Transaction.updates {
                 do {
                     let transaction = try checkVerified(verificationResult)
-                    _ = try await supabase.verifyIAPPurchase(
+                    let response = try await supabase.verifyIAPPurchase(
                         productId: transaction.productID,
                         transactionId: String(transaction.id),
                         originalTransactionId: String(transaction.originalID)
                     )
+                    supabase.creditsBalance = response.balance
+                    supabase.isCreditsLoading = false
                     await transaction.finish()
                 } catch {
                     lastErrorMessage = error.localizedDescription
