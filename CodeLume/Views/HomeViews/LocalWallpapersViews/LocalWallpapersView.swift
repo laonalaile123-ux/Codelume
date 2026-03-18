@@ -337,11 +337,12 @@ private enum LocalWallpaperBundleInfoLoader {
                 wallpaperId: UUID(),
                 width: info.width,
                 height: info.height,
-                sizeMB: Decimal(Double(info.size)),
+                sizeBytes: Int64(info.size),
                 duration: info.duration,
                 format: info.format.rawValue,
                 loop: info.loop,
-                isEncrypted: info.encrypted
+                isEncrypted: info.encrypted,
+                keyId: nil
             )
         }()
 

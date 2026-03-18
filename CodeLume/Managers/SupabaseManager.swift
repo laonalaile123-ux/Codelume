@@ -9,6 +9,26 @@ import Foundation
 import Supabase
 import AppKit
 
+private enum JWTParse {
+    static func decodePayload(_ jwt: String) -> [String: Any]? {
+        let parts = jwt.split(separator: ".")
+        guard parts.count >= 2 else { return nil }
+        let payloadPart = String(parts[1])
+        guard let payloadData = base64URLDecode(payloadPart) else { return nil }
+        guard let obj = try? JSONSerialization.jsonObject(with: payloadData) else { return nil }
+        return obj as? [String: Any]
+    }
+
+    private static func base64URLDecode(_ input: String) -> Data? {
+        var s = input.replacingOccurrences(of: "-", with: "+").replacingOccurrences(of: "_", with: "/")
+        let rem = s.count % 4
+        if rem != 0 {
+            s += String(repeating: "=", count: 4 - rem)
+        }
+        return Data(base64Encoded: s)
+    }
+}
+
 struct IAPVerifyResponse: Codable {
     let success: Bool
     let creditsGranted: Int
@@ -36,6 +56,16 @@ struct WallpaperCreditsPurchaseResponse: Codable {
 struct WallpaperDownloadLinkResponse: Codable {
     let success: Bool
     let url: String
+}
+
+struct RecordFreeDownloadResponse: Codable {
+    let success: Bool
+    let alreadyCounted: Bool
+
+    enum CodingKeys: String, CodingKey {
+        case success
+        case alreadyCounted = "already_counted"
+    }
 }
 
 class SupabaseManager: ObservableObject {
@@ -329,20 +359,11 @@ class SupabaseManager: ObservableObject {
         return !entitlements.isEmpty
     }
 
-    func verifyIAPPurchase(productId: String, transactionId: String, originalTransactionId: String?) async throws -> IAPVerifyResponse {
+    func verifyIAPPurchase(signedTransactionInfo: String) async throws -> IAPVerifyResponse {
         struct VerifyBody: Codable {
-            let productId: String
-            let transactionId: String
-            let originalTransactionId: String?
-
-            enum CodingKeys: String, CodingKey {
-                case productId = "product_id"
-                case transactionId = "transaction_id"
-                case originalTransactionId = "original_transaction_id"
-            }
+            let signedTransactionInfo: String
         }
-
-        let body = VerifyBody(productId: productId, transactionId: transactionId, originalTransactionId: originalTransactionId)
+        let body = VerifyBody(signedTransactionInfo: signedTransactionInfo)
         return try await invokeEdgeFunction(name: "verify-iap-purchase", body: body)
     }
 
@@ -387,6 +408,38 @@ class SupabaseManager: ObservableObject {
         return url
     }
 
+    func recordFreeDownload(wallpaperId: UUID) async throws -> RecordFreeDownloadResponse {
+        struct Body: Codable {
+            let wallpaperId: String
+            enum CodingKeys: String, CodingKey {
+                case wallpaperId = "wallpaper_id"
+            }
+        }
+        let body = Body(wallpaperId: wallpaperId.uuidString.lowercased())
+        return try await invokeEdgeFunction(name: "record-free-download", body: body)
+    }
+
+    /// 免费壁纸无需 entitlement：用用户 JWT 直接从 Storage 拉取（RLS/Storage policy 负责放行）
+    func makeAuthedWallpaperBundleRequest(wallpaper: WallpaperTable) async throws -> URLRequest {
+        let accessToken = try await validAccessToken()
+
+        let userId = wallpaper.userId.uuidString.lowercased()
+        let wallpaperId = wallpaper.id.uuidString.lowercased()
+
+        let url = supabaseUrl
+            .appendingPathComponent("storage")
+            .appendingPathComponent("v1")
+            .appendingPathComponent("object")
+            .appendingPathComponent("wallpaper-bundles")
+            .appendingPathComponent(userId)
+            .appendingPathComponent("\(wallpaperId).bundle.zip")
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        return request
+    }
+
     func getWallpaperPreviewURL(wallpaper: WallpaperTable) -> URL {
         let userId = wallpaper.userId.uuidString.lowercased()
         let wallpaperId = wallpaper.id.uuidString.lowercased()
@@ -408,31 +461,61 @@ class SupabaseManager: ObservableObject {
     private func invokeEdgeFunction<Response: Decodable, Body: Encodable>(name: String, body: Body) async throws -> Response {
         Logger.info("[EdgeFunction] Start invoke name=\(name)")
 
-        Logger.info("[EdgeFunction] Fetching auth session for name=\(name)")
-        let session = try await client.auth.session
-        let accessToken = session.accessToken
-        Logger.info("[EdgeFunction] Auth session ready for name=\(name), userId=\(session.user.id.uuidString.lowercased())")
-
         let endpoint = supabaseUrl.appendingPathComponent("functions/v1/\(name)")
         Logger.info("[EdgeFunction] Request endpoint=\(endpoint.absoluteString)")
 
-        var request = URLRequest(url: endpoint)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        request.httpBody = try JSONEncoder().encode(body)
-        Logger.info("[EdgeFunction] Request body encoded bytes=\(request.httpBody?.count ?? 0), name=\(name)")
+        func sendOnce(accessToken: String) async throws -> (Data, HTTPURLResponse) {
+            var request = URLRequest(url: endpoint)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("codelume-app/1", forHTTPHeaderField: "X-Client-Info")
+            // Supabase Edge Functions 网关要求 apikey 头用于识别项目；缺失时可能出现 NOT_FOUND / Invalid JWT
+            request.setValue(supabaseKey, forHTTPHeaderField: "apikey")
+            request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+            request.httpBody = try JSONEncoder().encode(body)
+            let headerKeys = Array((request.allHTTPHeaderFields ?? [:]).keys).sorted()
+            Logger.info("[EdgeFunction] Prepared headers keys=\(headerKeys), hasApikey=\(request.value(forHTTPHeaderField: "apikey") != nil), hasAuthorization=\(request.value(forHTTPHeaderField: "Authorization") != nil), name=\(name)")
+            Logger.info("[EdgeFunction] Request body encoded bytes=\(request.httpBody?.count ?? 0), name=\(name)")
 
-        let (data, response) = try await URLSession.shared.data(for: request)
-        Logger.info("[EdgeFunction] Network response received bytes=\(data.count), name=\(name)")
-        guard let httpResponse = response as? HTTPURLResponse else {
-            Logger.error("[EdgeFunction] Non-HTTP response for name=\(name)")
-            throw NSError(domain: "SupabaseError", code: 500, userInfo: [NSLocalizedDescriptionKey: "Invalid edge function response"])
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let http = response as? HTTPURLResponse else {
+                Logger.error("[EdgeFunction] Non-HTTP response for name=\(name)")
+                throw NSError(domain: "SupabaseError", code: 500, userInfo: [NSLocalizedDescriptionKey: "Invalid edge function response"])
+            }
+            return (data, http)
         }
+
+        // 首次尝试：用当前 session token
+        var accessToken = try await validAccessToken()
+        var (data, httpResponse) = try await sendOnce(accessToken: accessToken)
         Logger.info("[EdgeFunction] HTTP status=\(httpResponse.statusCode), name=\(name)")
 
+        // 若 token 失效，刷新 session 并重试一次（不吞错，便于定位）
+        if httpResponse.statusCode == 401 {
+            Logger.warning("[EdgeFunction] 401 received, refreshing session and retrying. name=\(name)")
+            do {
+                _ = try await client.auth.refreshSession()
+            } catch {
+                Logger.error("[EdgeFunction] refreshSession failed. name=\(name), error=\(error.localizedDescription)")
+                throw NSError(domain: "SupabaseError", code: 401, userInfo: [NSLocalizedDescriptionKey: "Auth refresh failed. Please sign in again."])
+            }
+            accessToken = try await validAccessToken()
+            (data, httpResponse) = try await sendOnce(accessToken: accessToken)
+            Logger.info("[EdgeFunction] Retry HTTP status=\(httpResponse.statusCode), name=\(name)")
+        }
+
         guard (200...299).contains(httpResponse.statusCode) else {
-            let errorMessage = String(data: data, encoding: .utf8) ?? "Edge function failed"
+            var errorMessage = String(data: data, encoding: .utf8) ?? "Edge function failed"
+            if httpResponse.statusCode == 401, let payload = JWTParse.decodePayload(accessToken) {
+                let iss = (payload["iss"] as? String) ?? "<nil>"
+                let exp = (payload["exp"] as? Double).map { String(format: "%.0f", $0) } ?? "<nil>"
+                let now = String(format: "%.0f", Date().timeIntervalSince1970)
+                let expectedIss = supabaseUrl.appendingPathComponent("auth/v1").absoluteString
+                let apikeyLen = supabaseKey.count
+                let authLen = accessToken.count
+                let responseURL = (httpResponse.url?.absoluteString ?? "<nil>")
+                errorMessage += "\n\n[debug] jwt.iss=\(iss)\n[debug] expectedIss=\(expectedIss)\n[debug] jwt.exp=\(exp)\n[debug] now=\(now)\n[debug] apikeyLen=\(apikeyLen)\n[debug] authorizationLen=\(authLen)\n[debug] responseURL=\(responseURL)"
+            }
             Logger.error("[EdgeFunction] HTTP error status=\(httpResponse.statusCode), name=\(name), body=\(errorMessage)")
             throw NSError(domain: "SupabaseError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: errorMessage])
         }
@@ -448,6 +531,45 @@ class SupabaseManager: ObservableObject {
         }
     }
 
+    private func validAccessToken() async throws -> String {
+        // 优先拿 session；若 token 即将过期则主动 refresh 一次
+        var session = try await client.auth.session
+        var token = session.accessToken
+
+        if let payload = JWTParse.decodePayload(token),
+           let exp = payload["exp"] as? Double {
+            let now = Date().timeIntervalSince1970
+            // 小于 60s 视为即将过期，提前刷新，避免 Edge Functions 网关直接拒绝
+            if exp - now < 60 {
+                Logger.info("[Auth] access token near expiry; refreshing session.")
+                _ = try await client.auth.refreshSession()
+                session = try await client.auth.session
+                token = session.accessToken
+            }
+        }
+
+        // 避免“换 Supabase 项目但 Keychain 里还留着旧 token”导致 Edge Functions 报 Invalid JWT
+        if let payload = JWTParse.decodePayload(token),
+           let iss = payload["iss"] as? String,
+           let issURL = URL(string: iss) {
+            let expectedAuthBase = supabaseUrl.appendingPathComponent("auth/v1").absoluteString
+            let issBase = issURL.absoluteString.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+            let expectedBase = expectedAuthBase.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+
+            if issBase != expectedBase {
+                Logger.error("[Auth] JWT issuer mismatch. iss=\(issBase), expected=\(expectedBase). Signing out.")
+                try? await client.auth.signOut()
+                throw NSError(
+                    domain: "SupabaseError",
+                    code: 401,
+                    userInfo: [NSLocalizedDescriptionKey: "Auth session is for a different Supabase project. Please sign in again."]
+                )
+            }
+        }
+
+        return token
+    }
+
     // MARK: - Wallpaper Hub (filters / search)
 
     func getWallpapersForHub(
@@ -455,7 +577,7 @@ class SupabaseManager: ObservableObject {
         limit: Int,
         orderColumn: String,
         ascending: Bool,
-        categoryId: Int?,
+        categorySlug: String?,
         nameContains: String?,
         freeOnly: Bool,
         paidOnly: Bool
@@ -464,8 +586,8 @@ class SupabaseManager: ObservableObject {
             .select()
             .eq("is_approved", value: true)
 
-        if let c = categoryId {
-            query = query.eq("category_id", value: c)
+        if let s = categorySlug?.trimmingCharacters(in: .whitespacesAndNewlines), !s.isEmpty {
+            query = query.eq("category_slug", value: s)
         }
         if let n = nameContains?.trimmingCharacters(in: .whitespacesAndNewlines), !n.isEmpty {
             let escaped = n.replacingOccurrences(of: "\\", with: "\\\\")
@@ -533,7 +655,7 @@ class SupabaseManager: ObservableObject {
         limit: Int,
         orderColumn: String,
         ascending: Bool,
-        categoryId: Int?,
+        categorySlug: String?,
         nameContains: String?,
         freeOnly: Bool,
         paidOnly: Bool
@@ -545,8 +667,8 @@ class SupabaseManager: ObservableObject {
             .eq("is_approved", value: true)
             .in("id", values: ids)
 
-        if let c = categoryId {
-            query = query.eq("category_id", value: c)
+        if let s = categorySlug?.trimmingCharacters(in: .whitespacesAndNewlines), !s.isEmpty {
+            query = query.eq("category_slug", value: s)
         }
         if let n = nameContains?.trimmingCharacters(in: .whitespacesAndNewlines), !n.isEmpty {
             let escaped = n.replacingOccurrences(of: "\\", with: "\\\\")
@@ -653,14 +775,24 @@ class SupabaseManager: ObservableObject {
         return map
     }
 
-    func getDistinctWallpaperCategoryIdsSample(limitRows: Int = 600) async throws -> [Int] {
-        let w: [WallpaperTable] = try await client
-            .from("wallpapers")
-            .select()
-            .eq("is_approved", value: true)
-            .limit(limitRows)
+    func getActiveCategories() async throws -> [WallpaperHubFilterModel.CategoryOption] {
+        struct Row: Decodable {
+            let name: String
+            let displayName: String
+            let isActive: Bool
+            enum CodingKeys: String, CodingKey {
+                case name
+                case displayName = "display_name"
+                case isActive = "is_active"
+            }
+        }
+        let rows: [Row] = try await client
+            .from("categories")
+            .select("name, display_name, is_active")
+            .eq("is_active", value: true)
+            .order("created_at", ascending: true)
             .execute()
             .value
-        return Array(Set(w.map(\.categoryId))).sorted()
+        return rows.map { .init(slug: $0.name, displayName: $0.displayName) }
     }
 }

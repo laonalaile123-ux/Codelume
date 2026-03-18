@@ -51,15 +51,16 @@ final class IAPManager: ObservableObject {
         defer { isPurchasing = false }
 
         do {
-            let result = try await product.purchase()
+            var options: Set<Product.PurchaseOption> = []
+            if let userId = supabase.currentUser?.id {
+                options.insert(.appAccountToken(userId))
+            }
+            let result = try await product.purchase(options: options)
             switch result {
             case .success(let verificationResult):
+                let jwsRepresentation = verificationResult.jwsRepresentation
                 let transaction = try checkVerified(verificationResult)
-                let response = try await supabase.verifyIAPPurchase(
-                    productId: transaction.productID,
-                    transactionId: String(transaction.id),
-                    originalTransactionId: String(transaction.originalID)
-                )
+                let response = try await supabase.verifyIAPPurchase(signedTransactionInfo: jwsRepresentation)
                 supabase.creditsBalance = response.balance
                 supabase.isCreditsLoading = false
                 await transaction.finish()
@@ -84,12 +85,9 @@ final class IAPManager: ObservableObject {
         Task { @MainActor in
             for await verificationResult in Transaction.updates {
                 do {
+                    let jwsRepresentation = verificationResult.jwsRepresentation
                     let transaction = try checkVerified(verificationResult)
-                    let response = try await supabase.verifyIAPPurchase(
-                        productId: transaction.productID,
-                        transactionId: String(transaction.id),
-                        originalTransactionId: String(transaction.originalID)
-                    )
+                    let response = try await supabase.verifyIAPPurchase(signedTransactionInfo: jwsRepresentation)
                     supabase.creditsBalance = response.balance
                     supabase.isCreditsLoading = false
                     await transaction.finish()

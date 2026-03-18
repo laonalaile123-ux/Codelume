@@ -56,7 +56,7 @@ struct WallpaperHubView: View {
         .task(id: supabase.isAuthenticated) {
             if supabase.isAuthenticated {
                 if filters.categoryOptions.isEmpty {
-                    filters.categoryOptions = (try? await supabase.getDistinctWallpaperCategoryIdsSample()) ?? []
+                    filters.categoryOptions = (try? await supabase.getActiveCategories()) ?? []
                 }
                 await loadInitialWallpapers()
             } else {
@@ -237,7 +237,7 @@ struct WallpaperHubView: View {
                     limit: pageSize,
                     orderColumn: filters.orderColumn,
                     ascending: filters.sortAscending,
-                    categoryId: filters.useCategoryFilter ? filters.categoryId : nil,
+                    categorySlug: filters.useCategoryFilter ? filters.categorySlug : nil,
                     nameContains: filters.nameSearch.isEmpty ? nil : filters.nameSearch,
                     freeOnly: filters.freeOnly,
                     paidOnly: filters.paidOnly
@@ -251,7 +251,7 @@ struct WallpaperHubView: View {
                     limit: pageSize,
                     orderColumn: filters.orderColumn,
                     ascending: filters.sortAscending,
-                    categoryId: filters.useCategoryFilter ? filters.categoryId : nil,
+                    categorySlug: filters.useCategoryFilter ? filters.categorySlug : nil,
                     nameContains: filters.nameSearch.isEmpty ? nil : filters.nameSearch,
                     freeOnly: filters.freeOnly,
                     paidOnly: filters.paidOnly
@@ -274,7 +274,7 @@ struct WallpaperHubView: View {
 
         guard let sourceIndex = wallpapers.firstIndex(where: { $0.id == currentWallpaperID }) else { return }
         let nearEnd = sourceIndex >= wallpapers.count - 6
-        let hasFilters = filters.useCategoryFilter || filters.categoryId != nil
+        let hasFilters = filters.useCategoryFilter || filters.categorySlug != nil
             || !filters.nameSearch.isEmpty || filters.freeOnly || filters.paidOnly
         guard nearEnd || hasFilters else { return }
 
@@ -291,7 +291,7 @@ struct WallpaperHubView: View {
                     limit: pageSize,
                     orderColumn: filters.orderColumn,
                     ascending: filters.sortAscending,
-                    categoryId: filters.useCategoryFilter ? filters.categoryId : nil,
+                    categorySlug: filters.useCategoryFilter ? filters.categorySlug : nil,
                     nameContains: filters.nameSearch.isEmpty ? nil : filters.nameSearch,
                     freeOnly: filters.freeOnly,
                     paidOnly: filters.paidOnly
@@ -302,7 +302,7 @@ struct WallpaperHubView: View {
                     limit: pageSize,
                     orderColumn: filters.orderColumn,
                     ascending: filters.sortAscending,
-                    categoryId: filters.useCategoryFilter ? filters.categoryId : nil,
+                    categorySlug: filters.useCategoryFilter ? filters.categorySlug : nil,
                     nameContains: filters.nameSearch.isEmpty ? nil : filters.nameSearch,
                     freeOnly: filters.freeOnly,
                     paidOnly: filters.paidOnly

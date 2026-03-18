@@ -26,10 +26,6 @@ struct HomeView: View {
                             .navigationTitle("")) {
                                 Label("Wallpaper Hub", systemImage: "icloud.and.arrow.down")
                             }
-                        NavigationLink(destination: TopUpCreditsView()
-                            .navigationTitle("")) {
-                                Label("Top up", systemImage: "creditcard")
-                            }
                         NavigationLink(destination: ScreenSaverView()
                             .navigationTitle("")) {
                                 Label("Screen Saver", systemImage: "sparkles")
@@ -38,13 +34,16 @@ struct HomeView: View {
                             .navigationTitle("")) {
                                 Label("Preferences", systemImage: "gear")
                             }
+                        NavigationLink(destination: TopUpCreditsView()
+                            .navigationTitle("")) {
+                                Label("Top up", systemImage: "creditcard")
+                            }
                         NavigationLink(destination: AboutView()
                             .navigationTitle("")) {
                                 Label("About", systemImage: "info.circle")
                             }
                     }
                     .listStyle(.sidebar)
-                    .frame(width: 220)
 
                     Spacer()
 
@@ -52,7 +51,6 @@ struct HomeView: View {
                         ScrollView {
                             WallpaperHubSidebarFiltersView(filters: hubFilters)
                         }
-                        .frame(maxHeight: .infinity)
                     }
 
                     UserAuthView()
@@ -64,7 +62,6 @@ struct HomeView: View {
                             .padding(5)
                     }
                 }
-                .frame(width: 220)
                 .navigationSplitViewColumnWidth(min: 220, ideal: 220, max: 220)
             } detail: {
                 LocalWallpapersView()

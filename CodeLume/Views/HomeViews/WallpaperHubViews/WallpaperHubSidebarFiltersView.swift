@@ -61,12 +61,13 @@ struct WallpaperHubSidebarFiltersView: View {
 
             if filters.useCategoryFilter {
                 Picker(String(localized: "Category"), selection: Binding(
-                    get: { filters.categoryId ?? -1 },
-                    set: { filters.categoryId = $0 < 0 ? nil : $0 }
+                    get: { filters.categorySlug ?? "" },
+                    set: { filters.categorySlug = $0.isEmpty ? nil : $0 }
                 )) {
-                    Text(String(localized: "All categories")).tag(-1)
-                    ForEach(filters.categoryOptions, id: \.self) { id in
-                        Text("\(String(localized: "Category")) \(id)").tag(id)
+                    Text(String(localized: "All categories")).tag("")
+                    ForEach(filters.categoryOptions) { c in
+                        // displayName 通常是 i18n key（例如 category.nature）
+                        Text(LocalizedStringKey(c.displayName)).tag(c.slug)
                     }
                 }
                 .pickerStyle(.menu)

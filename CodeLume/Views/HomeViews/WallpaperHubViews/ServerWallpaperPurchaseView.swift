@@ -15,6 +15,14 @@ private final class DownloadProgressDelegate: NSObject, URLSessionDownloadDelega
         }
     }
 
+    func startDownload(with request: URLRequest, session: URLSession) async throws -> URL {
+        try await withCheckedThrowingContinuation { continuation in
+            self.continuation = continuation
+            let task = session.downloadTask(with: request)
+            task.resume()
+        }
+    }
+
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         guard totalBytesExpectedToWrite > 0 else { return }
         let progress = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
@@ -167,7 +175,11 @@ struct ServerWallpaperPurchaseView: View {
 
         do {
             creditsBalance = try await supabase.getUserCredits()
-            hasPurchased = try await supabase.hasPurchasedWallpaper(wallpaperId: wallpaper.id)
+            if creditsCost <= 0 {
+                hasPurchased = true
+            } else {
+                hasPurchased = try await supabase.hasPurchasedWallpaper(wallpaperId: wallpaper.id)
+            }
             isDownloadedLocally = checkLocalDownloadedState()
         } catch {
             guard !isCancellationError(error) else { return }
@@ -176,6 +188,12 @@ struct ServerWallpaperPurchaseView: View {
     }
 
     private func buyWallpaper() async {
+        guard creditsCost > 0 else {
+            // 免费壁纸不走购买：只需下载（会在下载时记录 record-free-download）
+            hasPurchased = true
+            startDownloadTask()
+            return
+        }
         isLoading = true
         defer { isLoading = false }
 
@@ -200,8 +218,14 @@ struct ServerWallpaperPurchaseView: View {
         }
 
         do {
-            let url = try await supabase.getPurchasedWallpaperDownloadURL(wallpaperId: wallpaper.id)
-            try await downloadAndImportWallpaper(from: url)
+            if creditsCost <= 0 {
+                _ = try await supabase.recordFreeDownload(wallpaperId: wallpaper.id)
+                let request = try await supabase.makeAuthedWallpaperBundleRequest(wallpaper: wallpaper)
+                try await downloadAndImportWallpaper(request: request, suggestedName: "\(wallpaper.id.uuidString.lowercased()).bundle.zip")
+            } else {
+                let url = try await supabase.getPurchasedWallpaperDownloadURL(wallpaperId: wallpaper.id)
+                try await downloadAndImportWallpaper(from: url)
+            }
             downloadProgress = 1
             isDownloadedLocally = true
             Alert(title: "Download success", message: "Wallpaper has been imported to local library.")
@@ -263,6 +287,56 @@ struct ServerWallpaperPurchaseView: View {
         Logger.info("Imported downloaded wallpaper bundle at: \(destinationURL.path)")
     }
 
+    private func downloadAndImportWallpaper(request: URLRequest, suggestedName: String) async throws {
+        let fileManager = FileManager.default
+        let tempRoot = fileManager.temporaryDirectory.appendingPathComponent("CodelumeDownload-\(UUID().uuidString)", isDirectory: true)
+
+        try fileManager.createDirectory(at: tempRoot, withIntermediateDirectories: true)
+        defer {
+            try? fileManager.removeItem(at: tempRoot)
+        }
+
+        let downloadedFileURL = try await downloadFileWithProgress(request: request)
+
+        let localArchiveURL = tempRoot.appendingPathComponent(suggestedName)
+        try? fileManager.removeItem(at: localArchiveURL)
+        try fileManager.moveItem(at: downloadedFileURL, to: localArchiveURL)
+
+        let bundleURL: URL
+        if localArchiveURL.pathExtension.lowercased() == "zip" {
+            let extractDirectory = tempRoot.appendingPathComponent("unzipped", isDirectory: true)
+            try fileManager.createDirectory(at: extractDirectory, withIntermediateDirectories: true)
+            try unzipArchive(at: localArchiveURL, to: extractDirectory)
+
+            guard let extractedBundle = findSingleTopLevelBundle(in: extractDirectory) else {
+                throw NSError(domain: "DownloadImport", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Downloaded zip must contain exactly one top-level .bundle."])
+            }
+            bundleURL = extractedBundle
+        } else if localArchiveURL.pathExtension.lowercased() == "bundle" {
+            bundleURL = localArchiveURL
+        } else {
+            throw NSError(domain: "DownloadImport", code: 1002, userInfo: [NSLocalizedDescriptionKey: "Unsupported downloaded file format: \(localArchiveURL.pathExtension)"])
+        }
+
+        guard checkWallpaperBundle(bundleURL) else {
+            throw NSError(domain: "DownloadImport", code: 1003, userInfo: [NSLocalizedDescriptionKey: "Imported wallpaper bundle format is invalid."])
+        }
+
+        guard let wallpaperSaveURL = getWallpaperSaveURL() else {
+            throw NSError(domain: "DownloadImport", code: 1004, userInfo: [NSLocalizedDescriptionKey: "Failed to get local wallpaper directory."])
+        }
+
+        let destinationURL = wallpaperSaveURL.appendingPathComponent("\(wallpaper.id.uuidString.lowercased()).bundle")
+        if fileManager.fileExists(atPath: destinationURL.path) {
+            try fileManager.removeItem(at: destinationURL)
+        }
+        try fileManager.copyItem(at: bundleURL, to: destinationURL)
+
+        let bundleName = destinationURL.deletingPathExtension().lastPathComponent
+        DatabaseManger.shared.addWallpaper(bundleName)
+        Logger.info("Imported downloaded wallpaper bundle at: \(destinationURL.path)")
+    }
+
     private func downloadFileWithProgress(from remoteURL: URL) async throws -> URL {
         let delegate = DownloadProgressDelegate()
         delegate.onProgress = { progress in
@@ -277,6 +351,22 @@ struct ServerWallpaperPurchaseView: View {
         }
         defer { session.invalidateAndCancel() }
         return try await delegate.startDownload(from: remoteURL, session: session)
+    }
+
+    private func downloadFileWithProgress(request: URLRequest) async throws -> URL {
+        let delegate = DownloadProgressDelegate()
+        delegate.onProgress = { progress in
+            Task { @MainActor in
+                self.downloadProgress = progress
+            }
+        }
+
+        let session = URLSession(configuration: .ephemeral, delegate: delegate, delegateQueue: nil)
+        await MainActor.run {
+            self.activeDownloadSession = session
+        }
+        defer { session.invalidateAndCancel() }
+        return try await delegate.startDownload(with: request, session: session)
     }
 
     private func unzipArchive(at sourceURL: URL, to destinationURL: URL) throws {
