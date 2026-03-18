@@ -238,3 +238,9 @@ struct Follow: Codable {
         case createdAt = "created_at"
     }
 }
+
+/// `tags` 表（壁纸标签）；与 `wallpaper_tags` 关联
+struct TagTable: Codable, Identifiable, Hashable {
+    let id: Int
+    let name: String
+}

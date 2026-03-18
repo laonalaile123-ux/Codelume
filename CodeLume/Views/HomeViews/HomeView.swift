@@ -2,7 +2,8 @@ import SwiftUI
 
 struct HomeView: View {
     @AppStorage(ENABLE_BACKGROUND_EFFECTS) private var enableBackgroundEffects: Bool = true
-    
+    @StateObject private var hubFilters = WallpaperHubFilterModel()
+
     var body: some View {
         ZStack {
             if enableBackgroundEffects {
@@ -21,6 +22,7 @@ struct HomeView: View {
                                 Label("LocalWallpaper", systemImage: "photo.on.rectangle")
                             }
                         NavigationLink(destination: WallpaperHubView()
+                            .environmentObject(hubFilters)
                             .navigationTitle("")) {
                                 Label("Wallpaper Hub", systemImage: "icloud.and.arrow.down")
                             }
@@ -43,13 +45,20 @@ struct HomeView: View {
                     }
                     .listStyle(.sidebar)
                     .frame(width: 220)
-                    
+
                     Spacer()
-                    
+
+                    if hubFilters.isWallpaperHubDetailVisible {
+                        ScrollView {
+                            WallpaperHubSidebarFiltersView(filters: hubFilters)
+                        }
+                        .frame(maxHeight: .infinity)
+                    }
+
                     UserAuthView()
-                    
+
                     if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                        Text("Version \(version)")
+                        Text(String(format: String(localized: "Version %@"), version))
                             .font(.caption)
                             .foregroundColor(.secondary)
                             .padding(5)

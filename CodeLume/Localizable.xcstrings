@@ -26,6 +26,16 @@
         }
       }
     },
+    "%@ %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$lld"
+          }
+        }
+      }
+    },
     "%@ | %@ | %@ | %@ | %@" : {
       "localizations" : {
         "en" : {
@@ -129,6 +139,9 @@
         }
       }
     },
+    "All categories" : {
+
+    },
     "All contact methods are listed at the bottom of this page." : {
       "localizations" : {
         "zh-Hans" : {
@@ -178,6 +191,9 @@
           }
         }
       }
+    },
+    "Ascending order" : {
+
     },
     "Authenticated" : {
       "localizations" : {
@@ -655,6 +671,9 @@
         }
       }
     },
+    "Downloads" : {
+
+    },
     "Due to limited testing resources, this app is only tested on the latest macOS systems. Older systems may experience compatibility issues. We recommend upgrading your system or compiling from source to resolve any issues." : {
       "localizations" : {
         "zh-Hans" : {
@@ -810,6 +829,9 @@
         }
       }
     },
+    "Filter by category" : {
+
+    },
     "Five minutes" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -841,6 +863,9 @@
           }
         }
       }
+    },
+    "Free only" : {
+
     },
     "From the list on the left, select a screen to view and edit its configuration information" : {
       "localizations" : {
@@ -912,6 +937,9 @@
           }
         }
       }
+    },
+    "Hub filters" : {
+
     },
     "Import Completed" : {
       "localizations" : {
@@ -1147,6 +1175,9 @@
         }
       }
     },
+    "No description" : {
+
+    },
     "No Loop" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1262,6 +1293,9 @@
           }
         }
       }
+    },
+    "Paid only" : {
+
     },
     "Pause" : {
       "localizations" : {
@@ -1453,6 +1487,9 @@
         }
       }
     },
+    "Price" : {
+
+    },
     "Purchase failed" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1463,6 +1500,9 @@
         }
       }
     },
+    "Purchased only" : {
+
+    },
     "Purchased quantity" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1472,6 +1512,9 @@
           }
         }
       }
+    },
+    "Purchases" : {
+
     },
     "Quit" : {
       "localizations" : {
@@ -1745,6 +1788,12 @@
         }
       }
     },
+    "Search by name" : {
+
+    },
+    "Search by tag" : {
+
+    },
     "Secondary Screen" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1885,6 +1934,9 @@
           }
         }
       }
+    },
+    "Sort by" : {
+
     },
     "SpriteKit" : {
       "localizations" : {
@@ -2064,6 +2116,9 @@
           }
         }
       }
+    },
+    "Unknown Author" : {
+
     },
     "Unset wallpaper bundle" : {
       "localizations" : {

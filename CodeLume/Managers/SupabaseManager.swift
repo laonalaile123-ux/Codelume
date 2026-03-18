@@ -447,4 +447,220 @@ class SupabaseManager: ObservableObject {
             throw error
         }
     }
+
+    // MARK: - Wallpaper Hub (filters / search)
+
+    func getWallpapersForHub(
+        page: Int,
+        limit: Int,
+        orderColumn: String,
+        ascending: Bool,
+        categoryId: Int?,
+        nameContains: String?,
+        freeOnly: Bool,
+        paidOnly: Bool
+    ) async throws -> [WallpaperTable] {
+        var query = client.from("wallpapers")
+            .select()
+            .eq("is_approved", value: true)
+
+        if let c = categoryId {
+            query = query.eq("category_id", value: c)
+        }
+        if let n = nameContains?.trimmingCharacters(in: .whitespacesAndNewlines), !n.isEmpty {
+            let escaped = n.replacingOccurrences(of: "\\", with: "\\\\")
+                .replacingOccurrences(of: "%", with: "\\%")
+                .replacingOccurrences(of: "_", with: "\\_")
+            query = query.ilike("name", value: "%\(escaped)%")
+        }
+        if freeOnly {
+            query = query.eq("credits_cost", value: 0)
+        } else if paidOnly {
+            query = query.gt("credits_cost", value: 0)
+        }
+
+        let wallpapers: [WallpaperTable] = try await query
+            .order(orderColumn, ascending: ascending)
+            .range(from: (page - 1) * limit, to: page * limit - 1)
+            .execute()
+            .value
+        return wallpapers
+    }
+
+    func getPurchasedWallpaperIds() async throws -> [UUID] {
+        guard let user = try await getCurrentUser() else {
+            throw NSError(domain: "SupabaseError", code: 401, userInfo: [NSLocalizedDescriptionKey: "Not signed in"])
+        }
+        struct Row: Decodable {
+            let wallpaperId: UUID
+            enum CodingKeys: String, CodingKey {
+                case wallpaperId = "wallpaper_id"
+            }
+        }
+        let rows: [Row] = try await client
+            .from("wallpaper_entitlements")
+            .select("wallpaper_id")
+            .eq("user_id", value: user.id)
+            .execute()
+            .value
+        return rows.map(\.wallpaperId)
+    }
+
+    func fetchWallpapersByIds(_ ids: [UUID]) async throws -> [WallpaperTable] {
+        guard !ids.isEmpty else { return [] }
+        let chunkSize = 80
+        var out: [WallpaperTable] = []
+        var offset = 0
+        while offset < ids.count {
+            let slice = Array(ids[offset..<min(offset + chunkSize, ids.count)])
+            let part: [WallpaperTable] = try await client
+                .from("wallpapers")
+                .select()
+                .eq("is_approved", value: true)
+                .in("id", values: slice)
+                .execute()
+                .value
+            out.append(contentsOf: part)
+            offset += chunkSize
+        }
+        return out
+    }
+
+    /// 用于「已购买」/「标签搜索」等先得到 id 集合的场景：后续筛选/排序/分页仍全部由数据库执行。
+    func getWallpapersForHubByIds(
+        ids: [UUID],
+        page: Int,
+        limit: Int,
+        orderColumn: String,
+        ascending: Bool,
+        categoryId: Int?,
+        nameContains: String?,
+        freeOnly: Bool,
+        paidOnly: Bool
+    ) async throws -> [WallpaperTable] {
+        guard !ids.isEmpty else { return [] }
+
+        var query = client.from("wallpapers")
+            .select()
+            .eq("is_approved", value: true)
+            .in("id", values: ids)
+
+        if let c = categoryId {
+            query = query.eq("category_id", value: c)
+        }
+        if let n = nameContains?.trimmingCharacters(in: .whitespacesAndNewlines), !n.isEmpty {
+            let escaped = n.replacingOccurrences(of: "\\", with: "\\\\")
+                .replacingOccurrences(of: "%", with: "\\%")
+                .replacingOccurrences(of: "_", with: "\\_")
+            query = query.ilike("name", value: "%\(escaped)%")
+        }
+        if freeOnly {
+            query = query.eq("credits_cost", value: 0)
+        } else if paidOnly {
+            query = query.gt("credits_cost", value: 0)
+        }
+
+        let wallpapers: [WallpaperTable] = try await query
+            .order(orderColumn, ascending: ascending)
+            .range(from: (page - 1) * limit, to: page * limit - 1)
+            .execute()
+            .value
+        return wallpapers
+    }
+
+    /// 依赖表 `tags`、`wallpaper_tags`；缺失时返回空数组
+    func wallpaperIdsMatchingTagSearch(_ raw: String) async throws -> [UUID] {
+        let q = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !q.isEmpty else { return [] }
+        let pattern = "%\(q.replacingOccurrences(of: "%", with: "\\%").replacingOccurrences(of: "_", with: "\\_"))%"
+        do {
+            let tags: [TagTable] = try await client
+                .from("tags")
+                .select()
+                .ilike("name", value: pattern)
+                .execute()
+                .value
+            let tagIds = tags.map(\.id)
+            guard !tagIds.isEmpty else { return [] }
+            struct Row: Decodable {
+                let wallpaperId: UUID
+                enum CodingKeys: String, CodingKey {
+                    case wallpaperId = "wallpaper_id"
+                }
+            }
+            var all: [UUID] = []
+            var j = 0
+            let batch = 50
+            while j < tagIds.count {
+                let slice = Array(tagIds[j..<min(j + batch, tagIds.count)])
+                let rows: [Row] = try await client
+                    .from("wallpaper_tags")
+                    .select("wallpaper_id")
+                    .in("tag_id", values: slice)
+                    .execute()
+                    .value
+                all.append(contentsOf: rows.map(\.wallpaperId))
+                j += batch
+            }
+            return Array(Set(all))
+        } catch {
+            Logger.warning("Tag search unavailable: \(error.localizedDescription)")
+            return []
+        }
+    }
+
+    /// 批量查询壁纸标签（用于列表展示）；`display_name` 优先，否则 `name`
+    func getTagLabelsForWallpaperIds(_ wallpaperIds: [UUID]) async throws -> [UUID: [String]] {
+        guard !wallpaperIds.isEmpty else { return [:] }
+        struct TagEmbed: Decodable {
+            let name: String
+            let displayName: String?
+            enum CodingKeys: String, CodingKey {
+                case name
+                case displayName = "display_name"
+            }
+        }
+        struct Row: Decodable {
+            let wallpaperId: UUID
+            let tags: TagEmbed?
+            enum CodingKeys: String, CodingKey {
+                case wallpaperId = "wallpaper_id"
+                case tags
+            }
+        }
+        var map: [UUID: [String]] = [:]
+        let batchSize = 40
+        var offset = 0
+        while offset < wallpaperIds.count {
+            let slice = Array(wallpaperIds[offset..<min(offset + batchSize, wallpaperIds.count)])
+            let rows: [Row] = try await client
+                .from("wallpaper_tags")
+                .select("wallpaper_id, tags(name, display_name)")
+                .in("wallpaper_id", values: slice)
+                .execute()
+                .value
+            for row in rows {
+                guard let t = row.tags else { continue }
+                let d = t.displayName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                let label = d.isEmpty ? t.name : d
+                if label.isEmpty { continue }
+                var list = map[row.wallpaperId] ?? []
+                if !list.contains(label) { list.append(label) }
+                map[row.wallpaperId] = list
+            }
+            offset += batchSize
+        }
+        return map
+    }
+
+    func getDistinctWallpaperCategoryIdsSample(limitRows: Int = 600) async throws -> [Int] {
+        let w: [WallpaperTable] = try await client
+            .from("wallpapers")
+            .select()
+            .eq("is_approved", value: true)
+            .limit(limitRows)
+            .execute()
+            .value
+        return Array(Set(w.map(\.categoryId))).sorted()
+    }
 }
