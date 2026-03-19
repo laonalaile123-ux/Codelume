@@ -81,10 +81,10 @@ struct ServerWallpaperPurchaseView: View {
         HStack(alignment: .center, spacing: 12) {
             HStack(spacing: 10) {
                 HStack(spacing: 5) {
-                    Image(systemName: "bag.fill")
+                    Image(systemName: "arrow.down.circle")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    Text("\(String(localized: "Purchased quantity"))：\(wallpaper.totalPurchases)")
+                    Text(String(wallpaper.totalDownloads))
                         .monospacedDigit()
                 }
                 Text("·")
@@ -94,7 +94,7 @@ struct ServerWallpaperPurchaseView: View {
                     Image(systemName: "tag.fill")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    Text("\(String(localized: "Sale price"))：\(salePriceDisplay)")
+                    Text(String(salePriceDisplay))
                         .monospacedDigit()
                 }
             }

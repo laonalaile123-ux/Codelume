@@ -33,26 +33,6 @@
         }
       }
     },
-    "%@：%@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@：%2$@"
-          }
-        }
-      }
-    },
-    "%@：%lld" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@：%2$lld"
-          }
-        }
-      }
-    },
     "%lld" : {
 
     },
@@ -432,9 +412,6 @@
           }
         }
       }
-    },
-    "Confirm Purchase" : {
-
     },
     "Connected" : {
       "localizations" : {
@@ -1487,19 +1464,6 @@
     "Price" : {
 
     },
-    "Purchase" : {
-
-    },
-    "Purchase %lld credits for %@?" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Purchase %1$lld credits for %2$@?"
-          }
-        }
-      }
-    },
     "Purchase failed" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1514,6 +1478,7 @@
 
     },
     "Purchased quantity" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1639,6 +1604,7 @@
       }
     },
     "Sale price" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -2128,7 +2094,14 @@
       }
     },
     "Unknown Author" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作者未知"
+          }
+        }
+      }
     },
     "Unset wallpaper bundle" : {
       "localizations" : {

@@ -103,18 +103,11 @@ struct WallpaperHubView: View {
                         HStack(spacing: 4) {
                             ForEach(Array(tags.enumerated()), id: \.offset) { _, tag in
                                 HStack(spacing: 3) {
-                                    Image(systemName: "tag.fill")
-                                        .font(.system(size: 8))
-                                        .foregroundStyle(.secondary)
-                                    Text(tag)
+                                    Text("#" + tag)
                                         .font(.system(size: 10))
-                                        .foregroundStyle(.secondary)
+                                        .foregroundColor(.secondary)
                                         .lineLimit(1)
                                 }
-                                .background(
-                                    Capsule(style: .continuous)
-                                        .fill(Color.primary.opacity(0.07))
-                                )
                             }
                         }
                     }
@@ -164,7 +157,7 @@ struct WallpaperHubView: View {
         do {
             let m = try await supabase.getTagLabelsForWallpaperIds(missing)
             for (k, v) in m {
-                tagLabelsByWallpaperId[k] = v
+                tagLabelsByWallpaperId[k] = normalizeTagLabels(v)
             }
             for id in missing where tagLabelsByWallpaperId[id] == nil {
                 tagLabelsByWallpaperId[id] = []
@@ -175,6 +168,18 @@ struct WallpaperHubView: View {
             }
             Logger.warning("Wallpaper tags load failed: \(error.localizedDescription)")
         }
+    }
+
+    private func normalizeTagLabels(_ tags: [String]) -> [String] {
+        tags
+            .map { rawTag in
+                var cleaned = rawTag.trimmingCharacters(in: .whitespacesAndNewlines)
+                if cleaned.lowercased().hasPrefix("tag.") {
+                    cleaned.removeFirst(4)
+                }
+                return cleaned
+            }
+            .filter { !$0.isEmpty }
     }
 
     @MainActor
