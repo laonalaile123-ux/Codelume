@@ -25,8 +25,8 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>SUPABASE_ANON_KEY</key>
-	<string>sb_publishable_2osoNibBOvhyMmv6fyfOOw_hFo9fUa4</string>
+	<string>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuZmN0cnZtcWV4bmVxYXpqanFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MjMyNzYsImV4cCI6MjA4OTM5OTI3Nn0.CQOfOwvJS_BiZbN_XcgiE0lqTLtqBwn9kSbLylKZSx4</string>
 	<key>SUPABASE_URL</key>
-	<string>https://kpvqflkypukhzkzttcwv.supabase.co</string>
+	<string>https://vnfctrvmqexneqazjjqg.supabase.co</string>
 </dict>
 </plist>

@@ -36,12 +36,7 @@ struct ScreenManagerView: View {
                     EmptyConfigurationView()
                 }
             }
-            
-            .padding(12)
-            .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(.regularMaterial)
-            )
+            .aboutSectionCard()
             .padding()
             .frame(minWidth: 800, minHeight: 600)
     }

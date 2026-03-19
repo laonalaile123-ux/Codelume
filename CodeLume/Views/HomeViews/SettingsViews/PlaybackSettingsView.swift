@@ -4,6 +4,7 @@ struct PlaybackSettingsView: View {
     @AppStorage(PAUSE) private var pause: Bool = UserDefaultsManager.shared.getPauseStatus()
     @AppStorage(MUTE) private var mute: Bool = UserDefaultsManager.shared.getMuteStatus()
     @AppStorage(VOLUME) private var volume: Double = Double(UserDefaultsManager.shared.getVolume())
+    @AppStorage(SMOOTH_PLAYBACK_TRANSITION) private var smoothPlaybackTransition: Bool = UserDefaultsManager.shared.getSmoothPlaybackTransitionEnabled()
     @AppStorage(PAUSE_IF_OTHER_APP_ON_DESKTOP) private var pauseIfOtherAppOnDesktop: Bool = UserDefaultsManager.shared.getPauseIfOtherAppOnDesktopStatus()
     @AppStorage(PAUSE_IF_OTHER_APP_FULL_SCREEN) private var pauseIfOtherAppFullScreen: Bool = UserDefaultsManager.shared.getPauseIfOtherAppFullScreenStatus()
     @AppStorage(PAUSE_IF_BATTERY_POWERED) private var pauseIfBatteryPowered: Bool = UserDefaultsManager.shared.getPauseIfBatteryPoweredStatus()
@@ -79,6 +80,13 @@ struct PlaybackSettingsView: View {
              }
              .padding(.leading, 40)
              .padding(.trailing, 40)
+
+            IconToggle(iconName: "speedometer", title: "Smooth start/stop transition", isOn: $smoothPlaybackTransition) { newValue in
+                Logger.info("set smoothPlaybackTransition to \(newValue)")
+                smoothPlaybackTransition = newValue
+                NotificationCenter.default.post(name: .userDefaultChanged, object: nil)
+            }
+            .padding(.leading)
             
             Text("Conditions for pausing playback")
             

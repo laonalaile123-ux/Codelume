@@ -4,6 +4,15 @@
     "" : {
 
     },
+    "--" : {
+
+    },
+    "—" : {
+
+    },
+    "·" : {
+
+    },
     "%@ (%lfx%lf)" : {
       "localizations" : {
         "en" : {
@@ -26,6 +35,16 @@
     },
     "%lld" : {
 
+    },
+    "%lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld %2$@"
+          }
+        }
+      }
     },
     "%lldx%lld" : {
       "localizations" : {
@@ -87,6 +106,16 @@
         }
       }
     },
+    "All categories" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有分类"
+          }
+        }
+      }
+    },
     "All contact methods are listed at the bottom of this page." : {
       "localizations" : {
         "zh-Hans" : {
@@ -137,6 +166,9 @@
         }
       }
     },
+    "Ascending order" : {
+
+    },
     "Authenticated" : {
       "localizations" : {
         "zh-Hans" : {
@@ -163,6 +195,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "可用屏幕："
+          }
+        }
+      }
+    },
+    "Balance unavailable" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂时无法获取余额"
           }
         }
       }
@@ -198,7 +240,14 @@
       }
     },
     "Buy failed" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "购买失败"
+          }
+        }
+      }
     },
     "Cancel" : {
       "localizations" : {
@@ -238,6 +287,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "中文"
+          }
+        }
+      }
+    },
+    "Choose a folder to export this wallpaper bundle." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择一个文件夹，用于导出该壁纸资源包。"
+          }
+        }
+      }
+    },
+    "Choose a package" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择充值档位"
           }
         }
       }
@@ -300,17 +369,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "码镜是一个专注于播放引擎的平台，我们自身并不生产壁纸内容。我们深知，创作者的成果对用户体验至关重要。因此，我们欢迎创作者通过邮件提交原创壁纸，以纳入平台。创作者拥有对其作品的完全定价权。每笔销售，码镜将抽取少量佣金用于服务器维护和平台运营，其余收入将直接归创作者所有。同时，为确保平台的开放性与可访问性，我们将始终提供一批精选的免费壁纸。"
-          }
-        }
-      }
-    },
-    "Codelume is Running" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "码镜正在运行中"
           }
         }
       }
@@ -416,8 +474,35 @@
         }
       }
     },
-    "Credits: %lld" : {
-
+    "Credits" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点券"
+          }
+        }
+      }
+    },
+    "Credits Top Up" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点券充值"
+          }
+        }
+      }
+    },
+    "Current balance" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前余额"
+          }
+        }
+      }
     },
     "Dark" : {
       "extractionState" : "manual",
@@ -451,10 +536,24 @@
       }
     },
     "Delete Failed" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除失败"
+          }
+        }
+      }
     },
     "Delete Success" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除成功"
+          }
+        }
+      }
     },
     "Delete this video?" : {
       "localizations" : {
@@ -507,7 +606,14 @@
       }
     },
     "Download failed" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载失败"
+          }
+        }
+      }
     },
     "Download Screen Saver" : {
       "localizations" : {
@@ -520,6 +626,26 @@
       }
     },
     "Download success" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载成功"
+          }
+        }
+      }
+    },
+    "Downloaded" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已下载"
+          }
+        }
+      }
+    },
+    "Downloads" : {
 
     },
     "Due to limited testing resources, this app is only tested on the latest macOS systems. Older systems may experience compatibility issues. We recommend upgrading your system or compiling from source to resolve any issues." : {
@@ -543,12 +669,32 @@
         }
       }
     },
+    "Dynamic Background" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "动态背景"
+          }
+        }
+      }
+    },
     "Email" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "邮箱"
+          }
+        }
+      }
+    },
+    "Encrypted" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已加密"
           }
         }
       }
@@ -574,8 +720,45 @@
         }
       }
     },
+    "Export" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出"
+          }
+        }
+      }
+    },
+    "Export Failed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出失败"
+          }
+        }
+      }
+    },
+    "Export Success" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出成功"
+          }
+        }
+      }
+    },
     "Failed to import the following files:" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入下面的文件失败："
+          }
+        }
+      }
     },
     "File Path" : {
       "extractionState" : "manual",
@@ -620,6 +803,9 @@
         }
       }
     },
+    "Filter by category" : {
+
+    },
     "Five minutes" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -641,6 +827,19 @@
           }
         }
       }
+    },
+    "Free" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免费"
+          }
+        }
+      }
+    },
+    "Free only" : {
+
     },
     "From the list on the left, select a screen to view and edit its configuration information" : {
       "localizations" : {
@@ -712,6 +911,9 @@
           }
         }
       }
+    },
+    "Hub filters" : {
+
     },
     "Import Completed" : {
       "localizations" : {
@@ -806,7 +1008,34 @@
       }
     },
     "Load failed" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载失败"
+          }
+        }
+      }
+    },
+    "Loading balance…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在加载余额…"
+          }
+        }
+      }
+    },
+    "Loading packages…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在加载充值档位…"
+          }
+        }
+      }
     },
     "Loading..." : {
       "localizations" : {
@@ -814,17 +1043,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "加载中…"
-          }
-        }
-      }
-    },
-    "Local" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "本地"
           }
         }
       }
@@ -931,8 +1149,18 @@
         }
       }
     },
-    "No matching credit package found." : {
+    "No description" : {
 
+    },
+    "No Loop" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不循环"
+          }
+        }
+      }
     },
     "Non-program-built-in local video cannot be recovered after deletion and need to be redownloaded or imported." : {
       "localizations" : {
@@ -940,6 +1168,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "非程序内置的本地视频删除后无法恢复，需重新下载或导入。"
+          }
+        }
+      }
+    },
+    "Not Encrypted" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未加密"
           }
         }
       }
@@ -1029,6 +1267,9 @@
           }
         }
       }
+    },
+    "Paid only" : {
+
     },
     "Pause" : {
       "localizations" : {
@@ -1200,9 +1441,6 @@
         }
       }
     },
-    "Please sign in with your email and password." : {
-
-    },
     "Preferences" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1223,7 +1461,34 @@
         }
       }
     },
+    "Price" : {
+
+    },
     "Purchase failed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "购买失败"
+          }
+        }
+      }
+    },
+    "Purchased only" : {
+
+    },
+    "Purchased quantity" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已购买量"
+          }
+        }
+      }
+    },
+    "Purchases" : {
 
     },
     "Quit" : {
@@ -1247,12 +1512,6 @@
         }
       }
     },
-    "Register failed!" : {
-
-    },
-    "Register success!" : {
-
-    },
     "Report issues, request features, or contribute code." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1274,7 +1533,14 @@
       }
     },
     "Reset Success" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置成功"
+          }
+        }
+      }
     },
     "Resolution" : {
       "extractionState" : "manual",
@@ -1318,7 +1584,14 @@
       }
     },
     "Retry" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重试"
+          }
+        }
+      }
     },
     "Rstart" : {
       "localizations" : {
@@ -1326,6 +1599,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重启"
+          }
+        }
+      }
+    },
+    "Sale price" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "销售价格"
           }
         }
       }
@@ -1361,7 +1645,14 @@
       }
     },
     "Screen configuration has been reset." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "屏幕配置已重置"
+          }
+        }
+      }
     },
     "Screen ID:" : {
       "localizations" : {
@@ -1384,7 +1675,14 @@
       }
     },
     "Screen is connected. Please disconnect it first." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "屏幕已连接，请先断开连接"
+          }
+        }
+      }
     },
     "Screen Management" : {
       "localizations" : {
@@ -1466,16 +1764,11 @@
         }
       }
     },
-    "Screensaver saved successfully!" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "屏保保存成功!"
-          }
-        }
-      }
+    "Search by name" : {
+
+    },
+    "Search by tag" : {
+
     },
     "Secondary Screen" : {
       "localizations" : {
@@ -1549,7 +1842,14 @@
       }
     },
     "Sign in failed!" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录失败！"
+          }
+        }
+      }
     },
     "Sign in to access the Wallpaper Hub." : {
       "localizations" : {
@@ -1557,6 +1857,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "登录后访问壁纸中心"
+          }
+        }
+      }
+    },
+    "Sign in to top up credits" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录后可充值点券"
           }
         }
       }
@@ -1581,6 +1891,16 @@
         }
       }
     },
+    "Smooth start/stop transition" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放启停平滑过渡"
+          }
+        }
+      }
+    },
     "Some materials are sourced from the internet. If any content infringes on your rights, please contact us using the contact methods at the bottom of this page." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1590,6 +1910,9 @@
           }
         }
       }
+    },
+    "Sort by" : {
+
     },
     "SpriteKit" : {
       "localizations" : {
@@ -1607,17 +1930,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "开机自启"
-          }
-        }
-      }
-    },
-    "Stored in local wallpaper bundles." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "存储于本地壁纸 Bundle。"
           }
         }
       }
@@ -1720,17 +2032,6 @@
         }
       }
     },
-    "The application is already running. Please access Codelume through the top status bar." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "该应用已在运行。请通过顶部状态栏访问码镜"
-          }
-        }
-      }
-    },
     "Theme settings:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1763,10 +2064,14 @@
       }
     },
     "Top up" : {
-
-    },
-    "Top up unavailable" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "充值"
+          }
+        }
+      }
     },
     "Total Screens" : {
       "localizations" : {
@@ -1784,6 +2089,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法读取 Apple 身份令牌"
+          }
+        }
+      }
+    },
+    "Unknown Author" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作者未知"
           }
         }
       }
@@ -1868,6 +2183,16 @@
         }
       }
     },
+    "Wallpaper bundle exported successfully." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "壁纸资源包已成功导出。"
+          }
+        }
+      }
+    },
     "Wallpaper bundle:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1899,7 +2224,14 @@
       }
     },
     "Wallpaper has been imported to local library." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "壁纸已导入到本地图库"
+          }
+        }
+      }
     },
     "Wallpaper Hub" : {
       "localizations" : {
@@ -1950,9 +2282,6 @@
           }
         }
       }
-    },
-    "已下载" : {
-
     }
   },
   "version" : "1.0"

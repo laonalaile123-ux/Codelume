@@ -232,6 +232,17 @@ class UserDefaultsManager {
         return PlaybackDefaults.pauseIfPowerSaving
     }
 
+    func setSmoothPlaybackTransitionEnabled(_ enabled: Bool) {
+        userDefaults.set(enabled, forKey: smoothPlaybackTransitionKey)
+    }
+
+    func getSmoothPlaybackTransitionEnabled() -> Bool {
+        if userDefaults.object(forKey: smoothPlaybackTransitionKey) != nil {
+            return userDefaults.bool(forKey: smoothPlaybackTransitionKey)
+        }
+        return PlaybackDefaults.smoothPlaybackTransition
+    }
+
     func setSwitchIntervalStatus(_ switchInterval: PlayingSwitchInterval) {
         userDefaults.set(switchInterval.rawValue, forKey: switchIntervalKey)
     }
@@ -251,6 +262,7 @@ class UserDefaultsManager {
     private let pauseIfOtherAppFullScreenKey = PAUSE_IF_OTHER_APP_FULL_SCREEN
     private let pauseIfBatteryPoweredKey = PAUSE_IF_BATTERY_POWERED
     private let pauseIfPowerSavingKey = PAUSE_IF_POWER_SAVING
+    private let smoothPlaybackTransitionKey = SMOOTH_PLAYBACK_TRANSITION
     private let switchIntervalKey = WALLPAPER_SWITCH_INTERVAL
 
     private struct PlaybackDefaults {
@@ -261,6 +273,7 @@ class UserDefaultsManager {
         static let pauseIfOtherAppFullScreen: Bool = true
         static let pauseIfBatteryPowered: Bool = false
         static let pauseIfPowerSaving: Bool = true
+        static let smoothPlaybackTransition: Bool = true
         static let switchInterval: PlayingSwitchInterval = .oneDay
     }
 }

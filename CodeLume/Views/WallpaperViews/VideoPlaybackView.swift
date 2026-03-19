@@ -118,6 +118,7 @@ class VideoPlaybackView: NSView {
         let shouldTemporarilyPause = globalTemporaryPause || screenTemporaryPause
         let shouldPlay = !globalPause && config.isPlaying && !shouldTemporarilyPause
         let shouldSeekToZero = globalSeekToZero || screenSeekToZero
+        let smoothTransitionEnabled = UserDefaultsManager.shared.getSmoothPlaybackTransitionEnabled()
         Logger.info("Screen: \(config.id), global volume: \(globalVolume), screen volume: \(screenVolume), final volume: \(globalVolume * screenVolume)")
         Logger.info("Screen: \(config.id), global mute: \(globalMute), screen mute: \(config.isMuted), final mute: \(player.isMuted)")
         Logger.info("Screen: \(config.id), global pause: \(globalPause), screen play: \(config.isPlaying), global temporary pause: \(globalTemporaryPause), screen temporary pause: \(screenTemporaryPause), final play: \(shouldPlay)")
@@ -125,6 +126,19 @@ class VideoPlaybackView: NSView {
         if shouldSeekToZero {
             player.pause()
             player.seek(to: CMTime.zero)
+        }
+        
+        if !smoothTransitionEnabled {
+            rateRampTimer?.invalidate()
+            rateRampTimer = nil
+            if shouldPlay {
+                rampPlayerRate(to: 0.0, duration: 1.0) { [weak self] in
+                    self?.player?.play()
+                }
+            } else {
+                player.pause()
+            }
+            return
         }
         
         if shouldPlay {

@@ -56,7 +56,8 @@ struct UserAuthView: View {
                 .fontWeight(.bold)
                 .foregroundColor(.secondary)
                 .padding(.vertical, 5)
-            Spacer()
+
+            Spacer(minLength: 0)
         }
         .sheet(isPresented: $showSignInView) {
             SignInView()

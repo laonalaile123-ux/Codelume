@@ -7,6 +7,7 @@ struct GeneralSettingsView: View {
     @State private var showWelcomeView: Bool = UserDefaultsManager.shared.getWelcomeStatus()
     @State private var startAtLogin: Bool = UserDefaultsManager.shared.getStartAtLogin()
     @State private var showRestartAlert = false
+    @AppStorage(ENABLE_BACKGROUND_EFFECTS) private var enableBackgroundEffects: Bool = true
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -40,6 +41,15 @@ struct GeneralSettingsView: View {
                     }
                 }
                 .frame(width: 130)
+            }
+            
+            HStack {
+                Label("Dynamic Background", systemImage: "sparkles")
+                Spacer()
+                Toggle("", isOn: $enableBackgroundEffects)
+                    .toggleStyle(.switch)
+                    .frame(width: 50)
+                    .padding(.trailing, 20)
             }
             Divider()
             HStack {

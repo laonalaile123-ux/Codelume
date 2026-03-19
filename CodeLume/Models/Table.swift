@@ -32,7 +32,8 @@ struct WallpaperTable: Codable {
     let author: String
     let authorEmail: String
     let wallpaperType: String
-    let categoryId: Int
+    /// 后端字段：`category_slug`（例如 nature / city / other）
+    let categorySlug: String
     let bundleSizeMB: Decimal
     let totalDownloads: Int
     let totalPurchases: Int
@@ -41,8 +42,6 @@ struct WallpaperTable: Codable {
     let bundleSHA256: String
     let createdAt: Date
     let updatedAt: Date
-
-    private static let defaultUserId = UUID(uuidString: "00000000-0000-0000-0000-000000000000") ?? UUID()
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -52,7 +51,7 @@ struct WallpaperTable: Codable {
         case author
         case authorEmail = "author_email"
         case wallpaperType = "type"
-        case categoryId = "category_id"
+        case categorySlug = "category_slug"
         case bundleSizeMB = "bundle_size_mb"
         case totalDownloads = "total_downloads"
         case totalPurchases = "total_purchases"
@@ -61,27 +60,6 @@ struct WallpaperTable: Codable {
         case bundleSHA256 = "bundle_sha256"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
-        userId = try container.decodeIfPresent(UUID.self, forKey: .userId) ?? Self.defaultUserId
-        name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
-        description = try container.decodeIfPresent(String.self, forKey: .description) ?? ""
-        author = try container.decodeIfPresent(String.self, forKey: .author) ?? ""
-        authorEmail = try container.decodeIfPresent(String.self, forKey: .authorEmail) ?? ""
-        wallpaperType = try container.decodeIfPresent(String.self, forKey: .wallpaperType) ?? "video"
-        categoryId = try container.decodeIfPresent(Int.self, forKey: .categoryId) ?? 0
-        bundleSizeMB = try container.decodeIfPresent(Decimal.self, forKey: .bundleSizeMB) ?? .zero
-        totalDownloads = try container.decodeIfPresent(Int.self, forKey: .totalDownloads) ?? 0
-        totalPurchases = try container.decodeIfPresent(Int.self, forKey: .totalPurchases) ?? 0
-        creditsCost = try container.decodeIfPresent(Int.self, forKey: .creditsCost) ?? 0
-        isApproved = try container.decodeIfPresent(Bool.self, forKey: .isApproved) ?? false
-        bundleSHA256 = try container.decodeIfPresent(String.self, forKey: .bundleSHA256) ?? ""
-        createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt) ?? Date()
-        updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt) ?? Date()
     }
 }
 
@@ -159,11 +137,19 @@ struct WallpaperVideoInfoTable: Codable {
     let wallpaperId: UUID
     let width: Int
     let height: Int
-    let sizeMB: Decimal
+    /// 后端字段：`size_bytes`
+    let sizeBytes: Int64
     let duration: Int
     let format: String
     let loop: Bool
     let isEncrypted: Bool
+    /// 后端字段：`key_id`（仅当加密时存在）
+    let keyId: String?
+
+    /// 便于 UI 继续展示 MB
+    var sizeMB: Decimal {
+        Decimal(Double(max(sizeBytes, 0)) / 1024.0 / 1024.0)
+    }
 
     var resolutionText: String {
         "\(width)x\(height)"
@@ -173,11 +159,12 @@ struct WallpaperVideoInfoTable: Codable {
         case wallpaperId = "wallpaper_id"
         case width
         case height
-        case sizeMB = "size_mb"
+        case sizeBytes = "size_bytes"
         case duration = "duration"
         case format
         case loop
         case isEncrypted = "is_encrypted"
+        case keyId = "key_id"
     }
 }
 
@@ -237,4 +224,10 @@ struct Follow: Codable {
         case followingId = "following_id"
         case createdAt = "created_at"
     }
+}
+
+/// `tags` 表（壁纸标签）；与 `wallpaper_tags` 关联
+struct TagTable: Codable, Identifiable, Hashable {
+    let id: Int
+    let name: String
 }
