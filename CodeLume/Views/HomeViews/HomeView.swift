@@ -47,11 +47,11 @@ struct HomeView: View {
 
                     Spacer()
 
-                    if hubFilters.isWallpaperHubDetailVisible {
-                        ScrollView {
-                            WallpaperHubSidebarFiltersView(filters: hubFilters)
-                        }
-                    }
+                    // if hubFilters.isWallpaperHubDetailVisible {
+                    //     ScrollView {
+                    //         WallpaperHubSidebarFiltersView(filters: hubFilters)
+                    //     }
+                    // }
 
                     UserAuthView()
 
