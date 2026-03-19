@@ -56,14 +56,6 @@ struct UserAuthView: View {
                 .fontWeight(.bold)
                 .foregroundColor(.secondary)
                 .padding(.vertical, 5)
-            
-            if supabase.isAuthenticated {
-                Text("(\(creditsBalanceText))")
-                    .font(.callout)
-                    .foregroundColor(.secondary)
-                    .monospacedDigit()
-                    .lineLimit(1)
-            }
 
             Spacer(minLength: 0)
         }
@@ -74,16 +66,6 @@ struct UserAuthView: View {
             SignOutView()
             
         }
-    }
-}
-
-private extension UserAuthView {
-    var creditsBalanceText: String {
-        if supabase.isCreditsLoading {
-            return "-- \(String(localized: "Credits"))"
-        }
-        let value = supabase.creditsBalance ?? 0
-        return "\(value) \(String(localized: "Credits"))"
     }
 }
 

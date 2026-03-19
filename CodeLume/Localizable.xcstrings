@@ -13,9 +13,6 @@
     "·" : {
 
     },
-    "(%@)" : {
-
-    },
     "%@ (%lfx%lf)" : {
       "localizations" : {
         "en" : {
@@ -130,7 +127,14 @@
       }
     },
     "All categories" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有分类"
+          }
+        }
+      }
     },
     "All contact methods are listed at the bottom of this page." : {
       "localizations" : {
@@ -428,6 +432,9 @@
           }
         }
       }
+    },
+    "Confirm Purchase" : {
+
     },
     "Connected" : {
       "localizations" : {
@@ -1479,6 +1486,19 @@
     },
     "Price" : {
 
+    },
+    "Purchase" : {
+
+    },
+    "Purchase %lld credits for %@?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Purchase %1$lld credits for %2$@?"
+          }
+        }
+      }
     },
     "Purchase failed" : {
       "localizations" : {
