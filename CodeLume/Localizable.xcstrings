@@ -4,9 +4,6 @@
     "" : {
 
     },
-    "--" : {
-
-    },
     "—" : {
 
     },
@@ -135,6 +132,9 @@
           }
         }
       }
+    },
+    "App Store did not return these product IDs: %@. In App Store Connect, check that product identifiers match your database exactly, Paid Apps Agreement is active, and products are cleared for sale." : {
+
     },
     "App Store Version" : {
       "localizations" : {
@@ -279,6 +279,9 @@
           }
         }
       }
+    },
+    "Check App Store product ID" : {
+
     },
     "Chinese" : {
       "extractionState" : "manual",
@@ -1162,6 +1165,9 @@
         }
       }
     },
+    "No prices were returned from the App Store. Compare each product ID below with App Store Connect (including consumable vs non-consumable type) and confirm the Paid Apps Agreement is active." : {
+
+    },
     "Non-program-built-in local video cannot be recovered after deletion and need to be redownloaded or imported." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1934,6 +1940,9 @@
         }
       }
     },
+    "Store products not loaded" : {
+
+    },
     "Subject" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2092,6 +2101,9 @@
           }
         }
       }
+    },
+    "Unavailable" : {
+
     },
     "Unknown Author" : {
       "localizations" : {

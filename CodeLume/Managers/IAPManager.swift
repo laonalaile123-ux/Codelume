@@ -10,6 +10,8 @@ final class IAPManager: ObservableObject {
     @Published var isLoading = false
     @Published var isPurchasing = false
     @Published var lastErrorMessage: String?
+    /// Product IDs present in the database but not returned by `Product.products(for:)` (common after App Store release if IDs mismatch or IAP isn’t cleared for sale).
+    @Published var storeProductIdsMissingFromStoreKit: [String] = []
 
     private let supabase = SupabaseManager.shared
     private var updatesTask: Task<Void, Never>?
@@ -25,6 +27,8 @@ final class IAPManager: ObservableObject {
     func loadCreditProducts() async {
         isLoading = true
         defer { isLoading = false }
+        storeProductIdsMissingFromStoreKit = []
+        lastErrorMessage = nil
 
         do {
             let packages = try await supabase.getCreditPackages()
@@ -36,13 +40,28 @@ final class IAPManager: ObservableObject {
                 return
             }
 
-            let loadedProducts = try await Product.products(for: productIds)
-            products = loadedProducts.sorted { lhs, rhs in
-                lhs.price < rhs.price
+            do {
+                let loadedProducts = try await Product.products(for: productIds)
+                products = loadedProducts.sorted { lhs, rhs in
+                    lhs.price < rhs.price
+                }
+                let loadedIds = Set(loadedProducts.map(\.id))
+                let missing = productIds.filter { !loadedIds.contains($0) }
+                storeProductIdsMissingFromStoreKit = Array(Set(missing)).sorted()
+                if !storeProductIdsMissingFromStoreKit.isEmpty {
+                    let ids = storeProductIdsMissingFromStoreKit.joined(separator: ", ")
+                    lastErrorMessage = String(localized: "App Store did not return these product IDs: \(ids). In App Store Connect, check that product identifiers match your database exactly, Paid Apps Agreement is active, and products are cleared for sale.")
+                }
+            } catch {
+                lastErrorMessage = error.localizedDescription
+                products = []
+                storeProductIdsMissingFromStoreKit = Array(Set(productIds)).sorted()
             }
-            lastErrorMessage = nil
         } catch {
             lastErrorMessage = error.localizedDescription
+            products = []
+            creditPackages = []
+            storeProductIdsMissingFromStoreKit = []
         }
     }
 

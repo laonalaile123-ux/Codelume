@@ -29,6 +29,10 @@ struct TopUpCreditsView: View {
                     .foregroundStyle(.secondary)
                     .padding(.top, 4)
 
+                if shouldShowStoreKitWarning {
+                    storeKitWarningBanner
+                }
+
                 if isLoading && iapManager.creditPackages.isEmpty {
                     ProgressView(String(localized: "Loading packages…"))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -149,6 +153,14 @@ struct TopUpCreditsView: View {
         iapManager.creditPackages.sorted(by: { $0.credits < $1.credits })
     }
 
+    /// Avoid using `lastErrorMessage` alone (it may be set after a failed purchase).
+    private var shouldShowStoreKitWarning: Bool {
+        if !iapManager.storeProductIdsMissingFromStoreKit.isEmpty { return true }
+        return !iapManager.creditPackages.isEmpty
+            && iapManager.products.isEmpty
+            && !iapManager.isLoading
+    }
+
     @ViewBuilder
     private func packageRow(package: CreditPackageTable) -> some View {
         HStack {
@@ -172,11 +184,68 @@ struct TopUpCreditsView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(isLoading)
+            } else if iapManager.isLoading {
+                ProgressView()
+                    .controlSize(.small)
+                    .frame(minWidth: 64)
             } else {
-                Text("--")
-                    .foregroundColor(.secondary)
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text(String(localized: "Unavailable"))
+                        .font(.subheadline.weight(.medium))
+                        .foregroundStyle(.secondary)
+                    Text(String(localized: "Check App Store product ID"))
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                }
+                .multilineTextAlignment(.trailing)
             }
         }
+    }
+
+    private var storeKitWarningBanner: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .top, spacing: 10) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .foregroundStyle(.orange)
+                    .font(.title3)
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(String(localized: "Store products not loaded"))
+                        .font(.subheadline.weight(.semibold))
+                    if let msg = storeKitBannerMessage, !msg.isEmpty {
+                        Text(msg)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .textSelection(.enabled)
+                    }
+                }
+                Spacer(minLength: 8)
+                Button(String(localized: "Retry")) {
+                    Task { await iapManager.loadCreditProducts() }
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.small)
+            }
+        }
+        .padding(12)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background {
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color.orange.opacity(0.12))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .strokeBorder(Color.orange.opacity(0.35), lineWidth: 1)
+                }
+        }
+    }
+
+    private var storeKitBannerMessage: String? {
+        if !iapManager.storeProductIdsMissingFromStoreKit.isEmpty {
+            return iapManager.lastErrorMessage
+        }
+        if !iapManager.creditPackages.isEmpty, iapManager.products.isEmpty, !iapManager.isLoading {
+            return String(localized: "No prices were returned from the App Store. Compare each product ID below with App Store Connect (including consumable vs non-consumable type) and confirm the Paid Apps Agreement is active.")
+        }
+        return nil
     }
 
     private func refreshBalance() async {
