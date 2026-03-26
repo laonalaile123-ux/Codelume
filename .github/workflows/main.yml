@@ -19,33 +19,37 @@ jobs:
           repository: singulay-tech/CodelumeBundle
           path: CodelumeBundle
 
-      - name: 2.5. 强行修改版本号 (破解 Swift 6.2 限制)
+      - name: 2.5. 强行修改版本号
         run: |
-          # 使用 sed 命令，强行把 Package.swift 里的 6.2 替换成服务器支持的 6.1
           sed -i '' 's/6.2.0/6.1.0/g' CodelumeBundle/Package.swift
           sed -i '' 's/6.2/6.1/g' CodelumeBundle/Package.swift
-          echo "版本号篡改成功！开始骗过 Xcode..."
 
-      - name: 3. 编译 App
+      - name: 3. 打印可选 Scheme (防迷路)
         run: |
           cd Codelume
+          xcodebuild -list -project Codelume.xcodeproj || true
+
+      - name: 4. 编译 App (修复大小写)
+        run: |
+          cd Codelume
+          # 将这里的 -scheme 改成了全小写 l 的 Codelume
           xcodebuild archive \
             -project Codelume.xcodeproj \
-            -scheme CodeLume \
+            -scheme Codelume \
             -configuration Release \
             -archivePath ./build/Codelume.xcarchive \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             AD_HOC_CODE_SIGNING_ALLOWED=YES
 
-      - name: 4. 提取并打包 DMG
+      - name: 5. 提取并打包 DMG
         run: |
           cd Codelume
           mkdir -p ./dist
           cp -R ./build/Codelume.xcarchive/Products/Applications/*.app ./dist/ || echo "提取失败"
           hdiutil create -volname "Codelume" -srcfolder ./dist -ov -format UDZO Codelume.dmg
 
-      - name: 5. 上传成品提供下载
+      - name: 6. 上传成品提供下载
         uses: actions/upload-artifact@v4
         with:
           name: Codelume-DMG
