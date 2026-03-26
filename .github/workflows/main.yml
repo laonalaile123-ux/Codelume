@@ -1,0 +1,44 @@
+name: Build macOS DMG
+
+on:
+  workflow_dispatch: # 允许手动点击运行
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Xcode
+        # 默认环境已有 Xcode，这里确保选择一个版本
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Build App
+        run: |
+          # 编译项目（根据项目里的 .xcodeproj 名称调整）
+          xcodebuild archive \
+            -project Codelume.xcodeproj \
+            -scheme CodeLume \
+            -configuration Release \
+            -archivePath ./build/Codelume.xcarchive \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO
+
+      - name: Export App
+        run: |
+          # 将编译好的 app 拷贝出来
+          mkdir -p ./dist
+          cp -R ./build/Codelume.xcarchive/Products/Applications/*.app ./dist/
+
+      - name: Create DMG
+        run: |
+          # 使用 macOS 自带的 hdiutil 工具打包 dmg
+          hdiutil create -volname "Codelume" -srcfolder ./dist -ov -format UDZO Codelume.dmg
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Codelume-DMG
+          path: Codelume.dmg
