@@ -13,14 +13,14 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Fix Directory Structure
+      - name: Force Move Dependencies
         run: |
-          # 检查并修复 CodelumeBundle 的位置
-          # 强制将 CodeLume 目录下的 bundle 链接到根目录，确保编译器能找到
+          # 关键操作：如果文件夹在子目录，把它移动到根目录
           if [ -d "CodeLume/CodelumeBundle" ]; then
-            ln -s "$PWD/CodeLume/CodelumeBundle" "$PWD/CodelumeBundle"
+            cp -R CodeLume/CodelumeBundle ./CodelumeBundle
+            echo "Successfully moved CodelumeBundle to root."
           fi
-          ls -R # 打印目录结构方便排查
+          ls -d */ # 确认现在根目录下有哪些文件夹
 
       - name: Build App
         run: |
