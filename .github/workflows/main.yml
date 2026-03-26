@@ -8,19 +8,15 @@ jobs:
     runs-on: macos-latest
     
     steps:
-      - name: Checkout code
+      - name: Checkout main code
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
-      - name: Force Move Dependencies
+      - name: Download missing CodelumeBundle
         run: |
-          # 关键操作：如果文件夹在子目录，把它移动到根目录
-          if [ -d "CodeLume/CodelumeBundle" ]; then
-            cp -R CodeLume/CodelumeBundle ./CodelumeBundle
-            echo "Successfully moved CodelumeBundle to root."
-          fi
-          ls -d */ # 确认现在根目录下有哪些文件夹
+          # 核心修复：返回上一级目录，把缺失的兄弟仓库克隆下来
+          cd ..
+          git clone https://github.com/singulay-tech/CodelumeBundle.git
+          echo "成功拉取 CodelumeBundle 依赖包！"
 
       - name: Build App
         run: |
