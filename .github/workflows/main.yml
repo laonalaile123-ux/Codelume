@@ -24,32 +24,27 @@ jobs:
           sed -i '' 's/6.2.0/6.1.0/g' CodelumeBundle/Package.swift
           sed -i '' 's/6.2/6.1/g' CodelumeBundle/Package.swift
 
-      - name: 3. 打印可选 Scheme (防迷路)
+      - name: 3. 编译 App (修复签名权限问题)
         run: |
           cd Codelume
-          xcodebuild -list -project Codelume.xcodeproj || true
-
-      - name: 4. 编译 App (修复大小写)
-        run: |
-          cd Codelume
-          # 将这里的 -scheme 改成了全小写 l 的 Codelume
+          # 关键修改：将 CODE_SIGN_IDENTITY 改为 "-"，允许临时签名
           xcodebuild archive \
             -project Codelume.xcodeproj \
             -scheme Codelume \
             -configuration Release \
             -archivePath ./build/Codelume.xcarchive \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=YES \
             AD_HOC_CODE_SIGNING_ALLOWED=YES
 
-      - name: 5. 提取并打包 DMG
+      - name: 4. 提取并打包 DMG
         run: |
           cd Codelume
           mkdir -p ./dist
           cp -R ./build/Codelume.xcarchive/Products/Applications/*.app ./dist/ || echo "提取失败"
           hdiutil create -volname "Codelume" -srcfolder ./dist -ov -format UDZO Codelume.dmg
 
-      - name: 6. 上传成品提供下载
+      - name: 5. 上传成品提供下载
         uses: actions/upload-artifact@v4
         with:
           name: Codelume-DMG
