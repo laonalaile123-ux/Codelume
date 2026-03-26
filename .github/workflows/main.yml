@@ -8,17 +8,18 @@ jobs:
     runs-on: macos-latest
     
     steps:
-      - name: Checkout main code
+      - name: 1. 拉取主仓库代码 (Codelume)
         uses: actions/checkout@v4
 
-      - name: Download missing CodelumeBundle
-        run: |
-          # 核心修复：返回上一级目录，把缺失的兄弟仓库克隆下来
-          cd ..
-          git clone https://github.com/singulay-tech/CodelumeBundle.git
-          echo "成功拉取 CodelumeBundle 依赖包！"
+      - name: 2. 拉取依赖包代码 (CodelumeBundle)
+        uses: actions/checkout@v4
+        with:
+          # 直接指定原作者的另一个仓库
+          repository: singulay-tech/CodelumeBundle
+          # 关键：把它放在 Xcode 报错时要求的那条路径上（主目录的上一级）
+          path: ../CodelumeBundle
 
-      - name: Build App
+      - name: 3. 编译 App
         run: |
           xcodebuild archive \
             -project Codelume.xcodeproj \
@@ -29,16 +30,16 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             AD_HOC_CODE_SIGNING_ALLOWED=YES
 
-      - name: Export App
+      - name: 4. 提取 App 文件
         run: |
           mkdir -p ./dist
-          cp -R ./build/Codelume.xcarchive/Products/Applications/*.app ./dist/ || echo "No app found"
+          cp -R ./build/Codelume.xcarchive/Products/Applications/*.app ./dist/ || echo "提取失败"
 
-      - name: Create DMG
+      - name: 5. 封装为 DMG
         run: |
           hdiutil create -volname "Codelume" -srcfolder ./dist -ov -format UDZO Codelume.dmg
 
-      - name: Upload Artifact
+      - name: 6. 上传成品提供下载
         uses: actions/upload-artifact@v4
         with:
           name: Codelume-DMG
